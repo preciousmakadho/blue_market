@@ -1,34 +1,453 @@
-<header>
-  <div class="container">
-    <div class="header-content">
-      <a routerLink="/" class="logo">RED<span>PARTS</span></a>
-      
-      <nav [class.active]="isMenuOpen">
-        <ul>
-          <li><a routerLink="/">Home</a></li>
-          <li><a routerLink="/shop">Shop</a></li>
-          <li><a routerLink="/categories">Categories</a></li>
-          <li><a routerLink="/deals">Deals</a></li>
-          <li><a routerLink="/about">About</a></li>
-          <li><a routerLink="/contact">Contact</a></li>
-        </ul>
-      </nav>
-      
-      <div class="header-actions">
-        <div class="search-box">
-          <input type="text" placeholder="Enter Keyword or Part Number">
-          <button><i class="fas fa-search"></i></button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+        }
+        
+        /* Top Red Bar */
+        .top-bar {
+            background-color: #e53935;
+            color: white;
+            padding: 6px 0;
+            font-size: 12px;
+        }
+        
+        .top-bar .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .top-left, .top-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .top-bar a, .top-bar span {
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        
+        .top-bar a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Main Header Container */
+        .main-header {
+            position: relative;
+            display: flex;
+        }
+        
+        /* White Section */
+        .header-white {
+            background: white;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            height: 70px;
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        /* Menu Button */
+        .menu-btn {
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+            padding: 8px 12px;
+            white-space: nowrap;
+        }
+        
+        .menu-btn:hover {
+            color: #e53935;
+        }
+        
+        .menu-btn i {
+            font-size: 16px;
+        }
+        
+        /* Navigation */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+        
+        .nav-menu a {
+            color: #333;
+            text-decoration: none;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        
+        .nav-menu a:hover {
+            color: #e53935;
+        }
+        
+        .nav-menu i {
+            font-size: 9px;
+        }
+        
+        /* Logo */
+        .logo {
+            text-decoration: none;
+            margin: 0 auto;
+        }
+        
+        .logo-text {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            white-space: nowrap;
+        }
+        
+        .logo-red {
+            color: #e53935;
+        }
+        
+        .logo-dark {
+            color: #2d2d2d;
+        }
+        
+        /* Search Container */
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-left: auto;
+        }
+        
+        /* Select Vehicle Dropdown */
+        .vehicle-select {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 8px 12px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 13px;
+            color: #333;
+        }
+        
+        .vehicle-select i.fa-car {
+            color: #e53935;
+            font-size: 14px;
+        }
+        
+        .vehicle-select:hover {
+            border-color: #e53935;
+        }
+        
+        /* Search Box */
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            overflow: hidden;
+            width: 280px;
+        }
+        
+        .search-box input {
+            flex: 1;
+            border: none;
+            padding: 8px 12px;
+            outline: none;
+            font-size: 13px;
+        }
+        
+        .search-box button {
+            background: none;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .search-box button:hover {
+            color: #e53935;
+        }
+        
+        /* Dark Section */
+        .header-dark {
+            background: #2d3e50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            padding: 0 30px;
+            min-width: 350px;
+            position: relative;
+        }
+        
+        /* Diagonal Edge */
+        .header-dark::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 0;
+            bottom: 0;
+            width: 60px;
+            background: #2d3e50;
+            transform: skewX(-10deg);
+        }
+        
+        /* Car Icon Divider */
+        .car-divider {
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #999;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        
+        /* Header Icons */
+        .header-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            position: relative;
+            gap: 3px;
+        }
+        
+        .header-icon:hover {
+            opacity: 0.8;
+        }
+        
+        .icon-box {
+            position: relative;
+            font-size: 22px;
+        }
+        
+        .icon-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e53935;
+            color: white;
+            border-radius: 50%;
+            width: 17px;
+            height: 17px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .icon-label {
+            font-size: 10px;
+            opacity: 0.8;
+            white-space: nowrap;
+        }
+        
+        .icon-value {
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        /* Bottom Navy Bar */
+        .bottom-bar {
+            background: #1e2d3d;
+            height: 8px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            
+            .search-container {
+                order: 4;
+                width: 100%;
+                margin-top: 10px;
+            }
+            
+            .header-dark {
+                min-width: 300px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .main-header {
+                flex-direction: column;
+            }
+            
+            .header-dark {
+                width: 100%;
+                min-width: auto;
+                padding: 15px 30px;
+            }
+            
+            .header-dark::before,
+            .car-divider {
+                display: none;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .vehicle-select span {
+                display: none;
+            }
+            
+            .icon-label,
+            .icon-value {
+                display: none;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+ 
+
+    <!-- Main Header -->
+    <div class="main-header">
+        <!-- White Section -->
+        <div class="header-white">
+            <div class="header-content">
+                <!-- Menu Button -->
+
+                
+                <button class="menu-btn">
+                    <i class="fas fa-bars"></i>
+
+
+                    <span>Menu</span>
+                </button>
+                
+                <!-- Navigation -->
+                <ul class="nav-menu">
+                    <li><a href="#">Home <i class="fas fa-chevron-down"></i></a></li>
+                    <li><a href="#">Shop <i class="fas fa-chevron-down"></i></a></li>
+                    <li><a href="#">Blog <i class="fas fa-chevron-down"></i></a></li>
+                    <li><a href="#">Account <i class="fas fa-chevron-down"></i></a></li>
+                    <li><a href="#">Pages <i class="fas fa-chevron-down"></i></a></li>
+                </ul>
+                
+                <!-- Logo -->
+                <a href="#" class="logo">
+                    <div class="logo-text">
+                        <span class="logo-red">RED</span><span class="logo-dark">PARTS</span>
+                    </div>
+                </a>
+                
+                <!-- Search Container -->
+                <div class="search-container">
+                    <!-- Vehicle Select -->
+                    <div class="vehicle-select">
+                        <i class="fas fa-car"></i>
+                        <span>Select Vehicle</span>
+                        <i class="fas fa-chevron-down" style="font-size: 9px; color: #666;"></i>
+                    </div>
+                    
+                    <!-- Search Box -->
+                    <div class="search-box">
+                        <input type="text" placeholder="Enter Keyword or Part Number">
+                        <button>
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
         
-        <div class="auth-buttons">
-          <a routerLink="/login">Sign In</a>
-          <a routerLink="/register">Register</a>
+        <!-- Dark Section -->
+        <div class="header-dark">
+            <div class="car-divider">
+                <i class="fas fa-car"></i>
+            </div>
+            
+            <!-- Wishlist -->
+            <a href="#" class="header-icon">
+                <div class="icon-box">
+                    <i class="far fa-heart"></i>
+                    <span class="icon-badge">3</span>
+                </div>
+            </a>
+            
+            <!-- Account -->
+            <a href="#" class="header-icon">
+                <div class="icon-box">
+                    <i class="far fa-user"></i>
+                </div>
+                <span class="icon-label">Hello, Log In</span>
+                <span class="icon-value">My Account</span>
+            </a>
+            
+            <!-- Cart -->
+            <a href="#" class="header-icon">
+                <div class="icon-box">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="icon-badge">0</span>
+                </div>
+                <span class="icon-label">Shopping Cart</span>
+                <span class="icon-value">$0.00</span>
+            </a>
         </div>
-        
-        <button class="mobile-menu-toggle" (click)="toggleMenu()">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
     </div>
-  </div>
-</header>
+    
+    <!-- Bottom Navy Bar -->
+    <div class="bottom-bar"></div>
+</body>
+</html>

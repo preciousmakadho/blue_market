@@ -11,4 +11,5 @@ export interface Product {
   category: string;
   isFeatured: boolean;
   isOnSale: boolean;
+  discount?: number; // Add this line
 }
