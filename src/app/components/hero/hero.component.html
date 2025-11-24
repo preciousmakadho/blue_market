@@ -1,0 +1,30 @@
+<section class="hero">
+  <div class="container">
+    <h1>Find Parts For Your Vehicle</h1>
+    <p>Over hundreds of brands and tens of thousands of parts with fast shipping and competitive prices</p>
+    
+    <div class="vehicle-selector">
+      <select [(ngModel)]="selectedYear">
+        <option value="">Select Year</option>
+        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+      </select>
+      
+      <select [(ngModel)]="selectedBrand">
+        <option value="">Select Brand</option>
+        <option *ngFor="let brand of brands" [value]="brand">{{brand}}</option>
+      </select>
+      
+      <select [(ngModel)]="selectedModel">
+        <option value="">Select Model</option>
+        <option *ngFor="let model of models" [value]="model">{{model}}</option>
+      </select>
+      
+      <select [(ngModel)]="selectedEngine">
+        <option value="">Select Engine</option>
+        <option *ngFor="let engine of engines" [value]="engine">{{engine}}</option>
+      </select>
+      
+      <button (click)="searchParts()">Search</button>
+    </div>
+  </div>
+</section>

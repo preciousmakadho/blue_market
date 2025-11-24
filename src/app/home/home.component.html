@@ -1,0 +1,82 @@
+<!-- HERO SEARCH SECTION -->
+<div class="hero-section">
+  <div class="overlay"></div>
+
+  <div class="hero-content">
+    <h1>Find Anything You Need</h1>
+    <p>Shop from thousands of products across multiple categories</p>
+
+    <div class="filters">
+      <select [(ngModel)]="selectedYear">
+        <option value="">Select Category</option>
+        <option *ngFor="let year of years">{{ year }}</option>
+      </select>
+
+      <select [(ngModel)]="selectedBrand">
+        <option value="">Select Brand</option>
+        <option *ngFor="let brand of brands">{{ brand }}</option>
+      </select>
+
+      <select [(ngModel)]="selectedModel">
+        <option value="">Select Type</option>
+        <option *ngFor="let model of models">{{ model }}</option>
+      </select>
+
+      <select [(ngModel)]="selectedEngine">
+        <option value="">Select Option</option>
+        <option *ngFor="let engine of engines">{{ engine }}</option>
+      </select>
+
+      <button class="search-btn">Search</button>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES STRIP -->
+<div class="features-strip">
+  <div class="feature">
+    <img src="/assets/icons/shipping.png">
+    <div>
+      <h3>Free Shipping</h3>
+      <p>On orders above $50</p>
+    </div>
+  </div>
+
+  <div class="feature">
+    <img src="/assets/icons/support.png">
+    <div>
+      <h3>Support 24/7</h3>
+      <p>We’re always here for you</p>
+    </div>
+  </div>
+
+  <div class="feature">
+    <img src="/assets/icons/safety.png">
+    <div>
+      <h3>Secure Payments</h3>
+      <p>Trusted and protected checkout</p>
+    </div>
+  </div>
+
+  <div class="feature">
+    <img src="/assets/icons/hot.png">
+    <div>
+      <h3>Hot Deals</h3>
+      <p>Save up to 70%</p>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURED PRODUCTS -->
+<section class="featured-section">
+  <h2>Featured Products</h2>
+
+  <div class="product-list">
+    <div class="product-card" *ngFor="let p of featuredProducts">
+      <img [src]="p.img" alt="">
+      <h4>{{ p.title }}</h4>
+      <p class="price">${{ p.price }}</p>
+      <p class="rating">⭐ {{ p.rating }} ({{ p.reviews }} reviews)</p>
+    </div>
+  </div>
+</section>

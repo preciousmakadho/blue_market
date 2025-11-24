@@ -1,0 +1,42 @@
+.features {
+  padding: 60px 0;
+  background: white;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  text-align: center;
+}
+
+.feature-item {
+  padding: 20px;
+}
+
+.feature-icon {
+  font-size: 40px;
+  color: var(--primary);
+  margin-bottom: 15px;
+}
+
+.feature-item h3 {
+  margin-bottom: 10px;
+  color: var(--dark);
+}
+
+@media (max-width: 992px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .features {
+    padding: 40px 0;
+  }
+}

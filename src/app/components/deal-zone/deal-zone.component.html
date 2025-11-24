@@ -1,0 +1,58 @@
+<section class="deal-zone">
+  <div class="container">
+    <div class="deal-header">
+      <h2>Attention! Deal Zone</h2>
+      <p>Hurry up! Discounts up to 70%</p>
+    </div>
+    
+    <div class="countdown">
+      <div class="countdown-item">
+        <div class="countdown-value">{{timeLeft.days.toString().padStart(2, '0')}}</div>
+        <div class="countdown-label">Days</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-value">{{timeLeft.hours.toString().padStart(2, '0')}}</div>
+        <div class="countdown-label">Hours</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-value">{{timeLeft.minutes.toString().padStart(2, '0')}}</div>
+        <div class="countdown-label">Minutes</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-value">{{timeLeft.seconds.toString().padStart(2, '0')}}</div>
+        <div class="countdown-label">Seconds</div>
+      </div>
+    </div>
+    
+    <a routerLink="/deals" class="view-offers">View All Available Offers</a>
+  </div>
+</section>
+
+<section class="deal-products">
+  <div class="container">
+    <h2 class="section-title">Deal Zone Products</h2>
+    
+    <div class="products-grid">
+      <div class="product-card" *ngFor="let product of dealProducts">
+        <div class="product-image">
+          <img [src]="product.imageUrl" [alt]="product.name">
+        </div>
+        <div class="product-info">
+          <div class="product-sku">SKU: {{product.sku}}</div>
+          <div class="product-name">{{product.name}}</div>
+          <div class="product-rating">
+            <span *ngFor="let star of getStars(product.rating)" class="star">
+              <i [class]="star === 1 ? 'fas fa-star' : 'far fa-star'"></i>
+            </span>
+            <span>({{product.reviewCount}} reviews)</span>
+          </div>
+          <div class="product-price">
+            <span class="current-price">${{product.price.toFixed(2)}}</span>
+            <span class="original-price" *ngIf="product.originalPrice">${{product.originalPrice.toFixed(2)}}</span>
+            <button class="add-to-cart" (click)="addToCart(product)">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
