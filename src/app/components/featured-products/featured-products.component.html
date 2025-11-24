@@ -1,25 +1,36 @@
 <section class="featured-products">
   <div class="container">
-    <h2 class="section-title">Featured Products</h2>
+    <h2 class="section-title">Featured Auto Parts</h2>
+    <p class="section-subtitle">Premium quality parts for optimal vehicle performance</p>
     
     <div class="products-grid">
       <div class="product-card" *ngFor="let product of featuredProducts">
         <div class="product-image">
-          <img [src]="product.imageUrl" [alt]="product.name">
+          <img [src]="product.imageUrl" [alt]="product.name" loading="lazy">
+          <div class="product-badges">
+            <span class="badge featured" *ngIf="product.isFeatured">Featured</span>
+            <span class="badge sale" *ngIf="product.isOnSale">Sale</span>
+            <span class="badge category">{{product.category}}</span>
+          </div>
         </div>
         <div class="product-info">
           <div class="product-sku">{{product.sku}}</div>
-          <div class="product-name">{{product.name}}</div>
+          <h3 class="product-name">{{product.name}}</h3>
+          <p class="product-description">{{product.description}}</p>
           <div class="product-rating">
             <span *ngFor="let star of getStars(product.rating)" class="star">
               <i [class]="star === 1 ? 'fas fa-star' : 'far fa-star'"></i>
             </span>
-            <span>({{product.reviewCount}} reviews)</span>
+            <span class="review-count">({{product.reviewCount}} reviews)</span>
           </div>
           <div class="product-price">
-            <span class="current-price">${{product.price.toFixed(2)}}</span>
-            <span class="original-price" *ngIf="product.originalPrice">${{product.originalPrice.toFixed(2)}}</span>
-            <button class="add-to-cart" (click)="addToCart(product)">Add to Cart</button>
+            <div class="price-container">
+              <span class="current-price">${{product.price.toFixed(2)}}</span>
+              <span class="original-price" *ngIf="product.originalPrice">${{product.originalPrice.toFixed(2)}}</span>
+            </div>
+            <button class="add-to-cart" (click)="addToCart(product)">
+              <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
           </div>
         </div>
       </div>

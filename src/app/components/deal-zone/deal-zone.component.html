@@ -1,58 +1,109 @@
 <section class="deal-zone">
   <div class="container">
     <div class="deal-header">
-      <h2>Attention! Deal Zone</h2>
-      <p>Hurry up! Discounts up to 70%</p>
-    </div>
-    
-    <div class="countdown">
-      <div class="countdown-item">
-        <div class="countdown-value">{{timeLeft.days.toString().padStart(2, '0')}}</div>
-        <div class="countdown-label">Days</div>
+      <div class="deal-badge">Limited Time Offer</div>
+      <h1 class="deal-title">🚨 Deal Zone Flash Sale</h1>
+      <p class="deal-subtitle">Massive Discounts Up To 70% Off - Don't Miss Out!</p>
+      
+      <div class="countdown-container">
+        <div class="countdown-label">Sale Ends In:</div>
+        <div class="countdown">
+          <div class="countdown-item">
+            <div class="countdown-value">{{timeLeft.days.toString().padStart(2, '0')}}</div>
+            <div class="countdown-label">Days</div>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-item">
+            <div class="countdown-value">{{timeLeft.hours.toString().padStart(2, '0')}}</div>
+            <div class="countdown-label">Hours</div>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-item">
+            <div class="countdown-value">{{timeLeft.minutes.toString().padStart(2, '0')}}</div>
+            <div class="countdown-label">Minutes</div>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-item">
+            <div class="countdown-value">{{timeLeft.seconds.toString().padStart(2, '0')}}</div>
+            <div class="countdown-label">Seconds</div>
+          </div>
+        </div>
       </div>
-      <div class="countdown-item">
-        <div class="countdown-value">{{timeLeft.hours.toString().padStart(2, '0')}}</div>
-        <div class="countdown-label">Hours</div>
-      </div>
-      <div class="countdown-item">
-        <div class="countdown-value">{{timeLeft.minutes.toString().padStart(2, '0')}}</div>
-        <div class="countdown-label">Minutes</div>
-      </div>
-      <div class="countdown-item">
-        <div class="countdown-value">{{timeLeft.seconds.toString().padStart(2, '0')}}</div>
-        <div class="countdown-label">Seconds</div>
-      </div>
-    </div>
-    
-    <a routerLink="/deals" class="view-offers">View All Available Offers</a>
-  </div>
-</section>
 
-<section class="deal-products">
-  <div class="container">
-    <h2 class="section-title">Deal Zone Products</h2>
-    
-    <div class="products-grid">
-      <div class="product-card" *ngFor="let product of dealProducts">
-        <div class="product-image">
-          <img [src]="product.imageUrl" [alt]="product.name">
+      <div class="deal-stats">
+        <div class="stat">
+          <div class="stat-number">{{dealProducts.length}}+</div>
+          <div class="stat-label">Hot Deals</div>
         </div>
-        <div class="product-info">
-          <div class="product-sku">SKU: {{product.sku}}</div>
-          <div class="product-name">{{product.name}}</div>
+        <div class="stat">
+          <div class="stat-number">70%</div>
+          <div class="stat-label">Max Discount</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Support</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="deal-products-grid">
+      <div class="deal-product-card" *ngFor="let product of dealProducts">
+        <div class="product-image-container">
+          <img [src]="product.imageUrl" [alt]="product.name" class="product-image" loading="lazy">
+          <div class="discount-badge" *ngIf="product.originalPrice">-{{getProductDiscount(product)}}%</div>
+          <div class="hot-badge">HOT DEAL</div>
+        </div>
+        
+        <div class="product-content">
+          <div class="product-category">{{product.category}}</div>
+          <h3 class="product-name">{{product.name}}</h3>
+          <p class="product-description">{{product.description}}</p>
+          
           <div class="product-rating">
-            <span *ngFor="let star of getStars(product.rating)" class="star">
-              <i [class]="star === 1 ? 'fas fa-star' : 'far fa-star'"></i>
-            </span>
-            <span>({{product.reviewCount}} reviews)</span>
+            <div class="stars">
+              <span *ngFor="let star of getStars(product.rating)" class="star">
+                <i [class]="star === 1 ? 'fas fa-star' : 'far fa-star'"></i>
+              </span>
+            </div>
+            <span class="review-count">({{product.reviewCount}} reviews)</span>
           </div>
-          <div class="product-price">
-            <span class="current-price">${{product.price.toFixed(2)}}</span>
-            <span class="original-price" *ngIf="product.originalPrice">${{product.originalPrice.toFixed(2)}}</span>
-            <button class="add-to-cart" (click)="addToCart(product)">Add to Cart</button>
+          
+          <div class="product-pricing">
+            <div class="price-container">
+              <span class="current-price">${{product.price.toFixed(2)}}</span>
+              <span class="original-price" *ngIf="product.originalPrice">${{product.originalPrice.toFixed(2)}}</span>
+            </div>
+            <div class="savings" *ngIf="product.originalPrice">
+              Save ${{(product.originalPrice - product.price).toFixed(2)}}
+            </div>
+          </div>
+          
+          <div class="product-actions">
+            <button class="add-to-cart-btn" (click)="addToCart(product)">
+              <i class="fas fa-bolt"></i>
+              Quick Add
+            </button>
+            <button class="wishlist-btn">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+          
+          <div class="stock-info">
+            <div class="stock-bar">
+              <div class="stock-progress" [style.width.%]="getStockProgress(product.id)"></div>
+            </div>
+            <div class="stock-text">Only {{getStockQuantity(product.id)}} left in stock!</div>
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="deal-footer">
+      <a routerLink="/deals" class="view-all-deals-btn">
+        <i class="fas fa-fire"></i>
+        View All {{dealProducts.length}}+ Flash Deals
+        <i class="fas fa-arrow-right"></i>
+      </a>
     </div>
   </div>
 </section>
