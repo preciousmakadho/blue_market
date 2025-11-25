@@ -10,23 +10,23 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./hero.component.css']
 })
 export class HeroComponent {
-  selectedYear = '';
+  selectedCategory = '';
   selectedBrand = '';
-  selectedModel = '';
-  selectedEngine = '';
+  selectedType = '';
+  selectedPriceRange = '';
 
-  years = ['2023', '2022', '2021', '2020', '2019'];
-  brands = ['Toyota', 'Ford', 'Honda', 'Chevrolet', 'BMW'];
-  models = ['Camry', 'Corolla', 'RAV4', 'Civic', 'Accord'];
-  engines = ['2.0L 4-cylinder', '2.5L 4-cylinder', '3.5L V6', '1.5L Turbo'];
+  categories = ['Electronics', 'Home & Garden', 'Fashion', 'Sports', 'Automotive', 'Books', 'Health & Beauty'];
+  brands = ['All Brands', 'Premium', 'Budget', 'Eco-Friendly', 'Latest Releases'];
+  types = ['All Types', 'New Arrivals', 'On Sale', 'Best Sellers', 'Featured'];
+  priceRanges = ['Any Price', 'Under $50', '$50 - $100', '$100 - $200', 'Over $200'];
 
-  searchParts() {
+  searchProducts() {
     // Implement search functionality
-    console.log('Searching parts...', {
-      year: this.selectedYear,
+    console.log('Searching products...', {
+      category: this.selectedCategory,
       brand: this.selectedBrand,
-      model: this.selectedModel,
-      engine: this.selectedEngine
+      type: this.selectedType,
+      priceRange: this.selectedPriceRange
     });
   }
 }

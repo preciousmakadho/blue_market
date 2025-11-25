@@ -1,12 +1,12 @@
 <section class="hero">
   <div class="container">
-    <h1>Find Parts For Your Vehicle</h1>
-    <p>Over hundreds of brands and tens of thousands of parts with fast shipping and competitive prices</p>
+    <h1>Discover Amazing Products</h1>
+    <p>Explore thousands of items across all categories with fast shipping and competitive prices</p>
     
-    <div class="vehicle-selector">
-      <select [(ngModel)]="selectedYear">
-        <option value="">Select Year</option>
-        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+    <div class="product-selector">
+      <select [(ngModel)]="selectedCategory">
+        <option value="">Select Category</option>
+        <option *ngFor="let category of categories" [value]="category">{{category}}</option>
       </select>
       
       <select [(ngModel)]="selectedBrand">
@@ -14,17 +14,17 @@
         <option *ngFor="let brand of brands" [value]="brand">{{brand}}</option>
       </select>
       
-      <select [(ngModel)]="selectedModel">
-        <option value="">Select Model</option>
-        <option *ngFor="let model of models" [value]="model">{{model}}</option>
+      <select [(ngModel)]="selectedType">
+        <option value="">Product Type</option>
+        <option *ngFor="let type of types" [value]="type">{{type}}</option>
       </select>
       
-      <select [(ngModel)]="selectedEngine">
-        <option value="">Select Engine</option>
-        <option *ngFor="let engine of engines" [value]="engine">{{engine}}</option>
+      <select [(ngModel)]="selectedPriceRange">
+        <option value="">Price Range</option>
+        <option *ngFor="let price of priceRanges" [value]="price">{{price}}</option>
       </select>
       
-      <button (click)="searchParts()">Search</button>
+      <button (click)="searchProducts()">Search</button>
     </div>
   </div>
 </section>

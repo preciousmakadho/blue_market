@@ -1,0 +1,24 @@
+<div class="account-container">
+  <div class="account-trigger" 
+       (mouseenter)="openDropdown()" 
+       (mouseleave)="closeDropdown()">
+    <span class="material-icons">person</span>
+    <span class="account-text">My Account</span>
+  </div>
+
+  <div class="dropdown-menu" 
+       [class.open]="isDropdownOpen" 
+       (mouseenter)="openDropdown()" 
+       (mouseleave)="closeDropdown()">
+    <ul class="menu-list">
+      <li *ngFor="let item of accountMenuItems" 
+          class="menu-item"
+          (click)="navigateTo(item)">
+        <a class="menu-link">
+          <span class="menu-icon material-icons">{{ getIconForItem(item) }}</span>
+          {{ item }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
