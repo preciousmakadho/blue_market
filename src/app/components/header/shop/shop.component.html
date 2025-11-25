@@ -1,0 +1,20 @@
+<div class="shop-container">
+  <div class="shop-trigger" 
+       (mouseenter)="openDropdown()" 
+       (mouseleave)="closeDropdown()">
+    <span>Shop</span>
+  </div>
+
+  <div class="dropdown-menu" 
+       [class.open]="isDropdownOpen" 
+       (mouseenter)="openDropdown()" 
+       (mouseleave)="closeDropdown()">
+    <ul class="menu-list">
+      <li *ngFor="let item of shopMenuItems" 
+          class="menu-item"
+          (click)="navigateTo(item)">
+        <a class="menu-link">{{ item }}</a>
+      </li>
+    </ul>
+  </div>
+</div>

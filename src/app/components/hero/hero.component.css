@@ -1,5 +1,5 @@
 .hero {
-  background: linear-gradient(rgba(29, 53, 87, 0.8), rgba(29, 53, 87, 0.9)), url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+  background: linear-gradient(rgba(30, 136, 229, 0.8), rgba(30, 136, 229, 0.9)), url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
   background-size: cover;
   background-position: center;
   color: white;
@@ -10,15 +10,17 @@
 .hero h1 {
   font-size: 48px;
   margin-bottom: 20px;
+  font-weight: 700;
 }
 
 .hero p {
   font-size: 20px;
   max-width: 700px;
   margin: 0 auto 30px;
+  opacity: 0.9;
 }
 
-.vehicle-selector {
+.product-selector {
   background: white;
   padding: 25px;
   border-radius: 8px;
@@ -30,23 +32,30 @@
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.vehicle-selector select, .vehicle-selector button {
+.product-selector select, .product-selector button {
   padding: 12px;
   border-radius: 4px;
   border: 1px solid #ddd;
+  font-size: 14px;
 }
 
-.vehicle-selector button {
-  background: var(--primary);
+.product-selector select {
+  background: white;
+  color: #333;
+}
+
+.product-selector button {
+  background: #1e88e5;
   color: white;
   border: none;
   cursor: pointer;
   font-weight: 600;
   transition: background 0.3s;
+  white-space: nowrap;
 }
 
-.vehicle-selector button:hover {
-  background: #c1121f;
+.product-selector button:hover {
+  background: #1565c0;
 }
 
 @media (max-width: 768px) {
@@ -58,14 +67,15 @@
     font-size: 18px;
   }
   
-  .vehicle-selector {
+  .product-selector {
     grid-template-columns: 1fr;
+    max-width: 500px;
   }
 }
 
 @media (max-width: 576px) {
   .hero {
-    padding: 60px 0;
+    padding: 60px 20px;
   }
   
   .hero h1 {
@@ -74,5 +84,13 @@
   
   .hero p {
     font-size: 16px;
+  }
+  
+  .product-selector {
+    padding: 20px;
+  }
+  
+  .product-selector select, .product-selector button {
+    padding: 10px;
   }
 }

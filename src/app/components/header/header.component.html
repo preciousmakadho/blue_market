@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Blufountain</title>
     <style>
         * {
             margin: 0;
@@ -16,48 +17,15 @@
             background-color: #f5f5f5;
         }
         
-        /* Top Red Bar */
-        .top-bar {
-            background-color: #e53935;
-            color: white;
-            padding: 6px 0;
-            font-size: 12px;
-        }
-        
-        .top-bar .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .top-left, .top-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .top-bar a, .top-bar span {
-            color: white;
-            text-decoration: none;
-            font-size: 12px;
-        }
-        
-        .top-bar a:hover {
-            text-decoration: underline;
-        }
-        
         /* Main Header Container */
         .main-header {
             position: relative;
             display: flex;
+            background: white;
         }
         
         /* White Section */
         .header-white {
-            background: white;
             flex: 1;
             display: flex;
             align-items: center;
@@ -90,7 +58,7 @@
         }
         
         .menu-btn:hover {
-            color: #e53935;
+            color: #1e88e5;
         }
         
         .menu-btn i {
@@ -116,7 +84,7 @@
         }
         
         .nav-menu a:hover {
-            color: #e53935;
+            color: #1e88e5;
         }
         
         .nav-menu i {
@@ -127,17 +95,26 @@
         .logo {
             text-decoration: none;
             margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
         }
         
         .logo-text {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
             letter-spacing: -1px;
             white-space: nowrap;
         }
         
-        .logo-red {
-            color: #e53935;
+        .logo-blue {
+            color: #1e88e5;
         }
         
         .logo-dark {
@@ -152,8 +129,8 @@
             margin-left: auto;
         }
         
-        /* Select Vehicle Dropdown */
-        .vehicle-select {
+        /* Category Select Dropdown */
+        .category-select {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -167,13 +144,13 @@
             color: #333;
         }
         
-        .vehicle-select i.fa-car {
-            color: #e53935;
+        .category-select i.fa-tags {
+            color: #1e88e5;
             font-size: 14px;
         }
         
-        .vehicle-select:hover {
-            border-color: #e53935;
+        .category-select:hover {
+            border-color: #1e88e5;
         }
         
         /* Search Box */
@@ -204,7 +181,7 @@
         }
         
         .search-box button:hover {
-            color: #e53935;
+            color: #1e88e5;
         }
         
         /* Dark Section */
@@ -231,8 +208,8 @@
             transform: skewX(-10deg);
         }
         
-        /* Car Icon Divider */
-        .car-divider {
+        /* Icon Divider */
+        .icon-divider {
             position: absolute;
             left: -15px;
             top: 50%;
@@ -304,6 +281,16 @@
             height: 8px;
         }
         
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #333;
+            cursor: pointer;
+        }
+        
         /* Responsive */
         @media (max-width: 1200px) {
             .header-content {
@@ -333,17 +320,21 @@
             }
             
             .header-dark::before,
-            .car-divider {
+            .icon-divider {
                 display: none;
             }
             
             .nav-menu {
                 display: none;
             }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
         }
         
         @media (max-width: 768px) {
-            .vehicle-select span {
+            .category-select span {
                 display: none;
             }
             
@@ -355,24 +346,46 @@
             .search-box {
                 width: 100%;
             }
+            
+            .logo-text {
+                font-size: 24px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .header-white {
+                padding: 0 10px;
+            }
+            
+            .header-dark {
+                padding: 10px 15px;
+                gap: 15px;
+            }
+            
+            .logo-text {
+                font-size: 20px;
+            }
+            
+            .logo-img {
+                height: 35px;
+            }
         }
     </style>
 </head>
 <body>
- 
-
     <!-- Main Header -->
     <div class="main-header">
         <!-- White Section -->
         <div class="header-white">
             <div class="header-content">
-                <!-- Menu Button -->
-
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
                 
+                <!-- Menu Button -->
                 <button class="menu-btn">
                     <i class="fas fa-bars"></i>
-
-
                     <span>Menu</span>
                 </button>
                 
@@ -387,23 +400,25 @@
                 
                 <!-- Logo -->
                 <a href="#" class="logo">
+                    <!-- Use relative path from assets folder -->
+                    <img src="assets/logo/5832370794481257543_109.jpg" alt="Blufountain" class="logo-img">
                     <div class="logo-text">
-                        <span class="logo-red">RED</span><span class="logo-dark">PARTS</span>
+                        <span class="logo-blue">BLU</span><span class="logo-dark">FOUNTAIN</span>
                     </div>
                 </a>
                 
                 <!-- Search Container -->
                 <div class="search-container">
-                    <!-- Vehicle Select -->
-                    <div class="vehicle-select">
-                        <i class="fas fa-car"></i>
-                        <span>Select Vehicle</span>
+                    <!-- Category Select -->
+                    <div class="category-select">
+                        <i class="fas fa-tags"></i>
+                        <span>All Categories</span>
                         <i class="fas fa-chevron-down" style="font-size: 9px; color: #666;"></i>
                     </div>
                     
                     <!-- Search Box -->
                     <div class="search-box">
-                        <input type="text" placeholder="Enter Keyword or Part Number">
+                        <input type="text" placeholder="Search for products...">
                         <button>
                             <i class="fas fa-search"></i>
                         </button>
@@ -414,8 +429,8 @@
         
         <!-- Dark Section -->
         <div class="header-dark">
-            <div class="car-divider">
-                <i class="fas fa-car"></i>
+            <div class="icon-divider">
+                <i class="fas fa-store"></i>
             </div>
             
             <!-- Wishlist -->
@@ -424,6 +439,7 @@
                     <i class="far fa-heart"></i>
                     <span class="icon-badge">3</span>
                 </div>
+                <span class="icon-label">Wishlist</span>
             </a>
             
             <!-- Account -->

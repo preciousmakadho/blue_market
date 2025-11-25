@@ -1,0 +1,591 @@
+<div class="marketplace-container">
+  <header class="header">
+    <div class="main-header">
+      <div class="container header-content">
+        <div class="logo-section">
+          <div class="logo">
+            <img src="/Assets/blulogo.png" alt="BluFountain Marketplace" class="logo-image" />
+            <div class="logo-text">
+              <h1>BLUFOUNTAIN</h1>
+              <span class="marketplace-text">MARKETPLACE</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-right-section">
+          <div class="search-bar">
+            <input
+              type="text"
+              [(ngModel)]="searchQuery"
+              placeholder="Search products, brands, and categories..."
+              (keyup.enter)="searchProducts()"
+            />
+            <button class="search-btn" (click)="searchProducts()">
+              <span class="material-icons">search</span>
+            </button>
+          </div>
+
+          <div class="header-actions">
+            <app-account (itemSelected)="onAccountItemSelected($event)"></app-account>
+            <div class="cart" (click)="navigateToCart()">
+              <span class="material-icons">shopping_cart</span>
+              <span class="text">\${{ cartTotal.toFixed(2) }}</span>
+              <span class="badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
+          <span class="material-icons">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="main-nav" [class.mobile-open]="mobileMenuOpen">
+      <div class="container">
+        <ul class="nav-links">
+          <li><a href="#home" (click)="navigateTo('')">Home</a></li>
+          <li><app-shop (itemSelected)="onShopItemSelected($event)"></app-shop></li>
+          <li><a href="#deals">Deals</a></li>
+          <li><a href="#categories">Categories</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Dynamic Content based on route -->
+  <div *ngIf="showShopContent" class="shop-content">
+    <div class="container">
+      <h2>Shop Content</h2>
+      <p>Current Route: {{ currentRoute }}</p>
+      <!-- Add your shop-specific content here -->
+    </div>
+  </div>
+
+  <div *ngIf="showAccountContent" class="account-content">
+    <div class="container">
+      <h2>Account Content</h2>
+      <p>Current Route: {{ currentRoute }}</p>
+      <!-- Add your account-specific content here -->
+    </div>
+  </div>
+
+  <!-- Original Marketplace Content (shown when not in shop/account routes) -->
+  <div *ngIf="!showShopContent && !showAccountContent">
+    <section class="hero">
+      <div class="hero-overlay">
+        <div class="container hero-content">
+          <h2 class="hero-title">Discover Amazing Products</h2>
+          <p class="hero-subtitle">Everything you need, all in one place</p>
+
+          <div class="search-filters">
+            <select [(ngModel)]="selectedCategory" class="filter-select">
+              <option value="">All Categories</option>
+              <option *ngFor="let cat of mainCategories" [value]="cat">{{ cat }}</option>
+            </select>
+            <select [(ngModel)]="selectedPriceRange" class="filter-select">
+              <option value="">Price Range</option>
+              <option *ngFor="let range of priceRanges" [value]="range">{{ range }}</option>
+            </select>
+            <select [(ngModel)]="selectedBrand" class="filter-select">
+              <option value="">All Brands</option>
+              <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
+            </select>
+            <select [(ngModel)]="selectedRating" class="filter-select">
+              <option value="">Any Rating</option>
+              <option *ngFor="let rating of ratings" [value]="rating">{{ rating }}</option>
+            </select>
+            <button class="apply-filters-btn" (click)="applyFilters()">
+              <span class="material-icons">tune</span>
+              Apply Filters
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <div class="features-grid">
+          <div class="feature-box">
+            <div class="feature-icon">
+              <span class="material-icons">local_shipping</span>
+            </div>
+            <div class="feature-content">
+              <h3>Free Shipping</h3>
+              <p>For orders from $50</p>
+            </div>
+          </div>
+          <div class="feature-box">
+            <div class="feature-icon">
+              <span class="material-icons">support_agent</span>
+            </div>
+            <div class="feature-content">
+              <h3>Support 24/7</h3>
+              <p>Call us anytime</p>
+            </div>
+          </div>
+          <div class="feature-box">
+            <div class="feature-icon">
+              <span class="material-icons">security</span>
+            </div>
+            <div class="feature-content">
+              <h3>100% Safety</h3>
+              <p>Only secure payments</p>
+            </div>
+          </div>
+          <div class="feature-box">
+            <div class="feature-icon">
+              <span class="material-icons">local_fire_department</span>
+            </div>
+            <div class="feature-content">
+              <h3>Hot Offers</h3>
+              <p>Discounts up to 90%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="featured-products">
+      <div class="container">
+        <div class="section-header">
+          <h2>Featured Products</h2>
+          <div class="category-tabs">
+            <button
+              *ngFor="let cat of mainCategories"
+              [class.active]="selectedMainCategory === cat"
+              (click)="filterByCategory(cat)"
+            >
+              {{ cat }}
+            </button>
+          </div>
+        </div>
+
+        <div class="products-grid">
+          <div class="product-card" *ngFor="let product of getFilteredProducts()">
+            <div class="product-badges">
+              <span
+                class="badge"
+                *ngFor="let badge of product.badges"
+                [class.sale]="badge === 'SALE'"
+                [class.new]="badge === 'NEW'"
+                [class.hot]="badge === 'HOT'"
+              >
+                {{ badge }}
+              </span>
+            </div>
+            <div class="product-image">
+              <img [src]="product.image" [alt]="product.name" loading="lazy" />
+              <div class="product-actions">
+                <button
+                  class="wishlist-btn"
+                  [class.active]="isInWishlist(product.id)"
+                  (click)="toggleWishlist(product.id)"
+                >
+                  <span class="material-icons">favorite</span>
+                </button>
+              </div>
+            </div>
+            <div class="product-info">
+              <div class="product-sku">{{ product.sku }}</div>
+              <h3 class="product-name">{{ product.name }}</h3>
+              <div class="product-rating">
+                <span class="stars">
+                  <span *ngFor="let star of generateStars(product.rating)" class="star">
+                    <span class="material-icons">{{ star ? 'star' : 'star_border' }}</span>
+                  </span>
+                </span>
+                <span class="reviews">({{ product.reviews }})</span>
+              </div>
+              <div class="product-price">
+                <span class="price">\${{ product.price.toFixed(2) }}</span>
+                <span class="original-price" *ngIf="product.originalPrice">
+                  \${{ product.originalPrice.toFixed(2) }}
+                </span>
+              </div>
+              <button class="add-to-cart-btn" (click)="addToCart(product)">
+                <span class="material-icons">shopping_cart</span>
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="deal-zone">
+      <div class="container">
+        <div class="deal-content">
+          <div class="deal-header">
+            <h2>
+              <span class="material-icons">warning</span>
+              Flash Sale! Limited Time
+            </h2>
+            <div class="countdown">
+              <div class="countdown-box">
+                <span class="countdown-value">{{ dealCountdown.days }}</span>
+                <span class="countdown-label">Days</span>
+              </div>
+              <div class="countdown-box">
+                <span class="countdown-value">{{ dealCountdown.hours }}</span>
+                <span class="countdown-label">Hours</span>
+              </div>
+              <div class="countdown-box">
+                <span class="countdown-value">{{ dealCountdown.minutes }}</span>
+                <span class="countdown-label">Minutes</span>
+              </div>
+              <div class="countdown-box">
+                <span class="countdown-value">{{ dealCountdown.seconds }}</span>
+                <span class="countdown-label">Seconds</span>
+              </div>
+            </div>
+          </div>
+          <p class="deal-text">Hurry up! Discounts up to 70% on selected items</p>
+          <button class="view-offers-btn">View All Flash Deals</button>
+        </div>
+
+        <div class="deal-products">
+          <div class="product-card-small" *ngFor="let product of featuredProducts.slice(0, 5)">
+            <img [src]="product.image" [alt]="product.name" loading="lazy" />
+            <div class="product-info-small">
+              <h4>{{ product.name }}</h4>
+              <div class="price">\${{ product.price.toFixed(2) }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="categories-section">
+      <div class="container">
+        <div class="category-block electronics">
+          <div class="category-sidebar">
+            <h3>Electronics & Tech</h3>
+            <ul>
+              <li><a href="#smartphones">Smartphones</a></li>
+              <li><a href="#laptops">Laptops & Computers</a></li>
+              <li><a href="#audio">Audio & Headphones</a></li>
+              <li><a href="#cameras">Cameras & Photography</a></li>
+              <li><a href="#gaming">Gaming</a></li>
+              <li><a href="#wearables">Wearable Tech</a></li>
+              <li><a href="#accessories">Accessories</a></li>
+            </ul>
+            <button class="shop-all-btn">Shop All Electronics</button>
+          </div>
+          <div class="category-image">
+            <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?w=800&h=600&fit=crop" alt="Electronics" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="category-block fashion">
+          <div class="category-image">
+            <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=800&h=600&fit=crop" alt="Fashion" loading="lazy" />
+          </div>
+          <div class="category-sidebar dark">
+            <h3>Fashion & Apparel</h3>
+            <ul>
+              <li><a href="#mens">Men's Clothing</a></li>
+              <li><a href="#womens">Women's Clothing</a></li>
+              <li><a href="#shoes">Shoes & Footwear</a></li>
+              <li><a href="#accessories">Accessories</a></li>
+              <li><a href="#bags">Bags & Luggage</a></li>
+              <li><a href="#jewelry">Jewelry</a></li>
+              <li><a href="#watches">Watches</a></li>
+            </ul>
+            <button class="shop-all-btn">Shop All Fashion</button>
+          </div>
+        </div>
+
+        <div class="category-block home">
+          <div class="category-sidebar dark">
+            <h3>Home & Garden</h3>
+            <ul>
+              <li><a href="#furniture">Furniture</a></li>
+              <li><a href="#decor">Home Decor</a></li>
+              <li><a href="#kitchen">Kitchen & Dining</a></li>
+              <li><a href="#bedding">Bedding & Bath</a></li>
+              <li><a href="#garden">Garden & Outdoor</a></li>
+              <li><a href="#lighting">Lighting</a></li>
+              <li><a href="#storage">Storage & Organization</a></li>
+            </ul>
+            <button class="shop-all-btn">Shop All Home</button>
+          </div>
+          <div class="category-image">
+            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop" alt="Home & Garden" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="promo-banners">
+      <div class="container">
+        <div class="promo-grid">
+          <div class="promo-banner tech">
+            <div class="promo-content">
+              <h3>TECH WEEK SALE</h3>
+              <p>Latest gadgets and electronics</p>
+              <p class="promo-detail">Up to 50% off on selected items</p>
+              <button class="shop-now-btn">Shop Now</button>
+            </div>
+            <div class="promo-image">
+              <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop" alt="Tech Sale" loading="lazy" />
+            </div>
+          </div>
+
+          <div class="promo-banner fashion">
+            <div class="promo-content">
+              <h3>FASHION DEALS</h3>
+              <p>New season collection</p>
+              <p class="promo-detail">Fresh styles for every occasion</p>
+              <button class="shop-now-btn">Shop Now</button>
+            </div>
+            <div class="promo-image">
+              <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=600&h=400&fit=crop" alt="Fashion" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="new-arrivals">
+      <div class="container">
+        <div class="section-header">
+          <h2>New Arrivals</h2>
+        </div>
+
+        <div class="products-grid">
+          <div class="product-card" *ngFor="let product of newArrivals">
+            <div class="product-badges">
+              <span
+                class="badge"
+                *ngFor="let badge of product.badges"
+                [class.sale]="badge === 'SALE'"
+                [class.new]="badge === 'NEW'"
+                [class.hot]="badge === 'HOT'"
+              >
+                {{ badge }}
+              </span>
+            </div>
+            <div class="product-image">
+              <img [src]="product.image" [alt]="product.name" loading="lazy" />
+              <div class="product-actions">
+                <button
+                  class="wishlist-btn"
+                  [class.active]="isInWishlist(product.id)"
+                  (click)="toggleWishlist(product.id)"
+                >
+                  <span class="material-icons">favorite</span>
+                </button>
+              </div>
+            </div>
+            <div class="product-info">
+              <div class="product-sku">{{ product.sku }}</div>
+              <h3 class="product-name">{{ product.name }}</h3>
+              <div class="product-rating">
+                <span class="stars">
+                  <span *ngFor="let star of generateStars(product.rating)" class="star">
+                    <span class="material-icons">{{ star ? 'star' : 'star_border' }}</span>
+                  </span>
+                </span>
+                <span class="reviews">({{ product.reviews }})</span>
+              </div>
+              <div class="product-price">
+                <span class="price">\${{ product.price.toFixed(2) }}</span>
+                <span class="original-price" *ngIf="product.originalPrice">
+                  \${{ product.originalPrice.toFixed(2) }}
+                </span>
+              </div>
+              <button class="add-to-cart-btn" (click)="addToCart(product)">
+                <span class="material-icons">shopping_cart</span>
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="blog">
+      <div class="container">
+        <div class="section-header">
+          <h2>Latest News & Trends</h2>
+        </div>
+
+        <div class="blog-grid">
+          <article class="blog-card" *ngFor="let post of blogPosts">
+            <div class="blog-image">
+              <img [src]="post.image" [alt]="post.title" loading="lazy" />
+              <span class="blog-category">{{ post.category }}</span>
+            </div>
+            <div class="blog-content">
+              <h3>{{ post.title }}</h3>
+              <div class="blog-meta">
+                <span class="author">{{ post.author }}</span>
+                <span class="date">{{ post.date }}</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="brands">
+      <div class="container">
+        <h2 class="section-title">Featured Brands</h2>
+        <div class="brands-grid">
+          <div class="brand-logo" *ngFor="let brand of marketplaceBrands">
+            {{ brand }}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-products">
+      <div class="container">
+        <div class="footer-products-grid">
+          <div class="footer-product-section">
+            <h3>Top Rated Products</h3>
+            <div class="footer-product-list">
+              <div class="footer-product" *ngFor="let product of topRatedProducts">
+                <img [src]="product.image" [alt]="product.name" loading="lazy" />
+                <div class="footer-product-info">
+                  <h4>{{ product.name }}</h4>
+                  <div class="rating">
+                    <span *ngFor="let star of generateStars(product.rating)">
+                      <span class="material-icons">{{ star ? 'star' : 'star_border' }}</span>
+                    </span>
+                  </div>
+                  <div class="price">\${{ product.price.toFixed(2) }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-product-section">
+            <h3>Special Offers</h3>
+            <div class="footer-product-list">
+              <div class="footer-product" *ngFor="let product of specialOffers">
+                <img [src]="product.image" [alt]="product.name" loading="lazy" />
+                <div class="footer-product-info">
+                  <h4>{{ product.name }}</h4>
+                  <div class="rating">
+                    <span *ngFor="let star of generateStars(product.rating)">
+                      <span class="material-icons">{{ star ? 'star' : 'star_border' }}</span>
+                    </span>
+                  </div>
+                  <div class="price">\${{ product.price.toFixed(2) }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-product-section">
+            <h3>Bestsellers</h3>
+            <div class="footer-product-list">
+              <div class="footer-product" *ngFor="let product of bestsellers">
+                <img [src]="product.image" [alt]="product.name" loading="lazy" />
+                <div class="footer-product-info">
+                  <h4>{{ product.name }}</h4>
+                  <div class="rating">
+                    <span *ngFor="let star of generateStars(product.rating)">
+                      <span class="material-icons">{{ star ? 'star' : 'star_border' }}</span>
+                    </span>
+                  </div>
+                  <div class="price">\${{ product.price.toFixed(2) }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-column">
+            <h4>Contact Us</h4>
+            <ul>
+              <li><span class="material-icons">phone</span> (800) 090-0730</li>
+              <li><span class="material-icons">email</span> info&#64;blufountain.com</li>
+              <li><span class="material-icons">location_on</span> 123 Market Street, Commerce City, CA 90210</li>
+              <li><span class="material-icons">schedule</span> Mon-Fri: 8am - 8pm<br/>Sat-Sun: 9am - 6pm</li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Information</h4>
+            <ul>
+              <li><a href="#about">About Us</a></li>
+              <li><a href="#delivery">Delivery</a></li>
+              <li><a href="#privacy">Privacy Policy</a></li>
+              <li><a href="#brands">Brands</a></li>
+              <li><a href="#contact">Contact Us</a></li>
+              <li><a href="#returns">Returns</a></li>
+              <li><a href="#sitemap">Site Map</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>My Account</h4>
+            <ul>
+              <li><a href="#location">Store Location</a></li>
+              <li><a href="#history">Order History</a></li>
+              <li><a href="#wishlist">Wish List</a></li>
+              <li><a href="#newsletter">Newsletter</a></li>
+              <li><a href="#offers">Special Offers</a></li>
+              <li><a href="#gift">Gift Certificates</a></li>
+              <li><a href="#affiliate">Affiliate</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Newsletter</h4>
+            <p>Subscribe to our newsletter and get 10% off your first purchase</p>
+            <div class="newsletter-form">
+              <input type="email" placeholder="Your email address" />
+              <button class="subscribe-btn">Subscribe</button>
+            </div>
+            <div class="social-icons">
+              <a href="#facebook" aria-label="Facebook">
+                <span class="material-icons">facebook</span>
+              </a>
+              <a href="#twitter" aria-label="Twitter">
+                <span class="material-icons">twitter</span>
+              </a>
+              <a href="#youtube" aria-label="YouTube">
+                <span class="material-icons">ondemand_video</span>
+              </a>
+              <a href="#instagram" aria-label="Instagram">
+                <span class="material-icons">photo_camera</span>
+              </a>
+              <a href="#rss" aria-label="RSS">
+                <span class="material-icons">rss_feed</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="footer-bottom-content">
+          <p>Powered by Angular — BluFountain Marketplace © 2024</p>
+          <div class="payment-methods">
+            <span>PayPal</span>
+            <span>Visa</span>
+            <span>Amex</span>
+            <span>Mastercard</span>
+            <span>Maestro</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
