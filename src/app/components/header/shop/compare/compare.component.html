@@ -1,0 +1,32 @@
+<div class="compare-container">
+  <div class="container">
+    <h1>Compare Products</h1>
+    
+    <div class="compare-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Features</th>
+            <th *ngFor="let product of comparedProducts">{{ product.name }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Price</td>
+            <td *ngFor="let product of comparedProducts">${{ product.price }}</td>
+          </tr>
+          <tr>
+            <td>Rating</td>
+            <td *ngFor="let product of comparedProducts">{{ product.rating }}/5</td>
+          </tr>
+          <tr *ngFor="let feature of getFeatures()">
+            <td>{{ feature }}</td>
+            <td *ngFor="let product of comparedProducts">
+              {{ product.features.includes(feature) ? '✓' : '✗' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

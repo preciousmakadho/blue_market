@@ -1,0 +1,28 @@
+<div class="track-order-container">
+  <div class="container">
+    <h1>Track Your Order</h1>
+    
+    <div class="order-info">
+      <div class="order-number">
+        <strong>Order Number:</strong> {{ order.number }}
+      </div>
+      <div class="order-status">
+        <strong>Status:</strong> 
+        <span [class]="order.status">{{ order.status }}</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div *ngFor="let step of order.timeline; let i = index" 
+           class="timeline-step" 
+           [class.completed]="step.completed"
+           [class.active]="!step.completed && order.timeline[i-1]?.completed">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h3>{{ step.status }}</h3>
+          <p>{{ step.date }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,57 @@
-<p>deals works!</p>
+<div class="deals-container">
+  <div class="deals-trigger" 
+       (mouseenter)="openDropdown()" 
+       (mouseleave)="closeDropdown()">
+    <span>Deals</span>
+  </div>
+
+  <div class="dropdown-menu" 
+       [class.open]="isDropdownOpen" 
+       (mouseenter)="openDropdown()" 
+       (mouseleave)="closeDropdown()">
+    <div class="deals-content">
+      <!-- Main Deal Categories Column -->
+      <div class="main-deals-column">
+        <div *ngFor="let category of dealCategories" 
+             class="main-deal-item"
+             (mouseenter)="setActiveDealCategory(category.name)"
+             (click)="navigateTo(category.name)">
+          <span class="main-deal-name">{{ category.name }}</span>
+          <span class="arrow-icon">›</span>
+        </div>
+      </div>
+
+      <!-- Subcategories Column -->
+      <div class="subcategories-column" *ngIf="activeDealCategory">
+        <div class="subcategories-header">
+          <h4>{{ activeDealCategory }}</h4>
+        </div>
+        <div class="subcategories-list">
+          <a *ngFor="let subcategory of getActiveSubcategories()" 
+             class="subcategory-item"
+             (click)="navigateToSubcategory(activeDealCategory!, subcategory)">
+            {{ subcategory }}
+          </a>
+        </div>
+        <div class="deals-footer">
+          <button class="view-all-deals-btn" (click)="navigateTo(activeDealCategory!)">
+            View All {{ activeDealCategory }}
+            <span class="material-icons">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Placeholder when no category is active -->
+      <div class="subcategories-placeholder" *ngIf="!activeDealCategory">
+        <div class="placeholder-content">
+          <span class="material-icons">local_offer</span>
+          <h4>Special Offers</h4>
+          <p>Hover over a deal category to see available offers</p>
+          <button class="view-all-deals-btn" (click)="navigateTo('All Deals')">
+            View All Deals
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

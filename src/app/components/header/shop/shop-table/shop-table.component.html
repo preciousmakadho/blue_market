@@ -1,0 +1,198 @@
+<div class="shop-table-container">
+  <app-header></app-header>
+  
+  <div class="table-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="header-text">
+          <h1>Product Management Table</h1>
+          <p>Manage and view all products in a comprehensive table format</p>
+        </div>
+        <div class="results-count">
+          Showing {{ filteredProducts.length }} of {{ products.length }} products
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="table-controls">
+      <div class="controls-left">
+        <div class="search-box">
+          <span class="material-icons search-icon">search</span>
+          <input 
+            type="text" 
+            [(ngModel)]="searchQuery" 
+            placeholder="Search products by name, SKU, or category..."
+            class="search-input">
+        </div>
+        
+        <div class="filter-group">
+          <label for="category-filter">Category:</label>
+          <select id="category-filter" [(ngModel)]="selectedCategory" class="filter-select">
+            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-actions">
+        <button class="btn-primary" (click)="addProduct()">
+          <span class="material-icons">add</span>
+          Add Product
+        </button>
+        <button class="btn-secondary" (click)="exportProducts()">
+          <span class="material-icons">file_download</span>
+          Export CSV
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="products-table">
+        <thead>
+          <tr>
+            <th class="product-col">Product</th>
+            <th (click)="sortTable('sku')" class="sortable">
+              SKU
+              <span class="material-icons sort-icon">{{ getSortIcon('sku') }}</span>
+            </th>
+            <th (click)="sortTable('price')" class="sortable">
+              Price
+              <span class="material-icons sort-icon">{{ getSortIcon('price') }}</span>
+            </th>
+            <th (click)="sortTable('stock')" class="sortable">
+              Stock
+              <span class="material-icons sort-icon">{{ getSortIcon('stock') }}</span>
+            </th>
+            <th (click)="sortTable('category')" class="sortable">
+              Category
+              <span class="material-icons sort-icon">{{ getSortIcon('category') }}</span>
+            </th>
+            <th (click)="sortTable('rating')" class="sortable">
+              Rating
+              <span class="material-icons sort-icon">{{ getSortIcon('rating') }}</span>
+            </th>
+            <th (click)="sortTable('status')" class="sortable">
+              Status
+              <span class="material-icons sort-icon">{{ getSortIcon('status') }}</span>
+            </th>
+            <th (click)="sortTable('sales')" class="sortable">
+              Sales
+              <span class="material-icons sort-icon">{{ getSortIcon('sales') }}</span>
+            </th>
+            <th (click)="sortTable('dateAdded')" class="sortable">
+              Date Added
+              <span class="material-icons sort-icon">{{ getSortIcon('dateAdded') }}</span>
+            </th>
+            <th class="actions-col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of filteredProducts" class="product-row">
+            <td class="product-info">
+              <div class="product-image">
+                <img [src]="product.image" [alt]="product.name" *ngIf="product.image">
+                <div class="no-image" *ngIf="!product.image">No Image</div>
+              </div>
+              <div class="product-details">
+                <strong class="product-name">{{ product.name }}</strong>
+                <div class="product-meta">
+                  <span class="product-id">ID: {{ product.id }}</span>
+                </div>
+              </div>
+            </td>
+            <td class="sku">
+              <code>{{ product.sku }}</code>
+            </td>
+            <td class="price">
+              <span class="price-value">${{ product.price.toFixed(2) }}</span>
+            </td>
+            <td class="stock">
+              <div class="stock-info">
+                <span class="stock-value">{{ product.stock }}</span>
+                <div class="stock-bar" [class]="getStockLevel(product.stock)">
+                  <div class="stock-fill" [style.width.%]="getStockPercentage(product.stock)"></div>
+                </div>
+              </div>
+            </td>
+            <td class="category">
+              <span class="category-tag">{{ product.category }}</span>
+            </td>
+            <td class="rating">
+              <div class="rating-stars">
+                <span class="stars">{{ generateStars(product.rating || 0) }}</span>
+                <span class="rating-value">{{ product.rating?.toFixed(1) || 'N/A' }}</span>
+              </div>
+            </td>
+            <td>
+              <span class="status-badge" [class]="getStatusClass(product.status)">
+                {{ product.status }}
+              </span>
+            </td>
+            <td class="sales">
+              <div class="sales-info">
+                <span class="sales-value">{{ product.sales }}</span>
+                <span class="sales-trend" *ngIf="product.sales > 100">🔥</span>
+              </div>
+            </td>
+            <td class="date">
+              {{ formatDate(product.dateAdded) }}
+            </td>
+            <td class="actions">
+              <div class="action-buttons">
+                <button class="btn-view" (click)="viewProduct(product)" title="View Details">
+                  <span class="material-icons">visibility</span>
+                </button>
+                <button class="btn-edit" (click)="editProduct(product)" title="Edit">
+                  <span class="material-icons">edit</span>
+                </button>
+                <button class="btn-delete" (click)="deleteProduct(product)" title="Delete">
+                  <span class="material-icons">delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="empty-state" *ngIf="filteredProducts.length === 0">
+        <span class="material-icons empty-icon">inventory_2</span>
+        <h3>No products found</h3>
+        <p>Try adjusting your search or filter criteria</p>
+        <button class="btn-primary" (click)="addProduct()">
+          <span class="material-icons">add</span>
+          Add Your First Product
+        </button>
+      </div>
+    </div>
+
+    <div class="table-footer">
+      <div class="table-info">
+        Showing {{ filteredProducts.length }} of {{ products.length }} products
+      </div>
+      <div class="pagination">
+        <button class="page-btn prev" disabled>
+          <span class="material-icons">chevron_left</span>
+          Previous
+        </button>
+        <div class="page-numbers">
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <span class="page-dots">...</span>
+          <button class="page-btn">8</button>
+        </div>
+        <button class="page-btn next">
+          Next
+          <span class="material-icons">chevron_right</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-footer 
+    [topRatedProducts]="topRatedProducts"
+    [specialOffers]="specialOffers"
+    [bestsellers]="bestsellers">
+  </app-footer>
+</div>

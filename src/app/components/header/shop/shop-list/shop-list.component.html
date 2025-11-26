@@ -1,0 +1,166 @@
+<div class="shop-list-container">
+  <app-header></app-header>
+  
+  <div class="list-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="header-text">
+          <h1>Shop List View</h1>
+          <p>Detailed product information in an organized list format</p>
+        </div>
+        <div class="results-count">
+          Showing {{ filteredProducts.length }} products
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="shop-controls">
+      <div class="filters-section">
+        <div class="filter-group">
+          <label for="category-filter">Category:</label>
+          <select id="category-filter" [(ngModel)]="selectedCategory" class="filter-select">
+            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label for="sort-filter">Sort by:</label>
+          <select id="sort-filter" [(ngModel)]="sortBy" class="filter-select">
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Customer Rating</option>
+            <option value="newest">Newest Arrivals</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="view-toggle">
+        <button class="view-btn active" title="List View">
+          <span class="material-icons">view_list</span>
+        </button>
+        <button class="view-btn" title="Grid View" routerLink="/shop/grid">
+          <span class="material-icons">grid_view</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="products-list">
+      <div *ngFor="let product of filteredProducts" class="list-product-card">
+        <div class="product-image">
+          <img [src]="product.image" [alt]="product.name" loading="lazy">
+          <div class="product-badges">
+            <span *ngFor="let badge of product.badges" 
+                  [class]="badge.toLowerCase()"
+                  class="badge">
+              {{ badge }}
+            </span>
+          </div>
+        </div>
+        
+        <div class="product-details">
+          <div class="product-header">
+            <div class="product-category">{{ product.category }}</div>
+            <h3 class="product-name">{{ product.name }}</h3>
+            <div class="product-brand" *ngIf="product.brand">by {{ product.brand }}</div>
+          </div>
+          
+          <div class="product-rating">
+            <span class="stars">{{ generateStars(product.rating) }}</span>
+            <span class="reviews">({{ product.reviews }} reviews)</span>
+          </div>
+          
+          <p class="product-description">{{ product.description }}</p>
+          
+          <div class="product-features">
+            <h4>Key Features:</h4>
+            <div class="features-grid">
+              <span *ngFor="let feature of product.features" class="feature-tag">
+                {{ feature }}
+              </span>
+            </div>
+          </div>
+          
+          <div class="product-meta">
+            <span class="sku">SKU: PROD-{{ product.id.toString().padStart(3, '0') }}</span>
+            <span class="delivery-info">{{ product.delivery }}</span>
+          </div>
+        </div>
+        
+        <div class="product-actions">
+          <div class="product-price">
+            <span class="current-price">${{ product.price.toFixed(2) }}</span>
+            <span *ngIf="product.originalPrice" class="original-price">
+              ${{ product.originalPrice.toFixed(2) }}
+            </span>
+            <div *ngIf="product.originalPrice" class="discount">
+              Save ${{ (product.originalPrice - product.price).toFixed(2) }} ({{ calculateDiscount(product.originalPrice, product.price) }}%)
+            </div>
+          </div>
+          
+          <div class="stock-status">
+            <span [class]="product.inStock ? 'in-stock' : 'out-of-stock'">
+              {{ product.inStock ? '✓ In Stock' : '✗ Out of Stock' }}
+            </span>
+          </div>
+          
+          <div class="action-buttons">
+            <button class="add-to-cart-btn" 
+                    (click)="addToCart(product)" 
+                    [disabled]="!product.inStock">
+              <span class="material-icons">shopping_cart</span>
+              Add to Cart
+            </button>
+            <button class="wishlist-btn" (click)="addToWishlist(product)">
+              <span class="material-icons">favorite_border</span>
+              Wishlist
+            </button>
+            <button class="compare-btn" (click)="compareProduct(product)">
+              <span class="material-icons">compare_arrows</span>
+              Compare
+            </button>
+          </div>
+          
+          <div class="quick-actions">
+            <button class="quick-view-btn">
+              <span class="material-icons">visibility</span>
+              Quick View
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pagination-section">
+      <div class="pagination">
+        <button class="page-btn prev">
+          <span class="material-icons">chevron_left</span>
+          Previous
+        </button>
+        <div class="page-numbers">
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <span class="page-dots">...</span>
+          <button class="page-btn">8</button>
+        </div>
+        <button class="page-btn next">
+          Next
+          <span class="material-icons">chevron_right</span>
+        </button>
+      </div>
+      
+      <div class="results-info">
+        Showing 1-{{ filteredProducts.length }} of {{ filteredProducts.length }} products
+      </div>
+    </div>
+  </div>
+
+  <app-footer 
+    [topRatedProducts]="topRatedProducts"
+    [specialOffers]="specialOffers"
+    [bestsellers]="bestsellers">
+  </app-footer>
+</div>

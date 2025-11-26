@@ -1,45 +1,131 @@
-<footer>
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-column">
-        <h3>REDPARTS</h3>
-        <p>Your trusted source for quality auto parts and accessories. We offer a wide selection of products for all vehicle makes and models.</p>
+<footer class="footer">
+  <div class="footer-products" *ngIf="topRatedProducts.length > 0 || specialOffers.length > 0 || bestsellers.length > 0">
+    <div class="container">
+      <div class="footer-products-grid">
+        <div class="footer-product-section" *ngIf="topRatedProducts.length > 0">
+          <h3>Top Rated Products</h3>
+          <div class="footer-product-list">
+            <div class="footer-product" *ngFor="let product of topRatedProducts">
+              <img [src]="product.image" [alt]="product.name" loading="lazy" />
+              <div class="footer-product-info">
+                <h4>{{ product.name }}</h4>
+                <div class="rating">
+                  <span *ngFor="let star of generateStars(product.rating)">
+                    <span class="material-icons">{{ star ? 'star' : 'star_border' }}</span>
+                  </span>
+                </div>
+                <div class="price">\${{ product.price.toFixed(2) }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-product-section" *ngIf="specialOffers.length > 0">
+          <h3>Special Offers</h3>
+          <div class="footer-product-list">
+            <div class="footer-product" *ngFor="let product of specialOffers">
+              <img [src]="product.image" [alt]="product.name" loading="lazy" />
+              <div class="footer-product-info">
+                <h4>{{ product.name }}</h4>
+                <div class="rating">
+                  <span *ngFor="let star of generateStars(product.rating)">
+                    <span class="material-icons">{{ star ? 'star' : 'star_border' }}</span>
+                  </span>
+                </div>
+                <div class="price">\${{ product.price.toFixed(2) }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-product-section" *ngIf="bestsellers.length > 0">
+          <h3>Bestsellers</h3>
+          <div class="footer-product-list">
+            <div class="footer-product" *ngFor="let product of bestsellers">
+              <img [src]="product.image" [alt]="product.name" loading="lazy" />
+              <div class="footer-product-info">
+                <h4>{{ product.name }}</h4>
+                <div class="rating">
+                  <span *ngFor="let star of generateStars(product.rating)">
+                    <span class="material-icons">{{ star ? 'star' : 'star_border' }}</span>
+                  </span>
+                </div>
+                <div class="price">\${{ product.price.toFixed(2) }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      
-      <div class="footer-column">
-        <h3>Shop</h3>
-        <ul>
-          <li><a routerLink="/engine-parts">Engine Parts</a></li>
-          <li><a routerLink="/braking-system">Braking System</a></li>
-          <li><a routerLink="/suspension">Suspension</a></li>
-          <li><a routerLink="/lighting">Lighting</a></li>
-          <li><a routerLink="/interior-accessories">Interior Accessories</a></li>
-        </ul>
-      </div>
-      
-      <div class="footer-column">
-        <h3>Customer Service</h3>
-        <ul>
-          <li><a routerLink="/contact">Contact Us</a></li>
-          <li><a routerLink="/shipping">Shipping Policy</a></li>
-          <li><a routerLink="/returns">Returns & Refunds</a></li>
-          <li><a routerLink="/faq">FAQ</a></li>
-          <li><a routerLink="/account">My Account</a></li>
-        </ul>
-      </div>
-      
-      <div class="footer-column">
-        <h3>Contact Info</h3>
-        <ul>
-          <li><i class="fas fa-map-marker-alt"></i> 123 Auto Parts St, Detroit, MI</li>
-          <li><i class="fas fa-phone"></i> +1 (800) 555-1234</li>
-          <li><i class="fas fa-envelope"></i> support&#64;redparts.com</li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="copyright">
-      &copy; {{currentYear}} REDPARTS. All rights reserved.
     </div>
   </div>
+
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h4>Contact Us</h4>
+          <ul>
+            <li><span class="material-icons">phone</span> (800) 090-0730</li>
+            <li><span class="material-icons">email</span> info&#64;blufountain.com</li>
+            <li><span class="material-icons">location_on</span> 123 Market Street, Commerce City, CA 90210</li>
+            <li><span class="material-icons">schedule</span> Mon-Fri: 8am - 8pm<br/>Sat-Sun: 9am - 6pm</li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Information</h4>
+          <ul>
+            <li><a routerLink="/about">About Us</a></li>
+            <li><a routerLink="/delivery">Delivery</a></li>
+            <li><a routerLink="/privacy">Privacy Policy</a></li>
+            <li><a routerLink="/brands">Brands</a></li>
+            <li><a routerLink="/contact">Contact Us</a></li>
+            <li><a routerLink="/returns">Returns</a></li>
+            <li><a routerLink="/sitemap">Site Map</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>My Account</h4>
+          <ul>
+            <li><a routerLink="/location">Store Location</a></li>
+            <li><a routerLink="/history">Order History</a></li>
+            <li><a routerLink="/wishlist">Wish List</a></li>
+            <li><a routerLink="/newsletter">Newsletter</a></li>
+            <li><a routerLink="/offers">Special Offers</a></li>
+            <li><a routerLink="/gift">Gift Certificates</a></li>
+            <li><a routerLink="/affiliate">Affiliate</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Newsletter</h4>
+          <p>Subscribe to our newsletter and get 10% off your first purchase</p>
+          <div class="newsletter-form">
+            <input type="email" placeholder="Your email address" />
+            <button class="subscribe-btn">Subscribe</button>
+          </div>
+          <div class="social-icons">
+            <a href="#facebook" aria-label="Facebook">
+              <span class="material-icons">facebook</span>
+            </a>
+            <a href="#twitter" aria-label="Twitter">
+              <span class="material-icons">twitter</span>
+            </a>
+            <a href="#youtube" aria-label="YouTube">
+              <span class="material-icons">ondemand_video</span>
+            </a>
+            <a href="#instagram" aria-label="Instagram">
+              <span class="material-icons">photo_camera</span>
+            </a>
+            <a href="#rss" aria-label="RSS">
+              <span class="material-icons">rss_feed</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
 </footer>

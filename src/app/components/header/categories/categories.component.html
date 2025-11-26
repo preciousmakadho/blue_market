@@ -1,1 +1,47 @@
-<p>categories works!</p>
+<div class="categories-container">
+  <div class="categories-trigger" 
+       (mouseenter)="openDropdown()" 
+       (mouseleave)="closeDropdown()">
+    <span>Categories</span>
+  </div>
+
+  <div class="dropdown-menu" 
+       [class.open]="isDropdownOpen" 
+       (mouseenter)="openDropdown()" 
+       (mouseleave)="closeDropdown()">
+    <div class="categories-content">
+      <!-- Main Categories Column -->
+      <div class="main-categories-column">
+        <div *ngFor="let category of categories" 
+             class="main-category-item"
+             (mouseenter)="setActiveCategory(category.name)"
+             (click)="navigateTo(category.name)">
+          <span class="main-category-name">{{ category.name }}</span>
+          <span class="arrow-icon">›</span>
+        </div>
+      </div>
+
+      <!-- Subcategories Column -->
+      <div class="subcategories-column" *ngIf="activeCategory">
+        <div class="subcategories-header">
+          <h4>{{ activeCategory }}</h4>
+        </div>
+        <div class="subcategories-list">
+          <a *ngFor="let subcategory of getActiveSubcategories()" 
+             class="subcategory-item"
+             (click)="navigateToSubcategory(activeCategory!, subcategory)">
+            {{ subcategory }}
+          </a>
+        </div>
+      </div>
+
+      <!-- Placeholder when no category is active -->
+      <div class="subcategories-placeholder" *ngIf="!activeCategory">
+        <div class="placeholder-content">
+          <span class="material-icons">arrow_right</span>
+          <p>Hover over a category to see subcategories</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
