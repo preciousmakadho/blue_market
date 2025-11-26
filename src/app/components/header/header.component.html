@@ -1,469 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <title>Blufountain</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-        }
-        
-        /* Main Header Container */
-        .main-header {
-            position: relative;
-            display: flex;
-            background: white;
-        }
-        
-        /* White Section */
-        .header-white {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            height: 70px;
-            position: relative;
-        }
-        
-        .header-content {
-            max-width: 1400px;
-            width: 100%;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-        
-        /* Menu Button */
-        .menu-btn {
-            background: none;
-            border: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            color: #333;
-            padding: 8px 12px;
-            white-space: nowrap;
-        }
-        
-        .menu-btn:hover {
-            color: #1e88e5;
-        }
-        
-        .menu-btn i {
-            font-size: 16px;
-        }
-        
-        /* Navigation */
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 0;
-        }
-        
-        .nav-menu a {
-            color: #333;
-            text-decoration: none;
-            padding: 8px 12px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 14px;
-            white-space: nowrap;
-        }
-        
-        .nav-menu a:hover {
-            color: #1e88e5;
-        }
-        
-        .nav-menu i {
-            font-size: 9px;
-        }
-        
-        /* Logo */
-        .logo {
-            text-decoration: none;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .logo-img {
-            height: 40px;
-            width: auto;
-            object-fit: contain;
-        }
-        
-        .logo-text {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -1px;
-            white-space: nowrap;
-        }
-        
-        .logo-blue {
-            color: #1e88e5;
-        }
-        
-        .logo-dark {
-            color: #2d2d2d;
-        }
-        
-        /* Search Container */
-        .search-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-left: auto;
-        }
-        
-        /* Category Select Dropdown */
-        .category-select {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            padding: 8px 12px;
-            cursor: pointer;
-            white-space: nowrap;
-            font-size: 13px;
-            color: #333;
-        }
-        
-        .category-select i.fa-tags {
-            color: #1e88e5;
-            font-size: 14px;
-        }
-        
-        .category-select:hover {
-            border-color: #1e88e5;
-        }
-        
-        /* Search Box */
-        .search-box {
-            display: flex;
-            align-items: center;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            overflow: hidden;
-            width: 280px;
-        }
-        
-        .search-box input {
-            flex: 1;
-            border: none;
-            padding: 8px 12px;
-            outline: none;
-            font-size: 13px;
-        }
-        
-        .search-box button {
-            background: none;
-            border: none;
-            padding: 8px 12px;
-            cursor: pointer;
-            color: #666;
-        }
-        
-        .search-box button:hover {
-            color: #1e88e5;
-        }
-        
-        /* Dark Section */
-        .header-dark {
-            background: #2d3e50;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 25px;
-            padding: 0 30px;
-            min-width: 350px;
-            position: relative;
-        }
-        
-        /* Diagonal Edge */
-        .header-dark::before {
-            content: '';
-            position: absolute;
-            left: -30px;
-            top: 0;
-            bottom: 0;
-            width: 60px;
-            background: #2d3e50;
-            transform: skewX(-10deg);
-        }
-        
-        /* Icon Divider */
-        .icon-divider {
-            position: absolute;
-            left: -15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: #999;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            z-index: 10;
-        }
-        
-        /* Header Icons */
-        .header-icon {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: white;
-            position: relative;
-            gap: 3px;
-        }
-        
-        .header-icon:hover {
-            opacity: 0.8;
-        }
-        
-        .icon-box {
-            position: relative;
-            font-size: 22px;
-        }
-        
-        .icon-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #e53935;
-            color: white;
-            border-radius: 50%;
-            width: 17px;
-            height: 17px;
-            font-size: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-        }
-        
-        .icon-label {
-            font-size: 10px;
-            opacity: 0.8;
-            white-space: nowrap;
-        }
-        
-        .icon-value {
-            font-size: 13px;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-        
-        /* Bottom Navy Bar */
-        .bottom-bar {
-            background: #1e2d3d;
-            height: 8px;
-        }
-        
-        /* Mobile Menu */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 20px;
-            color: #333;
-            cursor: pointer;
-        }
-        
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .header-content {
-                flex-wrap: wrap;
-            }
-            
-            .search-container {
-                order: 4;
-                width: 100%;
-                margin-top: 10px;
-            }
-            
-            .header-dark {
-                min-width: 300px;
-            }
-        }
-        
-        @media (max-width: 992px) {
-            .main-header {
-                flex-direction: column;
-            }
-            
-            .header-dark {
-                width: 100%;
-                min-width: auto;
-                padding: 15px 30px;
-            }
-            
-            .header-dark::before,
-            .icon-divider {
-                display: none;
-            }
-            
-            .nav-menu {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .category-select span {
-                display: none;
-            }
-            
-            .icon-label,
-            .icon-value {
-                display: none;
-            }
-            
-            .search-box {
-                width: 100%;
-            }
-            
-            .logo-text {
-                font-size: 24px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .header-white {
-                padding: 0 10px;
-            }
-            
-            .header-dark {
-                padding: 10px 15px;
-                gap: 15px;
-            }
-            
-            .logo-text {
-                font-size: 20px;
-            }
-            
-            .logo-img {
-                height: 35px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Main Header -->
-    <div class="main-header">
-        <!-- White Section -->
-        <div class="header-white">
-            <div class="header-content">
-                <!-- Mobile Menu Button -->
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                
-                <!-- Menu Button -->
-                <button class="menu-btn">
-                    <i class="fas fa-bars"></i>
-                    <span>Menu</span>
-                </button>
-                
-                <!-- Navigation -->
-                <ul class="nav-menu">
-                    <li><a href="#">Home <i class="fas fa-chevron-down"></i></a></li>
-                    <li><a href="#">Shop <i class="fas fa-chevron-down"></i></a></li>
-                    <li><a href="#">Blog <i class="fas fa-chevron-down"></i></a></li>
-                    <li><a href="#">Account <i class="fas fa-chevron-down"></i></a></li>
-                    <li><a href="#">Pages <i class="fas fa-chevron-down"></i></a></li>
-                </ul>
-                
-                <!-- Logo -->
-                <a href="#" class="logo">
-                    <!-- Use relative path from assets folder -->
-                    <img src="assets/logo/5832370794481257543_109.jpg" alt="Blufountain" class="logo-img">
-                    <div class="logo-text">
-                        <span class="logo-blue">BLU</span><span class="logo-dark">FOUNTAIN</span>
-                    </div>
-                </a>
-                
-                <!-- Search Container -->
-                <div class="search-container">
-                    <!-- Category Select -->
-                    <div class="category-select">
-                        <i class="fas fa-tags"></i>
-                        <span>All Categories</span>
-                        <i class="fas fa-chevron-down" style="font-size: 9px; color: #666;"></i>
-                    </div>
-                    
-                    <!-- Search Box -->
-                    <div class="search-box">
-                        <input type="text" placeholder="Search for products...">
-                        <button>
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+<header class="header">
+  <div class="main-header">
+    <div class="container header-content">
+      <div class="logo-section">
+        <div class="logo" (click)="navigateTo('')" style="cursor: pointer;">
+          <img src="/Assets/blulogo.png" alt="BluFountain Marketplace" class="logo-image" />
+          <div class="logo-text">
+            <h1>BLUFOUNTAIN</h1>
+            <span class="marketplace-text">MARKETPLACE</span>
+          </div>
         </div>
-        
-        <!-- Dark Section -->
-        <div class="header-dark">
-            <div class="icon-divider">
-                <i class="fas fa-store"></i>
-            </div>
-            
-            <!-- Wishlist -->
-            <a href="#" class="header-icon">
-                <div class="icon-box">
-                    <i class="far fa-heart"></i>
-                    <span class="icon-badge">3</span>
-                </div>
-                <span class="icon-label">Wishlist</span>
-            </a>
-            
-            <!-- Account -->
-            <a href="#" class="header-icon">
-                <div class="icon-box">
-                    <i class="far fa-user"></i>
-                </div>
-                <span class="icon-label">Hello, Log In</span>
-                <span class="icon-value">My Account</span>
-            </a>
-            
-            <!-- Cart -->
-            <a href="#" class="header-icon">
-                <div class="icon-box">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="icon-badge">0</span>
-                </div>
-                <span class="icon-label">Shopping Cart</span>
-                <span class="icon-value">$0.00</span>
-            </a>
+      </div>
+
+      <div class="header-right-section">
+        <div class="search-bar">
+          <input
+            type="text"
+            [(ngModel)]="searchQuery"
+            placeholder="Search products, brands, and categories..."
+            (keyup.enter)="searchProducts()"
+          />
+          <button class="search-btn" (click)="searchProducts()">
+            <span class="material-icons">search</span>
+          </button>
         </div>
+
+        <div class="header-actions">
+          <app-account (itemSelected)="onAccountItemSelected($event)"></app-account>
+          <div class="cart" (click)="navigateToCart()">
+            <span class="material-icons">shopping_cart</span>
+            <span class="text">\${{ cartTotal.toFixed(2) }}</span>
+            <span class="badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
+        <span class="material-icons">menu</span>
+      </button>
     </div>
-    
-    <!-- Bottom Navy Bar -->
-    <div class="bottom-bar"></div>
-</body>
-</html>
+  </div>
+
+  <nav class="main-nav" [class.mobile-open]="mobileMenuOpen">
+    <div class="container">
+      <ul class="nav-links">
+        <li><a (click)="navigateTo('')">Home</a></li>
+        <li><app-shop (itemSelected)="onShopItemSelected($event)"></app-shop></li>
+        <li><app-categories (itemSelected)="onCategorySelected($event)"></app-categories></li>
+        <li><app-deals (itemSelected)="onDealSelected($event)"></app-deals></li>
+        <li><a (click)="navigateTo('/blog')">Blog</a></li>
+        <li><a (click)="navigateTo('/contact')">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>

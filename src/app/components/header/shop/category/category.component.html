@@ -1,0 +1,178 @@
+<div class="category-container">
+  <app-header></app-header>
+  
+  <div class="category-header">
+    <div class="container">
+      <h1>Shop by Category</h1>
+      <p>Discover products across all categories</p>
+    </div>
+  </div>
+
+  <div class="category-content">
+    <div class="container">
+      <div class="category-layout">
+        <!-- Sidebar Filters -->
+        <aside class="filters-sidebar">
+          <div class="filter-section">
+            <h3>Categories</h3>
+            <ul class="category-list">
+              <li [class.active]="selectedCategory === 'All'" (click)="selectCategory('All')">
+                All Categories
+                <span class="product-count">({{ getCategoryCount('All') }})</span>
+              </li>
+              <li *ngFor="let category of categories" 
+                  [class.active]="selectedCategory === category"
+                  (click)="selectCategory(category)">
+                {{ category }}
+                <span class="product-count">({{ getCategoryCount(category) }})</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="filter-section">
+            <h3>Price Range</h3>
+            <div class="price-filter">
+              <div class="range-inputs">
+                <label>
+                  Min: $<input type="number" [(ngModel)]="priceRange[0]" min="0" max="1000" (change)="applyFilters()">
+                </label>
+                <label>
+                  Max: $<input type="number" [(ngModel)]="priceRange[1]" min="0" max="1000" (change)="applyFilters()">
+                </label>
+              </div>
+              <div class="price-display">
+                ${{priceRange[0]}} - ${{priceRange[1]}}
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-section">
+            <h3>Brand</h3>
+            <div class="brand-filters">
+              <label *ngFor="let brand of brands">
+                <input type="checkbox" 
+                       [value]="brand" 
+                       [checked]="selectedBrands.includes(brand)"
+                       (change)="onBrandChange(brand, $event)"> 
+                {{ brand }}
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-section">
+            <h3>Rating</h3>
+            <div class="rating-filters">
+              <label *ngFor="let rating of [5,4,3]">
+                <input type="checkbox" 
+                       [value]="rating" 
+                       [checked]="selectedRatings.includes(rating)"
+                       (change)="onRatingChange(rating, $event)"> 
+                <span class="stars">★★★★★</span> & Up
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-actions">
+            <button class="apply-filters" (click)="applyFilters()">Apply Filters</button>
+            <button class="clear-filters" (click)="clearAllFilters()">Clear All</button>
+          </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="products-main">
+          <div class="products-header">
+            <div class="results-count">
+              Showing {{ filteredProducts.length }} products 
+              <span *ngIf="selectedCategory !== 'All'">in {{ selectedCategory }}</span>
+              <span *ngIf="selectedBrands.length > 0">from {{ selectedBrands.join(', ') }}</span>
+            </div>
+            <div class="view-controls">
+              <select [(ngModel)]="sortBy" (change)="onSortChange(sortBy)">
+                <option value="featured">Featured</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="rating">Customer Rating</option>
+                <option value="newest">Newest Arrivals</option>
+              </select>
+              
+              <div class="view-buttons">
+                <button [class.active]="viewMode === 'grid'" (click)="onViewChange('grid')">
+                  <span class="material-icons">grid_view</span>
+                </button>
+                <button [class.active]="viewMode === 'list'" (click)="onViewChange('list')">
+                  <span class="material-icons">view_list</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="products-grid" [class.list-view]="viewMode === 'list'">
+            <div *ngFor="let product of filteredProducts" class="product-card">
+              <div class="product-image">
+                <img [src]="product.image" [alt]="product.name" loading="lazy">
+                <div class="product-badges">
+                  <span *ngFor="let badge of product.badges" 
+                        [class]="badge.toLowerCase()"
+                        class="badge">
+                    {{ badge }}
+                  </span>
+                </div>
+                <button class="quick-view">Quick View</button>
+              </div>
+              <div class="product-info">
+                <div class="product-category">{{ product.category }}</div>
+                <h3>{{ product.name }}</h3>
+                <div class="product-brand" *ngIf="product.brand">Brand: {{ product.brand }}</div>
+                <div class="product-rating">
+                  <span class="stars">{{ generateStars(product.rating) }}</span>
+                  <span class="reviews">({{ product.reviews }})</span>
+                </div>
+                <div class="product-price">
+                  <span class="current-price">${{ product.price.toFixed(2) }}</span>
+                  <span *ngIf="product.originalPrice" class="original-price">
+                    ${{ product.originalPrice.toFixed(2) }}
+                  </span>
+                  <span *ngIf="product.originalPrice" class="discount">
+                    {{ calculateDiscount(product.originalPrice, product.price) }}% off
+                  </span>
+                </div>
+                <div class="product-actions">
+                  <button class="add-to-cart-btn" (click)="addToCart(product)">
+                    <span class="material-icons">shopping_cart</span>
+                    Add to Cart
+                  </button>
+                  <button class="wishlist-btn">
+                    <span class="material-icons">favorite_border</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pagination" *ngIf="filteredProducts.length > 0">
+            <button class="page-btn">Previous</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">Next</button>
+          </div>
+
+          <div *ngIf="filteredProducts.length === 0" class="no-products">
+            <span class="material-icons">search_off</span>
+            <h3>No products found</h3>
+            <p>Try adjusting your filters to find what you're looking for.</p>
+            <button class="clear-all-filters" (click)="clearAllFilters()">
+              Show All Products
+            </button>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <app-footer 
+    [topRatedProducts]="topRatedProducts"
+    [specialOffers]="specialOffers"
+    [bestsellers]="bestsellers">
+  </app-footer>
+</div>

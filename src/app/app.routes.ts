@@ -2,26 +2,50 @@ import { Routes } from '@angular/router';
 import { MarketplaceComponent } from './components/market-place/market-place.component';
 import { ShopComponent } from './components/header/shop/shop.component';
 import { AccountComponent } from './components/header/account/account.component';
+import { CategoriesComponent } from './components/header/categories/categories.component';
+import { BlogComponent } from './components/header/blog/blog.component';
+import { DealsComponent } from './components/header/deals/deals.component';
 
-// Import other components you'll create for the routes
-// You'll need to create these components for each route
+// Shop Components
+import { CategoryComponent } from './components/header/shop/category/category.component';
+import { ShopGridComponent } from './components/header/shop/shop-grid/shop-grid.component';
+import { ShopListComponent } from './components/header/shop/shop-list/shop-list.component';
+import { ShopTableComponent } from './components/header/shop/shop-table/shop-table.component';
+import { ShopSidebarComponent } from './components/header/shop/shop-sidebar/shop-sidebar.component';
+import { ProductComponent } from './components/header/shop/product/product.component';
+import { CartComponent } from './components/header/shop/cart/cart.component';
+import { CheckoutComponent } from './components/header/shop/checkout/checkout.component';
+import { OrderSuccessComponent } from './components/header/shop/order-success/order-success.component';
+import { WishlistComponent } from './components/header/shop/wishlist/wishlist.component';
+import { CompareComponent } from './components/header/shop/compare/compare.component';
+import { TrackOrderComponent } from './components/header/shop/track-order/track-order.component';
+
+// New Shared Components
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 export const routes: Routes = [
   { path: '', component: MarketplaceComponent },
   { path: 'home', component: MarketplaceComponent },
-  { path: 'shop', component: ShopComponent }, // Main shop page
-  { path: 'shop/category', component: MarketplaceComponent },
-  { path: 'shop/grid', component: MarketplaceComponent },
-  { path: 'shop/list', component: MarketplaceComponent },
-  { path: 'shop/table', component: MarketplaceComponent },
-  { path: 'shop/sidebar', component: MarketplaceComponent },
-  { path: 'product/:id', component: MarketplaceComponent },
-  { path: 'cart', component: MarketplaceComponent },
-  { path: 'checkout', component: MarketplaceComponent },
-  { path: 'order-success', component: MarketplaceComponent },
-  { path: 'wishlist', component: MarketplaceComponent },
-  { path: 'compare', component: MarketplaceComponent },
-  { path: 'track-order', component: MarketplaceComponent },
+  
+  // Shop routes
+  { path: 'shop', component: CategoryComponent }, // Main shop page
+  { path: 'shop/category', component: CategoryComponent },
+  { path: 'shop/category/:category', component: CategoryComponent }, // Dynamic category routes
+  { path: 'shop/grid', component: ShopGridComponent },
+  { path: 'shop/list', component: ShopListComponent },
+  { path: 'shop/table', component: ShopTableComponent },
+  { path: 'shop/sidebar', component: ShopSidebarComponent },
+  { path: 'product/:id', component: ProductComponent },
+  { path: 'cart', component: CartComponent },
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'order-success', component: OrderSuccessComponent },
+  { path: 'wishlist', component: WishlistComponent },
+  { path: 'compare', component: CompareComponent },
+  { path: 'track-order', component: TrackOrderComponent },
+  
+  // Blog route
+  { path: 'blog', component: BlogComponent }, 
   
   // Account routes
   { path: 'account', component: AccountComponent },
@@ -35,6 +59,17 @@ export const routes: Routes = [
   { path: 'account/address-book', component: MarketplaceComponent },
   { path: 'account/edit-address', component: MarketplaceComponent },
   { path: 'account/change-password', component: MarketplaceComponent },
+
+  // Deal routes
+  { path: 'deals', component: MarketplaceComponent },
+  { path: 'deals/today', component: MarketplaceComponent },
+  { path: 'deals/flash', component: MarketplaceComponent },
+  { path: 'deals/seasonal', component: MarketplaceComponent },
+  { path: 'deals/clearance', component: MarketplaceComponent },
+  { path: 'deals/bundle', component: MarketplaceComponent },
+  { path: 'deals/member', component: MarketplaceComponent },
+  { path: 'deals/brand', component: MarketplaceComponent },
+  { path: 'deals/discount', component: MarketplaceComponent },
   
   { path: '**', redirectTo: '' }
 ];

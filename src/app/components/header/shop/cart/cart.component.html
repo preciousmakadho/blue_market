@@ -1,0 +1,207 @@
+<div class="cart-container">
+  <app-header></app-header>
+  
+  <div class="cart-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="header-text">
+          <h1>Shopping Cart</h1>
+          <p>Review your items and proceed to checkout</p>
+        </div>
+        <div class="cart-stats">
+          <span class="item-count">{{ cartItems.length }} items</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="cart-layout">
+      <!-- Cart Items Section -->
+      <div class="cart-main">
+        <div class="cart-section">
+          <div class="section-header">
+            <h2>Cart Items ({{ cartItems.length }})</h2>
+            <button class="clear-cart" *ngIf="cartItems.length > 0" (click)="cartItems = []">
+              <span class="material-icons">delete_sweep</span>
+              Clear Cart
+            </button>
+          </div>
+
+          <div class="cart-items" *ngIf="cartItems.length > 0">
+            <div *ngFor="let item of cartItems" class="cart-item">
+              <div class="item-image">
+                <img [src]="item.image" [alt]="item.name" loading="lazy">
+                <div class="item-badges">
+                  <span *ngIf="item.originalPrice" class="badge discount">
+                    {{ calculateDiscount(item.originalPrice, item.price) }}% OFF
+                  </span>
+                  <span *ngIf="!item.inStock" class="badge out-of-stock">
+                    Out of Stock
+                  </span>
+                </div>
+              </div>
+              
+              <div class="item-details">
+                <div class="item-header">
+                  <h3 class="item-name">{{ item.name }}</h3>
+                  <div class="item-meta">
+                    <span class="item-brand" *ngIf="item.brand">by {{ item.brand }}</span>
+                    <span class="item-category">{{ item.category }}</span>
+                  </div>
+                </div>
+                
+                <div class="item-pricing">
+                  <div class="price-current">${{ item.price.toFixed(2) }}</div>
+                  <div class="price-original" *ngIf="item.originalPrice">
+                    ${{ item.originalPrice.toFixed(2) }}
+                  </div>
+                  <div class="item-savings" *ngIf="item.originalPrice">
+                    Save ${{ ((item.originalPrice - item.price) * item.quantity).toFixed(2) }}
+                  </div>
+                </div>
+
+                <div class="item-actions">
+                  <button class="action-btn wishlist" (click)="moveToWishlist(item)">
+                    <span class="material-icons">favorite_border</span>
+                    Move to Wishlist
+                  </button>
+                  <button class="action-btn remove" (click)="removeItem(item)">
+                    <span class="material-icons">delete</span>
+                    Remove
+                  </button>
+                </div>
+              </div>
+
+              <div class="item-controls">
+                <div class="quantity-selector">
+                  <label>Quantity:</label>
+                  <div class="quantity-controls">
+                    <button class="qty-btn" 
+                            (click)="updateQuantity(item, -1)"
+                            [disabled]="item.quantity <= 1">
+                      <span class="material-icons">remove</span>
+                    </button>
+                    <span class="quantity-display">{{ item.quantity }}</span>
+                    <button class="qty-btn" 
+                            (click)="updateQuantity(item, 1)"
+                            [disabled]="item.quantity >= item.maxQuantity">
+                      <span class="material-icons">add</span>
+                    </button>
+                  </div>
+                  <div class="stock-info" [class]="getStockStatus(item)">
+                    {{ item.inStock ? `${item.maxQuantity} available` : 'Out of stock' }}
+                  </div>
+                </div>
+
+                <div class="item-total">
+                  <div class="total-label">Item Total</div>
+                  <div class="total-amount">${{ (item.price * item.quantity).toFixed(2) }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="empty-cart" *ngIf="cartItems.length === 0">
+            <div class="empty-content">
+              <span class="material-icons empty-icon">shopping_cart</span>
+              <h3>Your cart is empty</h3>
+              <p>Browse our products and add items to your cart</p>
+              <button class="btn-primary" routerLink="/shop">
+                <span class="material-icons">shopping_bag</span>
+                Start Shopping
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recently Viewed / Recommendations -->
+        <div class="recommendations-section" *ngIf="cartItems.length > 0">
+          <h3>You might also like</h3>
+          <div class="recommendations-grid">
+            <!-- Add recommendation items here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="cart-sidebar" *ngIf="cartItems.length > 0">
+        <div class="order-summary">
+          <h3>Order Summary</h3>
+          
+          <div class="summary-content">
+            <div class="summary-line">
+              <span>Subtotal ({{ cartItems.length }} items)</span>
+              <span>${{ subtotal.toFixed(2) }}</span>
+            </div>
+            
+            <div class="summary-line">
+              <span>Shipping</span>
+              <span>{{ shippingCost === 0 ? 'FREE' : '$' + shippingCost.toFixed(2) }}</span>
+            </div>
+            
+            <div class="summary-line">
+              <span>Tax</span>
+              <span>${{ tax.toFixed(2) }}</span>
+            </div>
+            
+            <div class="summary-line discount-line">
+              <span>
+                <span class="discount-label">Discount</span>
+                <span class="discount-code">SUMMER2024</span>
+              </span>
+              <span class="discount-amount">-${{ discount.toFixed(2) }}</span>
+            </div>
+
+            <div class="summary-line total">
+              <span>Total</span>
+              <span>${{ total.toFixed(2) }}</span>
+            </div>
+
+            <div class="savings-info">
+              <span class="material-icons">savings</span>
+              You're saving ${{ totalSavings.toFixed(2 )}}
+            </div>
+
+            <div class="delivery-info">
+              <span class="material-icons">local_shipping</span>
+              <div class="delivery-text">
+                <strong>Free Delivery</strong>
+                <span>Est. delivery: {{ estimatedDelivery }}</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="checkout-btn btn-primary" (click)="proceedToCheckout()">
+            <span class="material-icons">lock</span>
+            Proceed to Checkout
+          </button>
+
+          <button class="continue-btn btn-secondary" (click)="continueShopping()">
+            <span class="material-icons">arrow_back</span>
+            Continue Shopping
+          </button>
+
+          <div class="security-info">
+            <span class="material-icons">security</span>
+            <span>Secure checkout · 256-bit SSL encryption</span>
+          </div>
+        </div>
+
+        <div class="promo-section">
+          <h4>Add a promo code</h4>
+          <div class="promo-input">
+            <input type="text" placeholder="Enter promo code">
+            <button class="apply-btn">Apply</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-footer 
+    [topRatedProducts]="topRatedProducts"
+    [specialOffers]="specialOffers"
+    [bestsellers]="bestsellers">
+  </app-footer>
+</div>

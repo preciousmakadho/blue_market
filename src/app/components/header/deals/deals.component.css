@@ -1,0 +1,256 @@
+.deals-container {
+  position: relative;
+  display: inline-block;
+  height: 100%;
+}
+
+.deals-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  font-weight: 500;
+  position: relative;
+  height: 100%;
+  align-items: center;
+}
+
+.deals-trigger:hover {
+  color: #2196F3;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  min-width: 700px;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  border: 1px solid #E0E0E0;
+  margin-top: 0;
+  padding: 0;
+}
+
+.dropdown-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.deals-content {
+  display: flex;
+  min-height: 400px;
+}
+
+/* Main Deal Categories Column */
+.main-deals-column {
+  flex: 0 0 220px;
+  border-right: 1px solid #F0F0F0;
+  background: #FAFAFA;
+}
+
+.main-deal-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #F5F5F5;
+}
+
+.main-deal-item:hover {
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+  color: white;
+}
+
+.main-deal-item:hover .arrow-icon {
+  color: white;
+}
+
+.main-deal-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.arrow-icon {
+  color: #999;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Subcategories Column */
+.subcategories-column {
+  flex: 1;
+  padding: 20px;
+  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+.subcategories-header {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #2196F3;
+}
+
+.subcategories-header h4 {
+  color: #2D2D2D;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.subcategories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.subcategory-item {
+  display: block;
+  padding: 10px 12px;
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  border-radius: 4px;
+  border-left: 3px solid transparent;
+}
+
+.subcategory-item:hover {
+  background: #F8F9FF;
+  color: #2196F3;
+  transform: translateX(4px);
+  border-left-color: #2196F3;
+}
+
+.deals-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid #E0E0E0;
+}
+
+.view-all-deals-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #2196F3;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  justify-content: center;
+}
+
+.view-all-deals-btn:hover {
+  background: #1976D2;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+/* Placeholder */
+.subcategories-placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 350px;
+  padding: 20px;
+}
+
+.placeholder-content {
+  text-align: center;
+  color: #666;
+}
+
+.placeholder-content .material-icons {
+  font-size: 48px;
+  color: #2196F3;
+  margin-bottom: 12px;
+}
+
+.placeholder-content h4 {
+  margin: 0 0 8px 0;
+  color: #2D2D2D;
+}
+
+.placeholder-content p {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+}
+
+/* Animation for dropdown */
+.dropdown-menu {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .deals-trigger {
+    padding: 16px 20px;
+    justify-content: space-between;
+  }
+
+  .dropdown-menu {
+    position: fixed;
+    top: auto;
+    left: 0;
+    right: 0;
+    margin: 0 16px;
+    min-width: auto;
+    transform: translateY(-20px);
+  }
+
+  .deals-content {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .main-deals-column {
+    flex: none;
+    border-right: none;
+    border-bottom: 1px solid #F0F0F0;
+  }
+
+  .subcategories-column,
+  .subcategories-placeholder {
+    min-width: auto;
+  }
+}
+
+/* Integration with your existing header styles */
+:host {
+  display: inline-block;
+  height: 100%;
+}

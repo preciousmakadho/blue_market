@@ -27,11 +27,11 @@ export class AccountComponent {
     'Pages',
     'Login & Register',
     'Dashboard',
-    'Garage',
+   
     'Edit Profile',
     'Order History',
     'Order Details',
-    'Address Book',
+    
     'Edit Address',
     'Change Password'
   ];
@@ -42,11 +42,11 @@ export class AccountComponent {
       'Pages': 'description',
       'Login & Register': 'login',
       'Dashboard': 'dashboard',
-      'Garage': 'garage',
+      
       'Edit Profile': 'edit',
       'Order History': 'history',
       'Order Details': 'receipt_long',
-      'Address Book': 'book',
+      
       'Edit Address': 'edit_location',
       'Change Password': 'password'
     };

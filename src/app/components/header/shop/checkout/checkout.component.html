@@ -1,0 +1,286 @@
+<div class="checkout-container">
+  <app-header></app-header>
+  
+  <div class="checkout-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="header-text">
+          <h1>Checkout</h1>
+          <p>Complete your purchase with secure checkout</p>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="checkout-layout">
+      <!-- Checkout Form -->
+      <div class="checkout-main">
+        <form (ngSubmit)="placeOrder()" class="checkout-form">
+          <!-- Contact Information -->
+          <div class="form-section">
+            <div class="section-header">
+              <h2>
+                <span class="material-icons">contact_mail</span>
+                Contact Information
+              </h2>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" [(ngModel)]="order.shipping.email" name="email" 
+                       placeholder="your@email.com" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" [(ngModel)]="order.shipping.phone" name="phone" 
+                       placeholder="+1 (555) 123-4567" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shipping Address -->
+          <div class="form-section">
+            <div class="section-header">
+              <h2>
+                <span class="material-icons">local_shipping</span>
+                Shipping Address
+              </h2>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="firstName">First Name *</label>
+                <input type="text" id="firstName" [(ngModel)]="order.shipping.firstName" name="firstName" 
+                       placeholder="John" required>
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name *</label>
+                <input type="text" id="lastName" [(ngModel)]="order.shipping.lastName" name="lastName" 
+                       placeholder="Doe" required>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="address">Street Address *</label>
+              <input type="text" id="address" [(ngModel)]="order.shipping.address" name="address" 
+                     placeholder="123 Main Street" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="apartment">Apartment, Suite, etc. (Optional)</label>
+              <input type="text" id="apartment" [(ngModel)]="order.shipping.apartment" name="apartment" 
+                     placeholder="Apt 4B">
+            </div>
+            
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="city">City *</label>
+                <input type="text" id="city" [(ngModel)]="order.shipping.city" name="city" 
+                       placeholder="New York" required>
+              </div>
+              <div class="form-group">
+                <label for="country">Country *</label>
+                <select id="country" [(ngModel)]="order.shipping.country" name="country" required>
+                  <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="state">State *</label>
+                <select id="state" [(ngModel)]="order.shipping.state" name="state" required>
+                  <option value="">Select State</option>
+                  <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="zipCode">ZIP Code *</label>
+                <input type="text" id="zipCode" [(ngModel)]="order.shipping.zipCode" name="zipCode" 
+                       placeholder="10001" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shipping Method -->
+          <div class="form-section">
+            <div class="section-header">
+              <h2>
+                <span class="material-icons">delivery_dining</span>
+                Shipping Method
+              </h2>
+            </div>
+            <div class="shipping-options">
+              <div *ngFor="let method of shippingMethods" 
+                   class="shipping-option" 
+                   [class.selected]="selectedShipping.id === method.id"
+                   (click)="onShippingMethodChange(method.id)">
+                <div class="option-radio">
+                  <div class="radio-dot" [class.checked]="selectedShipping.id === method.id"></div>
+                </div>
+                <div class="option-content">
+                  <div class="option-name">{{ method.name }}</div>
+                  <div class="option-delivery">{{ method.delivery }}</div>
+                </div>
+                <div class="option-price">${{ method.cost.toFixed(2) }}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Information -->
+          <div class="form-section">
+            <div class="section-header">
+              <h2>
+                <span class="material-icons">credit_card</span>
+                Payment Information
+              </h2>
+              
+            </div>
+            
+            <div class="form-group">
+              <label for="cardNumber">Card Number *</label>
+              <input type="text" id="cardNumber" [(ngModel)]="order.payment.cardNumber" name="cardNumber" 
+                     placeholder="1234 5678 9012 3456" required
+                     (input)="formatCardNumber($event)" maxlength="19">
+            </div>
+            
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="expiry">Expiry Date *</label>
+                <input type="text" id="expiry" [(ngModel)]="order.payment.expiry" name="expiry" 
+                       placeholder="MM/YY" required maxlength="5">
+              </div>
+              <div class="form-group">
+                <label for="cvv">CVV *</label>
+                <input type="text" id="cvv" [(ngModel)]="order.payment.cvv" name="cvv" 
+                       placeholder="123" required maxlength="4">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="nameOnCard">Name on Card *</label>
+              <input type="text" id="nameOnCard" [(ngModel)]="order.payment.nameOnCard" name="nameOnCard" 
+                     placeholder="John Doe" required>
+            </div>
+            
+            <div class="form-checkbox">
+              <input type="checkbox" id="saveCard" [(ngModel)]="order.payment.saveCard" name="saveCard">
+              <label for="saveCard">Save card for future purchases</label>
+            </div>
+          </div>
+
+          <!-- Billing Address -->
+          <div class="form-section">
+            <div class="section-header">
+              <h2>
+                <span class="material-icons">business_center</span>
+                Billing Address
+              </h2>
+            </div>
+            
+            <div class="form-checkbox">
+              <input type="checkbox" id="sameAsShipping" 
+                     [(ngModel)]="order.billing.sameAsShipping" 
+                     name="sameAsShipping"
+                     (change)="updateBillingAddress()">
+              <label for="sameAsShipping">Same as shipping address</label>
+            </div>
+            
+            <div *ngIf="!order.billing.sameAsShipping" class="billing-form">
+              <!-- Billing form fields would go here -->
+              <p>Billing address form would be displayed here when needed.</p>
+            </div>
+          </div>
+
+          <button type="submit" class="place-order-btn btn-primary">
+            <span class="material-icons">lock</span>
+            Place Order • ${{ total.toFixed(2) }}
+          </button>
+        </form>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="checkout-sidebar">
+        <div class="order-summary">
+          <h3>Order Summary</h3>
+          
+          <div class="order-items">
+            <div *ngFor="let item of cartItems" class="order-item">
+              <img [src]="item.image" [alt]="item.name" class="item-image">
+              <div class="item-details">
+                <div class="item-name">{{ item.name }}</div>
+                <div class="item-quantity">Qty: {{ item.quantity }}</div>
+              </div>
+              <div class="item-price">${{ (item.price * item.quantity).toFixed(2) }}</div>
+            </div>
+          </div>
+
+          <div class="summary-content">
+            <div class="summary-line">
+              <span>Subtotal ({{ cartItems.length }} items)</span>
+              <span>${{ subtotal.toFixed(2) }}</span>
+            </div>
+            
+            <div class="summary-line">
+              <span>Shipping</span>
+              <span>{{ selectedShipping.cost === 0 ? 'FREE' : '$' + selectedShipping.cost.toFixed(2) }}</span>
+            </div>
+            
+            <div class="summary-line">
+              <span>Tax</span>
+              <span>${{ tax.toFixed(2) }}</span>
+            </div>
+            
+            <div class="summary-line discount-line">
+              <span>
+                <span class="discount-label">Discount</span>
+                <span class="discount-code">SUMMER2024</span>
+              </span>
+              <span class="discount-amount">-${{ discount.toFixed(2) }}</span>
+            </div>
+
+            <div class="summary-line total">
+              <span>Total</span>
+              <span>${{ total.toFixed(2) }}</span>
+            </div>
+
+            <div class="savings-info">
+              <span class="material-icons">savings</span>
+              You're saving ${{ totalSavings.toFixed(2) }}
+            </div>
+          </div>
+
+          <div class="security-info">
+            <span class="material-icons">security</span>
+            <span>256-bit SSL secure checkout</span>
+          </div>
+        </div>
+
+        <div class="support-section">
+          <h4>Need Help?</h4>
+          <div class="support-options">
+            <div class="support-option">
+              <span class="material-icons">support_agent</span>
+              <span>24/7 Customer Support</span>
+            </div>
+            <div class="support-option">
+              <span class="material-icons">assignment_return</span>
+              <span>30-Day Return Policy</span>
+            </div>
+            <div class="support-option">
+              <span class="material-icons">verified_user</span>
+              <span>Money Back Guarantee</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-footer 
+    [topRatedProducts]="topRatedProducts"
+    [specialOffers]="specialOffers"
+    [bestsellers]="bestsellers">
+  </app-footer>
+</div>

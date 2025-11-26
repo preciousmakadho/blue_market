@@ -1,0 +1,99 @@
+<div class="wishlist-container">
+  <app-header></app-header>
+  
+  <div class="grid-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="header-text">
+          <h1>My Wishlist</h1>
+          <p>Your saved items and favorite products</p>
+        </div>
+        <div class="results-count">
+          {{ wishlistItems.length }} items saved
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="wishlist-content">
+      <div *ngIf="wishlistItems.length === 0" class="empty-wishlist">
+        <div class="empty-state">
+          <span class="material-icons">favorite_border</span>
+          <h2>Your wishlist is empty</h2>
+          <p>Start adding items you love to your wishlist</p>
+          <button class="btn-primary" routerLink="/shop">
+            <span class="material-icons">shopping_bag</span>
+            Start Shopping
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="wishlistItems.length > 0" class="wishlist-table">
+        <div class="table-header">
+          <div class="header-cell image">IMAGE</div>
+          <div class="header-cell product">PRODUCT</div>
+          <div class="header-cell stock">STOCK STATUS</div>
+          <div class="header-cell price">PRICE</div>
+          <div class="header-cell actions">ACTIONS</div>
+        </div>
+        
+        <div class="table-body">
+          <div *ngFor="let item of wishlistItems" class="table-row">
+            <div class="cell image-cell">
+              <img [src]="item.image" [alt]="item.name" class="product-image">
+            </div>
+            <div class="cell product-cell">
+              <div class="product-category">{{ item.category }}</div>
+              <h3 class="product-name">{{ item.name }}</h3>
+              <div class="product-brand" *ngIf="item.brand">{{ item.brand }}</div>
+              <div class="product-rating">
+                <span class="stars">{{ generateStars(item.rating) }}</span>
+                <span class="reviews">({{ item.reviews }})</span>
+              </div>
+            </div>
+            <div class="cell stock-cell">
+              <span class="stock-status" [class.in-stock]="item.inStock">
+                {{ item.inStock ? 'In Stock' : 'Out of Stock' }}
+              </span>
+            </div>
+            <div class="cell price-cell">
+              <div class="product-price">
+                <span class="current-price">${{ item.price.toFixed(2) }}</span>
+              </div>
+            </div>
+            <div class="cell actions-cell">
+              <div class="item-actions">
+                <button class="add-to-cart-btn" (click)="moveToCart(item)">
+                  <span class="material-icons">shopping_cart</span>
+                  Add to cart
+                </button>
+                <button class="remove-btn" (click)="removeFromWishlist(item)">
+                  <span class="material-icons">delete</span>
+                  Remove
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="wishlistItems.length > 0" class="wishlist-actions">
+        <button class="btn-secondary" routerLink="/shop">
+          <span class="material-icons">arrow_back</span>
+          Continue Shopping
+        </button>
+        <button class="btn-primary" (click)="moveAllToCart()">
+          <span class="material-icons">shopping_cart</span>
+          Add All to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-footer 
+    [topRatedProducts]="topRatedProducts"
+    [specialOffers]="specialOffers"
+    [bestsellers]="bestsellers">
+  </app-footer>
+</div>

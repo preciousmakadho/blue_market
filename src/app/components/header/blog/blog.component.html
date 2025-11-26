@@ -1,1 +1,166 @@
-<p>blog works!</p>
+<div class="blog-container">
+  <!-- Blog Header -->
+  <section class="blog-header">
+    <div class="container">
+      <div class="blog-hero">
+        <h1 class="blog-title">Our Blog</h1>
+        <p class="blog-subtitle">Discover the latest trends, tips, and insights from our experts</p>
+        
+        <!-- Search Bar -->
+        <div class="blog-search">
+          <input 
+            type="text" 
+            placeholder="Search articles, topics, or authors..."
+            #searchInput
+            (keyup)="searchBlogPosts(searchInput.value)"
+            class="search-input"
+          />
+          <button class="search-btn">
+            <span class="material-icons">search</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Content -->
+  <section class="blog-content">
+    <div class="container">
+      <div class="blog-layout">
+        <!-- Main Content -->
+        <div class="blog-main">
+          <!-- Category Filters -->
+          <div class="category-filters">
+            <button 
+              *ngFor="let category of categories" 
+              [class.active]="selectedCategory === category"
+              (click)="filterByCategory(category)"
+              class="category-btn"
+            >
+              {{ category }}
+            </button>
+          </div>
+
+          <!-- Blog Grid -->
+          <div class="blog-grid">
+            <article *ngFor="let post of filteredPosts" class="blog-card">
+              <div class="blog-image">
+                <img [src]="post.image" [alt]="post.title" loading="lazy" />
+                <span class="blog-category">{{ post.category }}</span>
+              </div>
+              
+              <div class="blog-card-content">
+                <div class="blog-meta">
+                  <span class="blog-date">{{ post.date }}</span>
+                  <span class="blog-read-time">{{ post.readTime }}</span>
+                </div>
+                
+                <h2 class="blog-card-title">{{ post.title }}</h2>
+                <p class="blog-card-excerpt">{{ post.excerpt }}</p>
+                
+                <div class="blog-tags">
+                  <span *ngFor="let tag of post.tags" class="blog-tag">{{ tag }}</span>
+                </div>
+                
+                <div class="blog-author">
+                  <img [src]="post.authorImage" [alt]="post.author" class="author-image" />
+                  <div class="author-info">
+                    <span class="author-name">{{ post.author }}</span>
+                  </div>
+                </div>
+                
+                <button class="read-more-btn">
+                  Read More
+                  <span class="material-icons">arrow_forward</span>
+                </button>
+              </div>
+            </article>
+          </div>
+
+          <!-- Load More Button -->
+          <div class="load-more-section" *ngIf="filteredPosts.length > 0">
+            <button class="load-more-btn">
+              Load More Articles
+            </button>
+          </div>
+
+          <!-- No Results Message -->
+          <div *ngIf="filteredPosts.length === 0" class="no-results">
+            <span class="material-icons">search_off</span>
+            <h3>No articles found</h3>
+            <p>Try adjusting your search or filter to find what you're looking for.</p>
+            <button (click)="filterByCategory('All')" class="reset-filters-btn">
+              Show All Articles
+            </button>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="blog-sidebar">
+          <!-- About Section -->
+          <div class="sidebar-widget about-widget">
+            <h3>About Our Blog</h3>
+            <p>Welcome to our blog where we share insights, trends, and expert advice on technology, fashion, home living, and more.</p>
+            <div class="subscribe-box">
+              <h4>Stay Updated</h4>
+              <p>Get the latest articles delivered to your inbox</p>
+              <div class="subscribe-form">
+                <input type="email" placeholder="Your email address" />
+                <button class="subscribe-btn">Subscribe</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Featured Posts -->
+          <div class="sidebar-widget featured-widget">
+            <h3>Featured Posts</h3>
+            <div class="featured-posts">
+              <div *ngFor="let post of getFeaturedPosts()" class="featured-post">
+                <img [src]="post.image" [alt]="post.title" />
+                <div class="featured-post-content">
+                  <h4>{{ post.title }}</h4>
+                  <span class="featured-post-date">{{ post.date }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Categories -->
+          <div class="sidebar-widget categories-widget">
+            <h3>Categories</h3>
+            <ul class="categories-list">
+              <li *ngFor="let category of categories.slice(1)">
+                <a href="#" (click)="filterByCategory(category); $event.preventDefault()">
+                  {{ category }}
+                  <span class="post-count">{{ getPostCount(category) }}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Recent Posts -->
+          <div class="sidebar-widget recent-widget">
+            <h3>Recent Posts</h3>
+            <div class="recent-posts">
+              <div *ngFor="let post of getRecentPosts()" class="recent-post">
+                <img [src]="post.image" [alt]="post.title" />
+                <div class="recent-post-content">
+                  <h4>{{ post.title }}</h4>
+                  <span class="recent-post-date">{{ post.date }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tags Cloud -->
+          <div class="sidebar-widget tags-widget">
+            <h3>Popular Tags</h3>
+            <div class="tags-cloud">
+              <span *ngFor="let tag of getAllTags()" class="tag-cloud-item">{{ tag }}</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>

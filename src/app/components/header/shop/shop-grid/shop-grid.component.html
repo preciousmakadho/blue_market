@@ -1,0 +1,134 @@
+<div class="shop-grid-container">
+  <app-header></app-header>
+  
+  <div class="grid-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="header-text">
+          <h1>Shop Grid View</h1>
+          <p>Browse our extensive collection of premium products</p>
+        </div>
+        <div class="results-count">
+          Showing {{ filteredProducts.length }} products
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="shop-controls">
+      <div class="filters-section">
+        <div class="filter-group">
+          <label for="category-filter">Category:</label>
+          <select id="category-filter" [(ngModel)]="selectedCategory" class="filter-select">
+            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label for="sort-filter">Sort by:</label>
+          <select id="sort-filter" [(ngModel)]="sortBy" class="filter-select">
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Customer Rating</option>
+            <option value="newest">Newest Arrivals</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="view-options">
+        <div class="grid-size-selector">
+          <button class="grid-size-btn active" title="Large Grid">
+            <span class="material-icons">view_module</span>
+          </button>
+          <button class="grid-size-btn" title="Medium Grid">
+            <span class="material-icons">view_quilt</span>
+          </button>
+          <button class="grid-size-btn" title="Small Grid">
+            <span class="material-icons">view_comfy</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="products-grid">
+      <div *ngFor="let product of filteredProducts" class="grid-product-card">
+        <div class="product-image">
+          <img [src]="product.image" [alt]="product.name" loading="lazy">
+          <div class="product-badges">
+            <span *ngFor="let badge of product.badges" 
+                  [class]="badge.toLowerCase()"
+                  class="badge">
+              {{ badge }}
+            </span>
+          </div>
+          <div class="product-actions">
+            <button class="action-btn quick-view" title="Quick View">
+              <span class="material-icons">visibility</span>
+            </button>
+            <button class="action-btn wishlist" (click)="toggleWishlist(product)" title="Add to Wishlist">
+              <span class="material-icons">favorite_border</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="product-info">
+          <div class="product-category">{{ product.category }}</div>
+          <h3 class="product-name">{{ product.name }}</h3>
+          <div class="product-brand" *ngIf="product.brand">{{ product.brand }}</div>
+          
+          <div class="product-rating">
+            <span class="stars">{{ generateStars(product.rating) }}</span>
+            <span class="reviews">({{ product.reviews }})</span>
+          </div>
+          
+          <div class="product-price">
+            <span class="current-price">${{ product.price.toFixed(2) }}</span>
+            <span *ngIf="product.originalPrice" class="original-price">
+              ${{ product.originalPrice.toFixed(2) }}
+            </span>
+            <span *ngIf="product.originalPrice" class="discount">
+              {{ calculateDiscount(product.originalPrice, product.price) }}% off
+            </span>
+          </div>
+          
+          <button class="add-to-cart-btn" (click)="addToCart(product)">
+            <span class="material-icons">shopping_cart</span>
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pagination-section">
+      <div class="pagination">
+        <button class="page-btn prev">
+          <span class="material-icons">chevron_left</span>
+          Previous
+        </button>
+        <div class="page-numbers">
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <span class="page-dots">...</span>
+          <button class="page-btn">8</button>
+        </div>
+        <button class="page-btn next">
+          Next
+          <span class="material-icons">chevron_right</span>
+        </button>
+      </div>
+      
+      <div class="results-info">
+        Showing 1-12 of {{ filteredProducts.length }} products
+      </div>
+    </div>
+  </div>
+
+  <app-footer 
+    [topRatedProducts]="topRatedProducts"
+    [specialOffers]="specialOffers"
+    [bestsellers]="bestsellers">
+  </app-footer>
+</div>

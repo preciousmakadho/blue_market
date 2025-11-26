@@ -1,10 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, RouterModule } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { ShopComponent } from '../header/shop/shop.component';
 import { AccountComponent } from '../header/account/account.component';
-import { filter } from 'rxjs/operators';
+import { CategoriesComponent } from '../header/categories/categories.component';
+import { DealsComponent } from '../header/deals/deals.component';
+import { BlogComponent } from '../header/blog/blog.component';
+import { HeaderComponent } from '../header/header.component';
+import { FooterComponent } from '../footer/footer.component';
 
 interface Product {
   id: number;
@@ -31,7 +36,18 @@ interface BlogPost {
 @Component({
   selector: 'app-marketplace',
   standalone: true,
-  imports: [CommonModule, FormsModule, ShopComponent, AccountComponent],
+  imports: [
+    CommonModule, 
+    FormsModule,
+    RouterModule,
+    ShopComponent, 
+    AccountComponent,
+    CategoriesComponent,
+    DealsComponent, 
+    BlogComponent,
+    HeaderComponent,  // Added HeaderComponent
+    FooterComponent   // Added FooterComponent
+  ],
   templateUrl: './market-place.component.html',
   styleUrls: ['./market-place.component.css']
 })
@@ -452,6 +468,7 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       this.router.navigate([route]);
     }
   }
+  
 
   // Account navigation handler
   onAccountItemSelected(item: string): void {
@@ -472,6 +489,63 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
     const route = routeMap[item];
     if (route) {
       this.router.navigate([route]);
+    }
+  }
+
+  // Add this method to your MarketplaceComponent class
+onCategorySelected(item: string) {
+  const routeMap: { [key: string]: string } = {
+    'Electronics': '/shop/category/electronics',
+    'Fashion': '/shop/category/fashion',
+    'Home & Garden': '/shop/category/home-garden',
+    'Sports': '/shop/category/sports',
+    'Beauty': '/shop/category/beauty',
+    'Books': '/shop/category/books',
+    'Toys & Games': '/shop/category/toys-games',
+    'Automotive': '/shop/category/automotive',
+    'All Categories': '/shop/categories'
+  };
+
+  // Handle subcategories (format: "Category - Subcategory")
+  if (item.includes(' - ')) {
+    const [category, subcategory] = item.split(' - ');
+    const baseRoute = routeMap[category];
+    if (baseRoute) {
+      this.router.navigate([baseRoute], { queryParams: { subcategory: subcategory.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-') } });
+    }
+  } else {
+    const route = routeMap[item];
+    if (route) {
+      this.router.navigate([route]);
+    }
+  }
+}
+
+onDealSelected(item: string) {
+    const routeMap: { [key: string]: string } = {
+      "Today's Deals": '/deals/today',
+      'Flash Sales': '/deals/flash',
+      'Seasonal Offers': '/deals/seasonal',
+      'Clearance': '/deals/clearance',
+      'Bundle Deals': '/deals/bundle',
+      'Member Exclusive': '/deals/member',
+      'Brand Offers': '/deals/brand',
+      'Discount Categories': '/deals/discount',
+      'All Deals': '/deals'
+    };
+
+    // Handle subcategories (format: "Category - Subcategory")
+    if (item.includes(' - ')) {
+      const [category, subcategory] = item.split(' - ');
+      const baseRoute = routeMap[category];
+      if (baseRoute) {
+        this.router.navigate([baseRoute], { queryParams: { subcategory: subcategory.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-') } });
+      }
+    } else {
+      const route = routeMap[item];
+      if (route) {
+        this.router.navigate([route]);
+      }
     }
   }
 

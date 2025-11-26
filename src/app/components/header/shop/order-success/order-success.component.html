@@ -1,0 +1,251 @@
+<div class="order-success-container">
+  <app-header></app-header>
+  
+  <div class="success-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="header-text">
+          <h1>Order Confirmed!</h1>
+          <p>Thank you for your purchase. We're preparing your order.</p>
+        </div>
+        <div class="order-badge">
+          <span class="order-number">{{ order.number }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="success-layout">
+      <!-- Main Success Content -->
+      <div class="success-main">
+        <div class="success-card">
+          <div class="success-header-content">
+            <div class="success-icon">
+              <span class="material-icons">check_circle</span>
+            </div>
+            <div class="success-text">
+              <h2>Payment Successful!</h2>
+              <p class="success-message">Your order has been confirmed and is being processed. You'll receive a confirmation email shortly.</p>
+            </div>
+          </div>
+
+          <!-- Order Progress -->
+          <div class="order-progress">
+            <div class="progress-steps">
+              <div class="step completed">
+                <div class="step-icon">
+                  <span class="material-icons">shopping_cart</span>
+                </div>
+                <div class="step-info">
+                  <div class="step-title">Order Placed</div>
+                  <div class="step-date">Today</div>
+                </div>
+              </div>
+              <div class="step active">
+                <div class="step-icon">
+                  <span class="material-icons">inventory_2</span>
+                </div>
+                <div class="step-info">
+                  <div class="step-title">Processing</div>
+                  <div class="step-date">Within 24 hours</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-icon">
+                  <span class="material-icons">local_shipping</span>
+                </div>
+                <div class="step-info">
+                  <div class="step-title">Shipped</div>
+                  <div class="step-date">Est. {{ order.estimatedDelivery }}</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-icon">
+                  <span class="material-icons">home</span>
+                </div>
+                <div class="step-info">
+                  <div class="step-title">Delivered</div>
+                  <div class="step-date">Est. {{ order.estimatedDelivery }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Order Items -->
+          <div class="order-items-section">
+            <h3>Order Items ({{ orderItems.length }})</h3>
+            <div class="order-items">
+              <div *ngFor="let item of orderItems" class="order-item">
+                <img [src]="item.image" [alt]="item.name" class="item-image">
+                <div class="item-details">
+                  <h4 class="item-name">{{ item.name }}</h4>
+                  <div class="item-meta">
+                    <span class="item-quantity">Qty: {{ item.quantity }}</span>
+                    <span class="item-price">${{ (item.price * item.quantity).toFixed(2) }}</span>
+                  </div>
+                  <div class="delivery-info">
+                    <span class="material-icons">schedule</span>
+                    Est. delivery: {{ item.estimatedDelivery }}
+                  </div>
+                </div>
+                <button class="track-item-btn" (click)="trackOrder(item.trackingNumber)">
+                  <span class="material-icons">local_shipping</span>
+                  Track Item
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="success-actions">
+            <button class="btn-primary track-order-btn" (click)="trackOrder()">
+              <span class="material-icons">visibility</span>
+              Track Your Order
+            </button>
+            <button class="btn-secondary view-details-btn" (click)="viewOrderDetails()">
+              <span class="material-icons">description</span>
+              View Order Details
+            </button>
+            <button class="btn-outline download-invoice-btn" (click)="downloadInvoice()">
+              <span class="material-icons">download</span>
+              Download Invoice
+            </button>
+            <button class="btn-primary continue-shopping" (click)="continueShopping()">
+              <span class="material-icons">shopping_bag</span>
+              Continue Shopping
+            </button>
+          </div>
+        </div>
+
+        <!-- Support Section -->
+        <div class="support-section">
+          <h3>Need Help With Your Order?</h3>
+          <div class="support-options">
+            <div class="support-option">
+              <span class="material-icons">support_agent</span>
+              <div class="support-info">
+                <strong>Customer Support</strong>
+                <span>24/7 assistance available</span>
+              </div>
+              <button class="support-btn">Contact</button>
+            </div>
+            <div class="support-option">
+              <span class="material-icons">chat</span>
+              <div class="support-info">
+                <strong>Live Chat</strong>
+                <span>Get instant help</span>
+              </div>
+              <button class="support-btn">Start Chat</button>
+            </div>
+            <div class="support-option">
+              <span class="material-icons">phone</span>
+              <div class="support-info">
+                <strong>Phone Support</strong>
+                <span>1-800-BLU-FOUNTAIN</span>
+              </div>
+              <button class="support-btn">Call Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Summary Sidebar -->
+      <div class="order-summary-sidebar">
+        <div class="summary-card">
+          <h3>Order Summary</h3>
+          
+          <div class="summary-section">
+            <h4>Shipping Address</h4>
+            <div class="address-info">
+              <strong>{{ order.shippingAddress.name }}</strong><br>
+              {{ order.shippingAddress.address }}<br>
+              {{ order.shippingAddress.city }}, {{ order.shippingAddress.state }} {{ order.shippingAddress.zipCode }}<br>
+              {{ order.shippingAddress.country }}
+            </div>
+          </div>
+
+          <div class="summary-section">
+            <h4>Payment Method</h4>
+            <div class="payment-info">
+              <span class="material-icons">credit_card</span>
+              {{ order.paymentMethod }}
+            </div>
+          </div>
+
+          <div class="summary-section">
+            <h4>Order Details</h4>
+            <div class="order-meta">
+              <div class="meta-item">
+                <span class="meta-label">Order Number:</span>
+                <span class="meta-value">{{ order.number }}</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Order Date:</span>
+                <span class="meta-value">{{ order.date }}</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Tracking Number:</span>
+                <span class="meta-value">{{ order.trackingNumber }}</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Status:</span>
+                <span class="meta-value status-badge" [style.background]="getOrderStatusColor()">
+                  {{ getOrderStatus() }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-total">
+            <div class="total-line">
+              <span>Order Total:</span>
+              <span class="total-amount">${{ order.total.toFixed(2) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Next Steps -->
+        <div class="next-steps-card">
+          <h4>What's Next?</h4>
+          <div class="next-steps">
+            <div class="step">
+              <span class="step-number">1</span>
+              <div class="step-content">
+                <strong>Order Confirmation</strong>
+                <span>Check your email for details</span>
+              </div>
+            </div>
+            <div class="step">
+              <span class="step-number">2</span>
+              <div class="step-content">
+                <strong>Order Processing</strong>
+                <span>We'll prepare your items</span>
+              </div>
+            </div>
+            <div class="step">
+              <span class="step-number">3</span>
+              <div class="step-content">
+                <strong>Shipping</strong>
+                <span>Track your package</span>
+              </div>
+            </div>
+            <div class="step">
+              <span class="step-number">4</span>
+              <div class="step-content">
+                <strong>Delivery</strong>
+                <span>Receive your items</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-footer 
+    [topRatedProducts]="topRatedProducts"
+    [specialOffers]="specialOffers"
+    [bestsellers]="bestsellers">
+  </app-footer>
+</div>
