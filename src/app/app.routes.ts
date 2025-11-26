@@ -20,18 +20,19 @@ import { WishlistComponent } from './components/header/shop/wishlist/wishlist.co
 import { CompareComponent } from './components/header/shop/compare/compare.component';
 import { TrackOrderComponent } from './components/header/shop/track-order/track-order.component';
 
-// New Shared Components
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
+// New Category Components
+import { ElectronicsComponent } from './components/market-place/electronics/electronics.component';
+import { FashionComponent } from './components/market-place/fashion/fashion.component';
+import { GardenComponent } from './components/market-place/garden/garden.component';
 
 export const routes: Routes = [
   { path: '', component: MarketplaceComponent },
   { path: 'home', component: MarketplaceComponent },
   
   // Shop routes
-  { path: 'shop', component: CategoryComponent }, // Main shop page
+  { path: 'shop', component: CategoryComponent },
   { path: 'shop/category', component: CategoryComponent },
-  { path: 'shop/category/:category', component: CategoryComponent }, // Dynamic category routes
+  { path: 'shop/category/:category', component: CategoryComponent },
   { path: 'shop/grid', component: ShopGridComponent },
   { path: 'shop/list', component: ShopListComponent },
   { path: 'shop/table', component: ShopTableComponent },
@@ -43,6 +44,11 @@ export const routes: Routes = [
   { path: 'wishlist', component: WishlistComponent },
   { path: 'compare', component: CompareComponent },
   { path: 'track-order', component: TrackOrderComponent },
+  
+  // Category specific routes
+  { path: 'electronics', component: ElectronicsComponent },
+  { path: 'fashion', component: FashionComponent },
+  { path: 'home-garden', component: GardenComponent },
   
   // Blog route
   { path: 'blog', component: BlogComponent }, 

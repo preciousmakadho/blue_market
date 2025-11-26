@@ -53,49 +53,6 @@
       </div>
     </section>
 
-    <section class="features">
-      <div class="container">
-        <div class="features-grid">
-          <div class="feature-box">
-            <div class="feature-icon">
-              <span class="material-icons">local_shipping</span>
-            </div>
-            <div class="feature-content">
-              <h3>Free Shipping</h3>
-              <p>For orders from $50</p>
-            </div>
-          </div>
-          <div class="feature-box">
-            <div class="feature-icon">
-              <span class="material-icons">support_agent</span>
-            </div>
-            <div class="feature-content">
-              <h3>Support 24/7</h3>
-              <p>Call us anytime</p>
-            </div>
-          </div>
-          <div class="feature-box">
-            <div class="feature-icon">
-              <span class="material-icons">security</span>
-            </div>
-            <div class="feature-content">
-              <h3>100% Safety</h3>
-              <p>Only secure payments</p>
-            </div>
-          </div>
-          <div class="feature-box">
-            <div class="feature-icon">
-              <span class="material-icons">local_fire_department</span>
-            </div>
-            <div class="feature-content">
-              <h3>Hot Offers</h3>
-              <p>Discounts up to 90%</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="featured-products">
       <div class="container">
         <div class="section-header">
@@ -111,162 +68,197 @@
           </div>
         </div>
 
-        <div class="products-grid">
-          <div class="product-card" *ngFor="let product of getFilteredProducts()">
-            <div class="product-badges">
-              <span
-                class="badge"
-                *ngFor="let badge of product.badges"
-                [class.sale]="badge === 'SALE'"
-                [class.new]="badge === 'NEW'"
-                [class.hot]="badge === 'HOT'"
+        <div class="featured-products-layout">
+          <!-- Shop by Category Sidebar -->
+          <aside class="category-sidebar">
+            <div class="sidebar-header">
+              <h3>Shop by Category</h3>
+            </div>
+            <div class="categories-list">
+              <div 
+                class="category-item" 
+                *ngFor="let category of categories"
+                [class.expanded]="expandedCategory === category.name"
+                [class.active]="hoveredCategory === category.key"
+                (mouseenter)="onCategoryHover(category.key)"
+                (mouseleave)="onCategoryLeave()"
               >
-                {{ badge }}
-              </span>
-            </div>
-            <div class="product-image">
-              <img [src]="product.image" [alt]="product.name" loading="lazy" />
-              <div class="product-actions">
-                <button
-                  class="wishlist-btn"
-                  [class.active]="isInWishlist(product.id)"
-                  (click)="toggleWishlist(product.id)"
+                <div 
+                  class="category-main" 
+                  (click)="toggleCategory(category.name)"
+                  (keypress)="toggleCategory(category.name)"
+                  tabindex="0"
                 >
-                  <span class="material-icons">favorite</span>
-                </button>
+                  <div class="category-info">
+                    <span class="material-icons category-icon">{{ category.icon }}</span>
+                    <span class="category-name">{{ category.name }}</span>
+                  </div>
+                  <div class="category-meta">
+                    <span class="product-count">{{ category.productCount }}</span>
+                    <span class="material-icons expand-icon">expand_more</span>
+                  </div>
+                </div>
+                <div class="subcategories" *ngIf="expandedCategory === category.name">
+                  <div 
+                    class="subcategory-item" 
+                    *ngFor="let subcategory of category.subcategories"
+                    (click)="navigateToSubcategory(category.key, subcategory)"
+                    (keypress)="navigateToSubcategory(category.key, subcategory)"
+                    tabindex="0"
+                  >
+                    {{ subcategory }}
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="product-info">
-              <div class="product-sku">{{ product.sku }}</div>
-              <h3 class="product-name">{{ product.name }}</h3>
-              <div class="product-rating">
-                <span class="stars">
-                  <span *ngFor="let star of generateStars(product.rating)" class="star">
-                    <span class="material-icons">{{ star ? 'star' : 'star_border' }}</span>
-                  </span>
-                </span>
-                <span class="reviews">({{ product.reviews }})</span>
-              </div>
-              <div class="product-price">
-                <span class="price">\${{ product.price.toFixed(2) }}</span>
-                <span class="original-price" *ngIf="product.originalPrice">
-                  \${{ product.originalPrice.toFixed(2) }}
-                </span>
-              </div>
-              <button class="add-to-cart-btn" (click)="addToCart(product)">
-                <span class="material-icons">shopping_cart</span>
-                Add to Cart
+            <div class="sidebar-footer">
+              <button class="view-all-categories-btn" (click)="navigateToShop()">
+                View All Categories
+                <span class="material-icons">arrow_forward</span>
               </button>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
+          </aside>
 
-    <section class="deal-zone">
-      <div class="container">
-        <div class="deal-content">
-          <div class="deal-header">
-            <h2>
-              <span class="material-icons">warning</span>
-              Flash Sale! Limited Time
-            </h2>
-            <div class="countdown">
-              <div class="countdown-box">
-                <span class="countdown-value">{{ dealCountdown.days }}</span>
-                <span class="countdown-label">Days</span>
-              </div>
-              <div class="countdown-box">
-                <span class="countdown-value">{{ dealCountdown.hours }}</span>
-                <span class="countdown-label">Hours</span>
-              </div>
-              <div class="countdown-box">
-                <span class="countdown-value">{{ dealCountdown.minutes }}</span>
-                <span class="countdown-label">Minutes</span>
-              </div>
-              <div class="countdown-box">
-                <span class="countdown-value">{{ dealCountdown.seconds }}</span>
-                <span class="countdown-label">Seconds</span>
+          <!-- Category Hover Cards Container -->
+          <div class="category-cards-container">
+            <!-- Electronics Card -->
+            <div 
+              class="category-hover-card" 
+              *ngIf="hoveredCategory === 'electronics'"
+              (mouseenter)="onCardHover()"
+              (mouseleave)="onCardLeave()"
+            >
+              <app-electronics></app-electronics>
+            </div>
+
+            <!-- Fashion Card -->
+            <div 
+              class="category-hover-card" 
+              *ngIf="hoveredCategory === 'fashion'"
+              (mouseenter)="onCardHover()"
+              (mouseleave)="onCardLeave()"
+            >
+              <app-fashion></app-fashion>
+            </div>
+
+            <!-- Home & Garden Card -->
+            <div 
+              class="category-hover-card" 
+              *ngIf="hoveredCategory === 'garden'"
+              (mouseenter)="onCardHover()"
+              (mouseleave)="onCardLeave()"
+            >
+              <app-garden></app-garden>
+            </div>
+
+            <!-- Sports Card -->
+            <div 
+              class="category-hover-card" 
+              *ngIf="hoveredCategory === 'sports'"
+              (mouseenter)="onCardHover()"
+              (mouseleave)="onCardLeave()"
+            >
+              <app-sports></app-sports>
+            </div>
+
+            <!-- Beauty Card -->
+            <div 
+              class="category-hover-card" 
+              *ngIf="hoveredCategory === 'beauty'"
+              (mouseenter)="onCardHover()"
+              (mouseleave)="onCardLeave()"
+            >
+              <app-beauty></app-beauty>
+            </div>
+
+            <!-- Books Card -->
+            <div 
+              class="category-hover-card" 
+              *ngIf="hoveredCategory === 'books'"
+              (mouseenter)="onCardHover()"
+              (mouseleave)="onCardLeave()"
+            >
+              <app-books></app-books>
+            </div>
+
+            <!-- Toys Card -->
+            <div 
+              class="category-hover-card" 
+              *ngIf="hoveredCategory === 'toys'"
+              (mouseenter)="onCardHover()"
+              (mouseleave)="onCardLeave()"
+            >
+              <app-toys></app-toys>
+            </div>
+
+            <!-- Automotive Card -->
+            <div 
+              class="category-hover-card" 
+              *ngIf="hoveredCategory === 'automotive'"
+              (mouseenter)="onCardHover()"
+              (mouseleave)="onCardLeave()"
+            >
+              <app-automotive></app-automotive>
+            </div>
+
+            <!-- Default Products Grid (shown when no category is hovered) -->
+            <div class="products-section" *ngIf="!hoveredCategory">
+              <div class="products-grid">
+                <div class="product-card" *ngFor="let product of getFilteredProducts()">
+                  <div class="product-badges">
+                    <span
+                      class="badge"
+                      *ngFor="let badge of product.badges"
+                      [class.sale]="badge === 'SALE'"
+                      [class.new]="badge === 'NEW'"
+                      [class.hot]="badge === 'HOT'"
+                    >
+                      {{ badge }}
+                    </span>
+                  </div>
+                  <div class="product-image">
+                    <img [src]="product.image" [alt]="product.name" loading="lazy" />
+                    <div class="product-actions">
+                      <button
+                        class="wishlist-btn"
+                        [class.active]="isInWishlist(product.id)"
+                        (click)="toggleWishlist(product.id)"
+                      >
+                        <span class="material-icons">favorite</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="product-info">
+                    <div class="product-sku">{{ product.sku }}</div>
+                    <h3 class="product-name">{{ product.name }}</h3>
+                    <div class="product-rating">
+                      <span class="stars">
+                        <span *ngFor="let star of generateStars(product.rating)" class="star">
+                          <span class="material-icons">{{ star ? 'star' : 'star_border' }}</span>
+                        </span>
+                      </span>
+                      <span class="reviews">({{ product.reviews }})</span>
+                    </div>
+                    <div class="product-price">
+                      <span class="price">\${{ product.price.toFixed(2) }}</span>
+                      <span class="original-price" *ngIf="product.originalPrice">
+                        \${{ product.originalPrice.toFixed(2) }}
+                      </span>
+                    </div>
+                    <button class="add-to-cart-btn" (click)="addToCart(product)">
+                      <span class="material-icons">shopping_cart</span>
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <p class="deal-text">Hurry up! Discounts up to 70% on selected items</p>
-          <button class="view-offers-btn">View All Flash Deals</button>
-        </div>
-
-        <div class="deal-products">
-          <div class="product-card-small" *ngFor="let product of featuredProducts.slice(0, 5)">
-            <img [src]="product.image" [alt]="product.name" loading="lazy" />
-            <div class="product-info-small">
-              <h4>{{ product.name }}</h4>
-              <div class="price">\${{ product.price.toFixed(2) }}</div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
 
-    <section class="categories-section">
-      <div class="container">
-        <div class="category-block electronics">
-          <div class="category-sidebar">
-            <h3>Electronics & Tech</h3>
-            <ul>
-              <li><a href="#smartphones">Smartphones</a></li>
-              <li><a href="#laptops">Laptops & Computers</a></li>
-              <li><a href="#audio">Audio & Headphones</a></li>
-              <li><a href="#cameras">Cameras & Photography</a></li>
-              <li><a href="#gaming">Gaming</a></li>
-              <li><a href="#wearables">Wearable Tech</a></li>
-              <li><a href="#accessories">Accessories</a></li>
-            </ul>
-            <button class="shop-all-btn">Shop All Electronics</button>
-          </div>
-          <div class="category-image">
-            <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?w=800&h=600&fit=crop" alt="Electronics" loading="lazy" />
-          </div>
-        </div>
-
-        <div class="category-block fashion">
-          <div class="category-image">
-            <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=800&h=600&fit=crop" alt="Fashion" loading="lazy" />
-          </div>
-          <div class="category-sidebar dark">
-            <h3>Fashion & Apparel</h3>
-            <ul>
-              <li><a href="#mens">Men's Clothing</a></li>
-              <li><a href="#womens">Women's Clothing</a></li>
-              <li><a href="#shoes">Shoes & Footwear</a></li>
-              <li><a href="#accessories">Accessories</a></li>
-              <li><a href="#bags">Bags & Luggage</a></li>
-              <li><a href="#jewelry">Jewelry</a></li>
-              <li><a href="#watches">Watches</a></li>
-            </ul>
-            <button class="shop-all-btn">Shop All Fashion</button>
-          </div>
-        </div>
-
-        <div class="category-block home">
-          <div class="category-sidebar dark">
-            <h3>Home & Garden</h3>
-            <ul>
-              <li><a href="#furniture">Furniture</a></li>
-              <li><a href="#decor">Home Decor</a></li>
-              <li><a href="#kitchen">Kitchen & Dining</a></li>
-              <li><a href="#bedding">Bedding & Bath</a></li>
-              <li><a href="#garden">Garden & Outdoor</a></li>
-              <li><a href="#lighting">Lighting</a></li>
-              <li><a href="#storage">Storage & Organization</a></li>
-            </ul>
-            <button class="shop-all-btn">Shop All Home</button>
-          </div>
-          <div class="category-image">
-            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop" alt="Home & Garden" loading="lazy" />
-          </div>
-        </div>
-      </div>
-    </section>
-
+    <!-- Rest of the sections remain the same -->
     <section class="promo-banners">
       <div class="container">
         <div class="promo-grid">

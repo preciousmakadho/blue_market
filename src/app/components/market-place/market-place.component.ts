@@ -10,6 +10,14 @@ import { DealsComponent } from '../header/deals/deals.component';
 import { BlogComponent } from '../header/blog/blog.component';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
+import { ElectronicsComponent } from './electronics/electronics.component';
+import { FashionComponent } from './fashion/fashion.component';
+import { GardenComponent } from './garden/garden.component';
+import { SportsComponent } from './sports/sports.component';
+import { BeautyComponent } from './beauty/beauty.component';
+import { BooksComponent } from './books/books.component';
+import { ToysComponent } from './toys/toys.component';
+import { AutomotiveComponent } from './automotive/automotive.component';
 
 interface Product {
   id: number;
@@ -33,6 +41,14 @@ interface BlogPost {
   author: string;
 }
 
+interface Category {
+  name: string;
+  key: string;
+  icon: string;
+  subcategories: string[];
+  productCount: number;
+}
+
 @Component({
   selector: 'app-marketplace',
   standalone: true,
@@ -45,8 +61,16 @@ interface BlogPost {
     CategoriesComponent,
     DealsComponent, 
     BlogComponent,
-    HeaderComponent,  // Added HeaderComponent
-    FooterComponent   // Added FooterComponent
+    HeaderComponent,
+    FooterComponent,
+    ElectronicsComponent,
+    FashionComponent,
+    GardenComponent,
+    SportsComponent,
+    BeautyComponent,
+    BooksComponent,
+    ToysComponent,
+    AutomotiveComponent
   ],
   templateUrl: './market-place.component.html',
   styleUrls: ['./market-place.component.css']
@@ -72,10 +96,71 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
   };
 
   private countdownInterval: any;
+  private hoverTimeout: any;
 
   priceRanges: string[] = ['Under $25', '$25 - $50', '$50 - $100', '$100 - $200', 'Over $200'];
   brands: string[] = ['Apple', 'Samsung', 'Nike', 'Adidas', 'Sony', 'LG', 'Dell', 'HP'];
   ratings: string[] = ['4+ Stars', '3+ Stars', '2+ Stars', '1+ Star'];
+
+  // Shop by Category data
+  categories: Category[] = [
+    {
+      name: 'Electronics & Tech',
+      key: 'electronics',
+      icon: 'devices',
+      subcategories: ['Smartphones', 'Laptops', 'Tablets', 'Headphones', 'Cameras', 'Smart Watches', 'Gaming Consoles', 'Accessories'],
+      productCount: 245
+    },
+    {
+      name: 'Fashion & Apparel',
+      key: 'fashion',
+      icon: 'checkroom',
+      subcategories: ["Men's Clothing", "Women's Clothing", 'Shoes', 'Bags', 'Accessories', 'Jewelry', 'Watches', 'Sunglasses'],
+      productCount: 189
+    },
+    {
+      name: 'Home & Garden',
+      key: 'garden',
+      icon: 'home',
+      subcategories: ['Furniture', 'Home Decor', 'Kitchen & Dining', 'Bed & Bath', 'Garden Tools', 'Outdoor Furniture', 'Lighting', 'Storage'],
+      productCount: 156
+    },
+    {
+      name: 'Sports & Outdoors',
+      key: 'sports',
+      icon: 'sports_basketball',
+      subcategories: ['Exercise Equipment', 'Outdoor Gear', 'Team Sports', 'Fitness Accessories', 'Camping Gear', 'Water Sports', 'Winter Sports'],
+      productCount: 98
+    },
+    {
+      name: 'Beauty & Personal Care',
+      key: 'beauty',
+      icon: 'spa',
+      subcategories: ['Skincare', 'Makeup', 'Hair Care', 'Fragrances', 'Personal Care', 'Beauty Tools', "Men's Grooming"],
+      productCount: 134
+    },
+    {
+      name: 'Books & Media',
+      key: 'books',
+      icon: 'menu_book',
+      subcategories: ['Fiction', 'Non-Fiction', 'Textbooks', 'Children Books', 'eBooks', 'Audiobooks', 'Magazines'],
+      productCount: 76
+    },
+    {
+      name: 'Toys & Games',
+      key: 'toys',
+      icon: 'toys',
+      subcategories: ['Action Figures', 'Board Games', 'Educational Toys', 'Puzzles', 'Outdoor Toys', 'Video Games', 'Collectibles'],
+      productCount: 87
+    },
+    {
+      name: 'Automotive',
+      key: 'automotive',
+      icon: 'directions_car',
+      subcategories: ['Car Parts', 'Tools & Equipment', 'Car Care', 'Interior Accessories', 'Exterior Accessories', 'Electronics', 'Lighting'],
+      productCount: 112
+    }
+  ];
 
   featuredProducts: Product[] = [
     {
@@ -380,6 +465,11 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
   showShopContent: boolean = false;
   showAccountContent: boolean = false;
 
+  // New properties for hover functionality
+  expandedCategory: string | null = null;
+  hoveredCategory: string | null = null;
+  isCardHovered: boolean = false;
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {
@@ -390,6 +480,92 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.countdownInterval) {
       clearInterval(this.countdownInterval);
+    }
+    if (this.hoverTimeout) {
+      clearTimeout(this.hoverTimeout);
+    }
+  }
+
+  // New methods for hover functionality
+  toggleCategory(categoryName: string): void {
+    if (this.expandedCategory === categoryName) {
+      this.expandedCategory = null;
+    } else {
+      this.expandedCategory = categoryName;
+    }
+  }
+
+  onCategoryHover(categoryKey: string): void {
+    if (this.hoverTimeout) {
+      clearTimeout(this.hoverTimeout);
+    }
+    this.hoveredCategory = categoryKey;
+  }
+
+  onCategoryLeave(): void {
+    // Only hide if not hovering over the card
+    if (!this.isCardHovered) {
+      this.hoverTimeout = setTimeout(() => {
+        if (!this.isCardHovered) {
+          this.hoveredCategory = null;
+        }
+      }, 300); // 300ms delay before hiding
+    }
+  }
+
+  onCardHover(): void {
+    this.isCardHovered = true;
+    if (this.hoverTimeout) {
+      clearTimeout(this.hoverTimeout);
+    }
+  }
+
+  onCardLeave(): void {
+    this.isCardHovered = false;
+    this.hoverTimeout = setTimeout(() => {
+      if (!this.isCardHovered) {
+        this.hoveredCategory = null;
+      }
+    }, 300); // 300ms delay before hiding
+  }
+
+  // New method to navigate to category
+  navigateToCategory(categoryKey: string): void {
+    const routeMap: { [key: string]: string } = {
+      'electronics': '/shop/category/electronics',
+      'fashion': '/shop/category/fashion',
+      'garden': '/shop/category/home-garden',
+      'sports': '/shop/category/sports',
+      'beauty': '/shop/category/beauty',
+      'books': '/shop/category/books',
+      'toys': '/shop/category/toys-games',
+      'automotive': '/shop/category/automotive'
+    };
+
+    const route = routeMap[categoryKey];
+    if (route) {
+      this.router.navigate([route]);
+    }
+  }
+
+  // New method to navigate to subcategory
+  navigateToSubcategory(categoryKey: string, subcategory: string): void {
+    const baseRouteMap: { [key: string]: string } = {
+      'electronics': '/shop/category/electronics',
+      'fashion': '/shop/category/fashion',
+      'garden': '/shop/category/home-garden',
+      'sports': '/shop/category/sports',
+      'beauty': '/shop/category/beauty',
+      'books': '/shop/category/books',
+      'toys': '/shop/category/toys-games',
+      'automotive': '/shop/category/automotive'
+    };
+
+    const baseRoute = baseRouteMap[categoryKey];
+    if (baseRoute) {
+      this.router.navigate([baseRoute], { 
+        queryParams: { subcategory: subcategory.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-') } 
+      });
     }
   }
 
@@ -492,36 +668,36 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Add this method to your MarketplaceComponent class
-onCategorySelected(item: string) {
-  const routeMap: { [key: string]: string } = {
-    'Electronics': '/shop/category/electronics',
-    'Fashion': '/shop/category/fashion',
-    'Home & Garden': '/shop/category/home-garden',
-    'Sports': '/shop/category/sports',
-    'Beauty': '/shop/category/beauty',
-    'Books': '/shop/category/books',
-    'Toys & Games': '/shop/category/toys-games',
-    'Automotive': '/shop/category/automotive',
-    'All Categories': '/shop/categories'
-  };
+  // Category navigation handler
+  onCategorySelected(item: string) {
+    const routeMap: { [key: string]: string } = {
+      'Electronics': '/shop/category/electronics',
+      'Fashion': '/shop/category/fashion',
+      'Home & Garden': '/shop/category/home-garden',
+      'Sports': '/shop/category/sports',
+      'Beauty': '/shop/category/beauty',
+      'Books': '/shop/category/books',
+      'Toys & Games': '/shop/category/toys-games',
+      'Automotive': '/shop/category/automotive',
+      'All Categories': '/shop/categories'
+    };
 
-  // Handle subcategories (format: "Category - Subcategory")
-  if (item.includes(' - ')) {
-    const [category, subcategory] = item.split(' - ');
-    const baseRoute = routeMap[category];
-    if (baseRoute) {
-      this.router.navigate([baseRoute], { queryParams: { subcategory: subcategory.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-') } });
-    }
-  } else {
-    const route = routeMap[item];
-    if (route) {
-      this.router.navigate([route]);
+    // Handle subcategories (format: "Category - Subcategory")
+    if (item.includes(' - ')) {
+      const [category, subcategory] = item.split(' - ');
+      const baseRoute = routeMap[category];
+      if (baseRoute) {
+        this.router.navigate([baseRoute], { queryParams: { subcategory: subcategory.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-') } });
+      }
+    } else {
+      const route = routeMap[item];
+      if (route) {
+        this.router.navigate([route]);
+      }
     }
   }
-}
 
-onDealSelected(item: string) {
+  onDealSelected(item: string) {
     const routeMap: { [key: string]: string } = {
       "Today's Deals": '/deals/today',
       'Flash Sales': '/deals/flash',
