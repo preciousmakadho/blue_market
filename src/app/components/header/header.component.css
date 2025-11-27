@@ -191,35 +191,18 @@
   color: #2196F3;
 }
 
-/* Ensure proper dropdown alignment in header */
-.main-nav .nav-links {
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-.main-nav .nav-links li {
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-/* Ensure the shop trigger aligns with other nav items */
-app-shop {
-  height: 100%;
-}
-
-app-account {
-  height: 100%;
-}
-
 /* Mobile Styles */
+@media (max-width: 1024px) {
+  .search-section {
+    max-width: 400px;
+    margin: 0 16px;
+  }
+  
+  .header-actions {
+    gap: 20px;
+  }
+}
+
 @media (max-width: 768px) {
   .mobile-menu-toggle {
     display: block;
@@ -231,27 +214,30 @@ app-account {
 
   .search-section {
     display: none;
+    order: 3;
+    width: 100%;
+    margin: 16px 0 0 0;
+    max-width: 100%;
   }
 
   .header-content {
     flex-wrap: wrap;
+    position: relative;
   }
 
   .header-content.mobile-open .search-section {
     display: flex;
-    order: 3;
-    width: 100%;
-    margin-top: 16px;
   }
 
   .nav-links {
     display: none;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px 0;
   }
 
   .main-nav.mobile-open .nav-links {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
   }
 
   .logo-text h1 {
@@ -266,9 +252,21 @@ app-account {
     width: 40px;
     height: 40px;
   }
+
+  .header-actions {
+    gap: 16px;
+  }
 }
 
 @media (max-width: 576px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .header-content {
+    gap: 16px;
+  }
+
   .logo-text h1 {
     font-size: 20px;
   }
@@ -277,6 +275,41 @@ app-account {
     font-size: 10px;
   }
 
+  .logo-image {
+    width: 36px;
+    height: 36px;
+  }
+
+  .logo {
+    gap: 8px;
+  }
+
+  .header-actions {
+    gap: 12px;
+  }
+
+  .cart .badge {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    top: -6px;
+    right: -6px;
+  }
+
+  .material-icons {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 375px) {
+  .logo-text h1 {
+    font-size: 18px;
+  }
+  
+  .marketplace-text {
+    font-size: 9px;
+  }
+  
   .logo-image {
     width: 32px;
     height: 32px;
