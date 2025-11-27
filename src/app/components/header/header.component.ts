@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // Navigation methods - THESE WERE MISSING
+  // Navigation methods
   navigateTo(route: string): void {
     this.router.navigate([route]);
     this.mobileMenuOpen = false;
@@ -45,6 +45,10 @@ export class HeaderComponent implements OnInit {
 
   navigateToWishlist(): void {
     this.router.navigate(['/wishlist']);
+  }
+
+  navigateToCompare(): void {
+    this.router.navigate(['/compare']);
   }
 
   searchProducts(): void {
@@ -160,7 +164,7 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  // You can add cart management methods here
+  // Cart management methods
   addToCart(price: number): void {
     this.cartTotal += price;
     this.cartItemCount++;

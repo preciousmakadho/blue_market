@@ -1,3 +1,75 @@
+.top-header {
+  background: #f5f5f5;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.top-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.top-search-section {
+  flex: 1;
+  max-width: 500px;
+}
+
+.top-actions {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.main-header {
+  background: white;
+  padding: 16px 0;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.main-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.logo-section {
+  flex-shrink: 0;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: #2d2d2d;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.nav-links a:hover {
+  color: #2196f3;
+}
+
+.header-actions {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+/* ... rest of the existing CSS for the search bar, buttons, etc. ... */
+
+
 .header {
   position: sticky;
   top: 0;
@@ -13,22 +85,23 @@
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .header-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+  position: relative;
+  padding: 0 20px;
 }
 
+/* Logo section - absolute far left with no margin */
 .logo-section {
-  display: flex;
-  align-items: center;
   flex-shrink: 0;
+  margin-right: 20px;
+  padding-left: 0;
 }
 
 .logo {
@@ -67,17 +140,17 @@
   margin-top: 2px;
 }
 
+/* Search section - absolutely centered */
 .search-section {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  max-width: 600px;
-  margin: 0 20px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  max-width: 40%;
 }
 
 .search-bar {
   width: 100%;
-  max-width: 500px;
   display: flex;
   border: 2px solid #E0E0E0;
   border-radius: 24px;
@@ -115,15 +188,36 @@
   background: #1976D2;
 }
 
+/* Header actions - far right */
 .header-actions {
   display: flex;
   gap: 24px;
   align-items: center;
   flex-shrink: 0;
+  margin-left: auto;
+}
+
+.become-vendor {
+  color: #4CAF50;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+  font-size: 15px;
+}
+
+.become-vendor:hover {
+  opacity: 0.8;
 }
 
 .account,
-.cart {
+.cart,
+.wishlist,
+.compare {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -131,10 +225,14 @@
   transition: color 0.3s;
   position: relative;
   white-space: nowrap;
+  color: #2D2D2D;
+  font-size: 15px;
 }
 
 .account:hover,
-.cart:hover {
+.cart:hover,
+.wishlist:hover,
+.compare:hover {
   color: #2196F3;
 }
 
@@ -142,20 +240,23 @@
   font-size: 24px;
 }
 
-.cart .badge {
+.cart .badge,
+.wishlist .badge,
+.compare .badge {
   position: absolute;
   top: -8px;
   right: -8px;
-  background: #2196F3;
+  background: #4CAF50;
   color: white;
   border-radius: 50%;
-  width: 20px;
+  min-width: 20px;
   height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 11px;
   font-weight: bold;
+  padding: 0 5px;
 }
 
 .mobile-menu-toggle {
@@ -176,7 +277,8 @@
   list-style: none;
   display: flex;
   gap: 32px;
-  padding: 16px 0;
+  padding: 16px 20px;
+  margin: 0;
 }
 
 .nav-links a {
@@ -185,6 +287,7 @@
   font-weight: 500;
   transition: color 0.3s;
   cursor: pointer;
+  font-size: 15px;
 }
 
 .nav-links a:hover {
@@ -204,28 +307,14 @@
   align-items: center;
 }
 
-.header-actions {
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-/* Ensure the shop trigger aligns with other nav items */
-app-shop {
-  height: 100%;
-}
-
-app-account {
-  height: 100%;
-}
-
 /* Mobile Styles */
 @media (max-width: 768px) {
   .mobile-menu-toggle {
     display: block;
   }
 
-  .header-actions .text {
+  .header-actions .text,
+  .become-vendor {
     display: none;
   }
 
@@ -233,15 +322,18 @@ app-account {
     display: none;
   }
 
-  .header-content {
-    flex-wrap: wrap;
+  .header-content.mobile-open .search-section {
+    display: block;
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 16px;
+    order: 3;
   }
 
-  .header-content.mobile-open .search-section {
-    display: flex;
-    order: 3;
-    width: 100%;
-    margin-top: 16px;
+  .header-content {
+    flex-wrap: wrap;
   }
 
   .nav-links {
@@ -265,6 +357,10 @@ app-account {
   .logo-image {
     width: 40px;
     height: 40px;
+  }
+
+  .header-actions {
+    gap: 12px;
   }
 }
 

@@ -1,6 +1,7 @@
 <header class="header">
   <div class="main-header">
     <div class="container header-content">
+      <!-- Logo on far left -->
       <div class="logo-section">
         <div class="logo" (click)="navigateTo('')" style="cursor: pointer;">
           <img src="/Assets/blulogo.png" alt="BluFountain Marketplace" class="logo-image" />
@@ -11,6 +12,7 @@
         </div>
       </div>
 
+      <!-- Search bar in center -->
       <div class="search-section">
         <div class="search-bar">
           <input
@@ -25,6 +27,7 @@
         </div>
       </div>
 
+      <!-- Account & Cart on far right -->
       <div class="header-actions">
         <app-account (itemSelected)="onAccountItemSelected($event)"></app-account>
         <div class="cart" (click)="navigateToCart()">
