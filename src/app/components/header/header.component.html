@@ -1,22 +1,38 @@
 <header class="header">
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-left">
+        <span>Welcome to BluFountain Marketplace</span>
+        <a class="top-bar-link" (click)="navigateTo('/help')">Help Center</a>
+        <a class="top-bar-link" (click)="navigateTo('/track-order')">Track Order</a>
+      </div>
+      <div class="top-bar-right">
+        <a class="top-bar-link" (click)="toggleLanguage()">English</a>
+        <a class="top-bar-link" (click)="toggleCurrency()">USD</a>
+      </div>
+    </div>
+  </div>
+  
   <div class="main-header">
-    <div class="container header-content">
+    <div class="container header-content" [class.mobile-open]="mobileMenuOpen">
+      <!-- Logo on far left -->
       <div class="logo-section">
         <div class="logo" (click)="navigateTo('')" style="cursor: pointer;">
-          <img src="/Assets/blulogo.png" alt="BluFountain Marketplace" class="logo-image" />
+          <img src="Assets/blulogo.png" class="logo-image" />
           <div class="logo-text">
-            <h1>BLUFOUNTAIN</h1>
-            <span class="marketplace-text">MARKETPLACE</span>
+            <h4>BLUFOUNTAIN</h4>
+            <span class="marketplace-text">MARKET</span>
           </div>
         </div>
       </div>
 
+      <!-- Search bar in center -->
       <div class="search-section">
         <div class="search-bar">
           <input
             type="text"
             [(ngModel)]="searchQuery"
-            placeholder="Search products, brands, and categories..."
+            placeholder="Search for products..."
             (keyup.enter)="searchProducts()"
           />
           <button class="search-btn" (click)="searchProducts()">
@@ -25,12 +41,68 @@
         </div>
       </div>
 
+      <!-- Header actions on far right -->
       <div class="header-actions">
-        <app-account (itemSelected)="onAccountItemSelected($event)"></app-account>
-        <div class="cart" (click)="navigateToCart()">
+        <a class="become-vendor" (click)="navigateTo('/become-vendor')">
+          <span class="material-icons">storefront</span>
+          <span class="text">Become Vendor</span>
+        </a>
+        
+        <a class="compare" (click)="navigateToCompare()">
+          <span class="material-icons">compare</span>
+          <span class="text">Compare</span>
+        </a>
+        
+        <a class="wishlist" (click)="navigateToWishlist()">
+          <span class="material-icons">favorite_border</span>
+          <span class="text">Wishlist</span>
+        </a>
+
+        <div class="account" [class.active]="accountDropdownOpen" (click)="toggleAccountDropdown()">
+          <span class="material-icons">person_outline</span>
+          <span class="text">Account</span>
+          <div class="dropdown fancy-dropdown" *ngIf="accountDropdownOpen">
+            <a (click)="navigateTo('/login')" class="dropdown-item">
+              <span class="material-icons">login</span>
+              <span>Login</span>
+            </a>
+            <a (click)="navigateTo('/register')" class="dropdown-item">
+              <span class="material-icons">person_add</span>
+              <span>Register</span>
+            </a>
+            <a (click)="navigateTo('/dashboard')" class="dropdown-item">
+              <span class="material-icons">dashboard</span>
+              <span>Dashboard</span>
+            </a>
+            <a (click)="navigateTo('/orders')" class="dropdown-item">
+              <span class="material-icons">receipt</span>
+              <span>Order History</span>
+            </a>
+            <a (click)="navigateTo('/settings')" class="dropdown-item">
+              <span class="material-icons">settings</span>
+              <span>Settings</span>
+            </a>
+          </div>
+        </div>
+        
+        <div class="cart" [class.active]="cartDropdownOpen" (click)="toggleCartDropdown()">
           <span class="material-icons">shopping_cart</span>
-          <span class="text">\${{ cartTotal.toFixed(2) }}</span>
+          <span class="text">${{ cartTotal.toFixed(2) }}</span>
           <span class="badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+          <div class="dropdown fancy-dropdown" *ngIf="cartDropdownOpen">
+            <a (click)="navigateToCart()" class="dropdown-item">
+              <span class="material-icons">shopping_cart</span>
+              <span>View Cart</span>
+            </a>
+            <a (click)="navigateTo('/checkout')" class="dropdown-item">
+              <span class="material-icons">payment</span>
+              <span>Checkout</span>
+            </a>
+            <a (click)="navigateTo('/orders')" class="dropdown-item">
+              <span class="material-icons">receipt</span>
+              <span>Order History</span>
+            </a>
+          </div>
         </div>
       </div>
 
@@ -43,12 +115,217 @@
   <nav class="main-nav" [class.mobile-open]="mobileMenuOpen">
     <div class="container">
       <ul class="nav-links">
-        <li><a (click)="navigateTo('')">Home</a></li>
-        <li><app-shop (itemSelected)="onShopItemSelected($event)"></app-shop></li>
-        <li><app-categories (itemSelected)="onCategorySelected($event)"></app-categories></li>
-        <li><app-deals (itemSelected)="onDealSelected($event)"></app-deals></li>
-        <li><a (click)="navigateTo('/blog')">Blog</a></li>
-        <li><a (click)="navigateTo('/contact')">Contact</a></li>
+        <!-- Home without dropdown -->
+        <li class="nav-item">
+          <a (click)="navigateTo('')" class="nav-link">Home</a>
+        </li>
+        
+        <!-- About with fancy dropdown -->
+        <li class="nav-item" [class.active]="aboutDropdownOpen" 
+            (mouseenter)="aboutDropdownOpen = true" (mouseleave)="aboutDropdownOpen = false">
+          <a class="nav-link">About</a>
+          <div class="dropdown mega-dropdown" *ngIf="aboutDropdownOpen">
+            <div class="dropdown-content">
+              <div class="dropdown-section">
+                <h4>Our Company</h4>
+                <a (click)="navigateTo('/about/story')" class="dropdown-item">
+                  <span class="material-icons">business</span>
+                  <span>Our Story</span>
+                </a>
+                <a (click)="navigateTo('/about/team')" class="dropdown-item">
+                  <span class="material-icons">groups</span>
+                  <span>Our Team</span>
+                </a>
+                <a (click)="navigateTo('/about/careers')" class="dropdown-item">
+                  <span class="material-icons">work</span>
+                  <span>Careers</span>
+                </a>
+              </div>
+              <div class="dropdown-section">
+                <h4>Information</h4>
+                <a (click)="navigateTo('/about/press')" class="dropdown-item">
+                  <span class="material-icons">article</span>
+                  <span>Press</span>
+                </a>
+                <a (click)="navigateTo('/about/values')" class="dropdown-item">
+                  <span class="material-icons">star</span>
+                  <span>Our Values</span>
+                </a>
+                <a (click)="navigateTo('/about/contact')" class="dropdown-item">
+                  <span class="material-icons">contact_page</span>
+                  <span>Contact Us</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>
+        
+        <!-- Shop with mega dropdown -->
+        <li class="nav-item" [class.active]="shopDropdownOpen" 
+            (mouseenter)="shopDropdownOpen = true" (mouseleave)="shopDropdownOpen = false">
+          <a class="nav-link">Shop</a>
+          <div class="dropdown mega-dropdown" *ngIf="shopDropdownOpen">
+            <div class="dropdown-content">
+              <div class="dropdown-section">
+                <h4>Shop Categories</h4>
+                <a (click)="navigateTo('/shop/all')" class="dropdown-item">
+                  <span class="material-icons">storefront</span>
+                  <span>All Products</span>
+                </a>
+                <a (click)="navigateTo('/shop/featured')" class="dropdown-item">
+                  <span class="material-icons">featured_play_list</span>
+                  <span>Featured</span>
+                </a>
+                <a (click)="navigateTo('/shop/best-sellers')" class="dropdown-item">
+                  <span class="material-icons">trending_up</span>
+                  <span>Best Sellers</span>
+                </a>
+              </div>
+              <div class="dropdown-section">
+                <h4>New Arrivals</h4>
+                <a (click)="navigateTo('/shop/new')" class="dropdown-item">
+                  <span class="material-icons">new_releases</span>
+                  <span>New Products</span>
+                </a>
+                <a (click)="navigateTo('/shop/sales')" class="dropdown-item">
+                  <span class="material-icons">local_offer</span>
+                  <span>Sales & Deals</span>
+                </a>
+                <a (click)="navigateTo('/shop/clearance')" class="dropdown-item">
+                  <span class="material-icons">flash_on</span>
+                  <span>Clearance</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>
+        
+        <!-- Vendors dropdown -->
+        <li class="nav-item" [class.active]="vendorsDropdownOpen" 
+            (mouseenter)="vendorsDropdownOpen = true" (mouseleave)="vendorsDropdownOpen = false">
+          <a class="nav-link">Vendors</a>
+          <div class="dropdown fancy-dropdown" *ngIf="vendorsDropdownOpen">
+            <a (click)="navigateTo('/vendors/all')" class="dropdown-item">
+              <span class="material-icons">store</span>
+              <span>All Vendors</span>
+            </a>
+            <a (click)="navigateTo('/vendors/featured')" class="dropdown-item">
+              <span class="material-icons">star</span>
+              <span>Featured Vendors</span>
+            </a>
+            <a (click)="navigateTo('/become-vendor')" class="dropdown-item">
+              <span class="material-icons">person_add</span>
+              <span>Become a Vendor</span>
+            </a>
+            <a (click)="navigateTo('/vendor-dashboard')" class="dropdown-item">
+              <span class="material-icons">dashboard</span>
+              <span>Vendor Dashboard</span>
+            </a>
+          </div>
+        </li>
+        
+        <!-- Mega Menu dropdown -->
+        <li class="nav-item" [class.active]="megaMenuDropdownOpen" 
+            (mouseenter)="megaMenuDropdownOpen = true" (mouseleave)="megaMenuDropdownOpen = false">
+          <a class="nav-link">Mega Menu</a>
+          <div class="dropdown mega-dropdown" *ngIf="megaMenuDropdownOpen">
+            <div class="dropdown-content">
+              <div class="dropdown-section">
+                <h4>Electronics</h4>
+                <a (click)="navigateTo('/category/electronics')" class="dropdown-item">
+                  <span>Smartphones</span>
+                </a>
+                <a (click)="navigateTo('/category/laptops')" class="dropdown-item">
+                  <span>Laptops</span>
+                </a>
+                <a (click)="navigateTo('/category/tvs')" class="dropdown-item">
+                  <span>TVs</span>
+                </a>
+              </div>
+              <div class="dropdown-section">
+                <h4>Fashion</h4>
+                <a (click)="navigateTo('/category/mens')" class="dropdown-item">
+                  <span>Men's Clothing</span>
+                </a>
+                <a (click)="navigateTo('/category/womens')" class="dropdown-item">
+                  <span>Women's Clothing</span>
+                </a>
+                <a (click)="navigateTo('/category/shoes')" class="dropdown-item">
+                  <span>Shoes</span>
+                </a>
+              </div>
+              <div class="dropdown-section">
+                <h4>Home & Garden</h4>
+                <a (click)="navigateTo('/category/furniture')" class="dropdown-item">
+                  <span>Furniture</span>
+                </a>
+                <a (click)="navigateTo('/category/decor')" class="dropdown-item">
+                  <span>Home Decor</span>
+                </a>
+                <a (click)="navigateTo('/category/garden')" class="dropdown-item">
+                  <span>Garden</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>
+        
+        <!-- Blog dropdown -->
+        <li class="nav-item" [class.active]="blogDropdownOpen" 
+            (mouseenter)="blogDropdownOpen = true" (mouseleave)="blogDropdownOpen = false">
+          <a class="nav-link">Blog</a>
+          <div class="dropdown fancy-dropdown" *ngIf="blogDropdownOpen">
+            <a (click)="navigateTo('/blog/latest')" class="dropdown-item">
+              <span class="material-icons">article</span>
+              <span>Latest Posts</span>
+            </a>
+            <a (click)="navigateTo('/blog/popular')" class="dropdown-item">
+              <span class="material-icons">trending_up</span>
+              <span>Popular Posts</span>
+            </a>
+            <a (click)="navigateTo('/blog/categories')" class="dropdown-item">
+              <span class="material-icons">category</span>
+              <span>Categories</span>
+            </a>
+            <a (click)="navigateTo('/blog/archives')" class="dropdown-item">
+              <span class="material-icons">archive</span>
+              <span>Archives</span>
+            </a>
+          </div>
+        </li>
+        
+        <!-- Pages dropdown -->
+        <li class="nav-item" [class.active]="pagesDropdownOpen" 
+            (mouseenter)="pagesDropdownOpen = true" (mouseleave)="pagesDropdownOpen = false">
+          <a class="nav-link">Pages</a>
+          <div class="dropdown fancy-dropdown" *ngIf="pagesDropdownOpen">
+            <a (click)="navigateTo('/about')" class="dropdown-item">
+              <span class="material-icons">info</span>
+              <span>About Us</span>
+            </a>
+            <a (click)="navigateTo('/contact')" class="dropdown-item">
+              <span class="material-icons">contact_page</span>
+              <span>Contact Us</span>
+            </a>
+            <a (click)="navigateTo('/faq')" class="dropdown-item">
+              <span class="material-icons">help</span>
+              <span>FAQ</span>
+            </a>
+            <a (click)="navigateTo('/terms')" class="dropdown-item">
+              <span class="material-icons">gavel</span>
+              <span>Terms & Conditions</span>
+            </a>
+            <a (click)="navigateTo('/privacy')" class="dropdown-item">
+              <span class="material-icons">privacy_tip</span>
+              <span>Privacy Policy</span>
+            </a>
+          </div>
+        </li>
+        
+        <!-- Contact without dropdown -->
+        <li class="nav-item">
+          <a (click)="navigateTo('/contact')" class="nav-link">Contact</a>
+        </li>
       </ul>
     </div>
   </nav>

@@ -1,11 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ShopComponent } from './shop/shop.component';
-import { AccountComponent } from './account/account.component';
-import { CategoriesComponent } from './categories/categories.component';
-import { DealsComponent } from './deals/deals.component';
 
 @Component({
   selector: 'app-header',
@@ -13,11 +9,7 @@ import { DealsComponent } from './deals/deals.component';
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule,
-    ShopComponent,
-    AccountComponent,
-    CategoriesComponent,
-    DealsComponent
+    FormsModule
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
@@ -27,29 +19,64 @@ export class HeaderComponent implements OnInit {
   cartTotal: number = 0;
   cartItemCount: number = 0;
   mobileMenuOpen: boolean = false;
-  wishlist: Set<number> = new Set();
+  
+  // Dropdown states
+  accountDropdownOpen: boolean = false;
+  cartDropdownOpen: boolean = false;
+  aboutDropdownOpen: boolean = false;
+  shopDropdownOpen: boolean = false;
+  vendorsDropdownOpen: boolean = false;
+  megaMenuDropdownOpen: boolean = false;
+  blogDropdownOpen: boolean = false;
+  pagesDropdownOpen: boolean = false;
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Initialize cart with some demo data
+    this.cartTotal = 44.98;
+    this.cartItemCount = 2;
+  }
 
-  // Navigation methods - THESE WERE MISSING
+  // Close all dropdowns when clicking outside
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    
+    // Close dropdowns if click is outside
+    if (!target.closest('.account')) {
+      this.accountDropdownOpen = false;
+    }
+    if (!target.closest('.cart')) {
+      this.cartDropdownOpen = false;
+    }
+  }
+
+  // Navigation methods
   navigateTo(route: string): void {
     this.router.navigate([route]);
     this.mobileMenuOpen = false;
+    this.closeAllDropdowns();
   }
 
   navigateToCart(): void {
     this.router.navigate(['/cart']);
+    this.cartDropdownOpen = false;
   }
 
   navigateToWishlist(): void {
     this.router.navigate(['/wishlist']);
   }
 
+  navigateToCompare(): void {
+    this.router.navigate(['/compare']);
+  }
+
   searchProducts(): void {
     if (this.searchQuery.trim()) {
-      this.router.navigate(['/search'], { queryParams: { q: this.searchQuery } });
+      this.router.navigate(['/search'], { 
+        queryParams: { q: this.searchQuery.trim() } 
+      });
     }
   }
 
@@ -57,117 +84,67 @@ export class HeaderComponent implements OnInit {
     this.mobileMenuOpen = !this.mobileMenuOpen;
   }
 
-  // Shop navigation handler
-  onShopItemSelected(item: string): void {
-    const routeMap: { [key: string]: string } = {
-      'Category': '/shop/category',
-      'Shop Grid': '/shop/grid',
-      'Shop List': '/shop/list',
-      'Shop Table': '/shop/table',
-      'Shop Right Sidebar': '/shop/sidebar',
-      'Product': '/shop',
-      'Cart': '/cart',
-      'Checkout': '/checkout',
-      'Order Success': '/order-success',
-      'Wishlist': '/wishlist',
-      'Compare': '/compare',
-      'Track Order': '/track-order'
-    };
-
-    const route = routeMap[item];
-    if (route) {
-      this.router.navigate([route]);
+  // Dropdown toggle methods
+  toggleAccountDropdown(): void {
+    this.accountDropdownOpen = !this.accountDropdownOpen;
+    if (this.accountDropdownOpen) {
+      this.cartDropdownOpen = false;
     }
   }
 
-  // Account navigation handler
-  onAccountItemSelected(item: string): void {
-    const routeMap: { [key: string]: string } = {
-      'Account': '/account',
-      'Pages': '/account',
-      'Login & Register': '/account/login',
-      'Dashboard': '/account/dashboard',
-      'Garage': '/account/garage',
-      'Edit Profile': '/account/profile',
-      'Order History': '/account/orders',
-      'Order Details': '/account/order-details',
-      'Address Book': '/account/address-book',
-      'Edit Address': '/account/edit-address',
-      'Change Password': '/account/change-password'
-    };
-
-    const route = routeMap[item];
-    if (route) {
-      this.router.navigate([route]);
+  toggleCartDropdown(): void {
+    this.cartDropdownOpen = !this.cartDropdownOpen;
+    if (this.cartDropdownOpen) {
+      this.accountDropdownOpen = false;
     }
   }
 
-  onCategorySelected(item: string) {
-    const routeMap: { [key: string]: string } = {
-      'Electronics': '/shop/category/electronics',
-      'Fashion': '/shop/category/fashion',
-      'Home & Garden': '/shop/category/home-garden',
-      'Sports': '/shop/category/sports',
-      'Beauty': '/shop/category/beauty',
-      'Books': '/shop/category/books',
-      'Toys & Games': '/shop/category/toys-games',
-      'Automotive': '/shop/category/automotive',
-      'All Categories': '/shop/categories'
-    };
-
-    if (item.includes(' - ')) {
-      const [category, subcategory] = item.split(' - ');
-      const baseRoute = routeMap[category];
-      if (baseRoute) {
-        this.router.navigate([baseRoute], { 
-          queryParams: { subcategory: subcategory.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-') } 
-        });
-      }
-    } else {
-      const route = routeMap[item];
-      if (route) {
-        this.router.navigate([route]);
-      }
-    }
+  closeAllDropdowns(): void {
+    this.accountDropdownOpen = false;
+    this.cartDropdownOpen = false;
+    this.aboutDropdownOpen = false;
+    this.shopDropdownOpen = false;
+    this.vendorsDropdownOpen = false;
+    this.megaMenuDropdownOpen = false;
+    this.blogDropdownOpen = false;
+    this.pagesDropdownOpen = false;
   }
 
-  onDealSelected(item: string) {
-    const routeMap: { [key: string]: string } = {
-      "Today's Deals": '/deals/today',
-      'Flash Sales': '/deals/flash',
-      'Seasonal Offers': '/deals/seasonal',
-      'Clearance': '/deals/clearance',
-      'Bundle Deals': '/deals/bundle',
-      'Member Exclusive': '/deals/member',
-      'Brand Offers': '/deals/brand',
-      'Discount Categories': '/deals/discount',
-      'All Deals': '/deals'
-    };
-
-    if (item.includes(' - ')) {
-      const [category, subcategory] = item.split(' - ');
-      const baseRoute = routeMap[category];
-      if (baseRoute) {
-        this.router.navigate([baseRoute], { 
-          queryParams: { subcategory: subcategory.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-') } 
-        });
-      }
-    } else {
-      const route = routeMap[item];
-      if (route) {
-        this.router.navigate([route]);
-      }
-    }
+  // Top bar actions
+  toggleLanguage(): void {
+    console.log('Toggle language');
+    // Implement language toggle logic
   }
 
-  // You can add cart management methods here
+  toggleCurrency(): void {
+    console.log('Toggle currency');
+    // Implement currency toggle logic
+  }
+
+  // Cart management methods
   addToCart(price: number): void {
     this.cartTotal += price;
     this.cartItemCount++;
   }
 
+  removeFromCart(price: number): void {
+    this.cartTotal = Math.max(0, this.cartTotal - price);
+    this.cartItemCount = Math.max(0, this.cartItemCount - 1);
+  }
+
   updateCart(total: number, count: number): void {
     this.cartTotal = total;
     this.cartItemCount = count;
+  }
+
+  clearCart(): void {
+    this.cartTotal = 0;
+    this.cartItemCount = 0;
+  }
+
+  // Demo method to simulate adding items
+  addDemoItems(): void {
+    this.addToCart(19.99);
+    this.addToCart(24.99);
   }
 }

@@ -3,154 +3,227 @@
   top: 0;
   z-index: 1000;
   background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.main-header {
-  background: white;
-  padding: 16px 0;
-  border-bottom: 1px solid #E0E0E0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+.top-bar {
+  background: #2c3e50;
+  color: white;
+  padding: 8px 0;
+  font-size: 14px;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.header-content {
+.top-bar-left {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 20px;
 }
 
-.logo-section {
+.top-bar-right {
   display: flex;
   align-items: center;
-  flex-shrink: 0;
+  gap: 15px;
+}
+
+.top-bar-link {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.top-bar-link:hover {
+  color: #3498db;
+}
+
+.main-header {
+  background: white;
+  padding: 15px 0;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.header-content {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.logo-section {
+  grid-column: 1;
+  justify-self: start;
+}
+
+.search-section {
+  grid-column: 2;
+  justify-self: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+.header-actions {
+  grid-column: 3;
+  justify-self: end;
+}
+
+/* Logo section - FIXED: Far Left */
+.logo-section {
+  flex: 0 0 auto;
+  margin-right: auto; /* This pushes everything else to the right */
 }
 
 .logo {
   display: flex;
   align-items: center;
   gap: 12px;
+  cursor: pointer;
 }
 
 .logo-image {
-  width: 48px;
-  height: 48px;
+  height: 40px;
+  width: auto;
   object-fit: contain;
 }
 
 .logo-text {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 }
 
-.logo-text h1 {
-  color: #2196F3;
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  line-height: 1;
+.logo-text h4 {
+  font-size: 20px;
+  font-weight: 700;
   margin: 0;
+  line-height: 1;
+  color: #2c3e50;
+  letter-spacing: 1px;
 }
 
 .marketplace-text {
-  font-size: 14px;
-  color: #666;
-  font-weight: 600;
+  font-size: 12px;
+  color: #7f8c8d;
+  font-weight: 500;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   margin-top: 2px;
 }
 
+/* Search section - centered */
 .search-section {
   flex: 1;
-  display: flex;
-  justify-content: center;
-  max-width: 600px;
-  margin: 0 20px;
+  max-width: 500px;
+  margin: 0 auto; /* This centers the search bar */
 }
 
 .search-bar {
-  width: 100%;
-  max-width: 500px;
   display: flex;
-  border: 2px solid #E0E0E0;
-  border-radius: 24px;
+  border: 2px solid #3498db;
+  border-radius: 25px;
   overflow: hidden;
-  transition: border-color 0.3s;
-}
-
-.search-bar:focus-within {
-  border-color: #2196F3;
+  background: #f8f8f8;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .search-bar input {
   flex: 1;
-  padding: 12px 20px;
   border: none;
+  padding: 12px 20px;
+  font-size: 16px;
   outline: none;
-  font-size: 14px;
-  border-radius: 24px 0 0 24px;
+  background: transparent;
 }
 
 .search-btn {
-  background: #2196F3;
-  color: white;
+  background: #3498db;
   border: none;
-  padding: 12px 20px;
+  padding: 0 20px;
   cursor: pointer;
-  transition: background 0.3s;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0 24px 24px 0;
+  color: white;
+  transition: background 0.3s;
 }
 
 .search-btn:hover {
-  background: #1976D2;
+  background: #2980b9;
 }
 
+/* Header actions - far right */
 .header-actions {
   display: flex;
-  gap: 24px;
   align-items: center;
+  gap: 20px;
   flex-shrink: 0;
+  margin-left: auto; /* This ensures it stays on the right */
+}
+
+.become-vendor, .compare, .wishlist {
+  color: #2c3e50;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.become-vendor:hover, .compare:hover, .wishlist:hover {
+  color: #3498db;
+}
+
+.wishlist {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .account,
 .cart {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   cursor: pointer;
-  transition: color 0.3s;
+  transition: color 0.2s;
   position: relative;
   white-space: nowrap;
+  color: #2c3e50;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 600;
 }
 
 .account:hover,
 .cart:hover {
-  color: #2196F3;
+  color: #3498db;
 }
 
 .material-icons {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .cart .badge {
   position: absolute;
   top: -8px;
   right: -8px;
-  background: #2196F3;
+  background: #e74c3c;
   color: white;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -163,32 +236,46 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #2D2D2D;
-  padding: 8px;
+  color: #333;
+  padding: 4px;
 }
 
+/* Navigation */
 .main-nav {
-  background: #2D2D2D;
-  padding: 0;
+  background: #f8f8f8;
+  padding: 12px 0;
+  border-top: 1px solid #e0e0e0;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 32px;
-  padding: 16px 0;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
 }
 
-.nav-links a {
-  color: white;
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  color: #2c3e50;
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s;
+  font-weight: 600;
+  transition: color 0.2s;
   cursor: pointer;
+  font-size: 16px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 0;
 }
 
-.nav-links a:hover {
-  color: #2196F3;
+.nav-link:hover {
+  color: #3498db;
 }
 
 /* Mobile Styles */
@@ -208,7 +295,9 @@
     display: block;
   }
 
-  .header-actions .text {
+  .header-actions .text:not(.cart .text),
+  .become-vendor,
+  .compare {
     display: none;
   }
 
@@ -240,17 +329,16 @@
     display: flex;
   }
 
-  .logo-text h1 {
-    font-size: 24px;
+  .logo-text h4 {
+    font-size: 16px;
   }
 
   .marketplace-text {
-    font-size: 12px;
+    font-size: 9px;
   }
 
   .logo-image {
-    width: 40px;
-    height: 40px;
+    height: 30px;
   }
 
   .header-actions {
@@ -271,8 +359,14 @@
     font-size: 20px;
   }
 
-  .marketplace-text {
-    font-size: 10px;
+  .dropdown {
+    position: static;
+    box-shadow: none;
+    background: transparent;
+    padding: 5px 0;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
   }
 
   .logo-image {
