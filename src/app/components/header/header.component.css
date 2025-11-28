@@ -405,254 +405,15 @@
   color: #3498db;
 }
 
-.hot-icon {
-  color: #ef4444;
-  font-size: 16px;
-}
-
-.arrow-down {
-  font-size: 15px;
-  transition: transform 0.2s;
-}
-
-.nav-item.active .arrow-down {
-  transform: rotate(180deg);
-}
-
-/* Simple dropdown */
-.simple-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: white;
-  min-width: 200px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  border-radius: 4px;
-  padding: 6px 0;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(10px);
-  transition: all 0.2s ease;
-  z-index: 100;
-}
-
-.nav-item:hover .simple-dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.dropdown-item {
-  display: block;
-  padding: 8px 16px;
-  color: #4b5563;
-  text-decoration: none;
-  font-size: 12px;
-  transition: all 0.2s;
-  cursor: pointer;
-}
-
-.dropdown-item:hover {
-  background: #f9fafb;
-  color: #3498db;
-  padding-left: 20px;
-}
-
-/* Shop Mega Dropdown */
-.shop-mega-dropdown {
-  position: absolute;
-  top: 100%;
-  left: -100px;
-  background: white;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  border-radius: 6px;
-  padding: 20px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(10px);
-  transition: all 0.3s ease;
-  z-index: 100;
-  min-width: 850px;
-}
-
-.nav-item:hover .shop-mega-dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.mega-content {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 25px;
-}
-
-.mega-column {
-  min-width: 0;
-}
-
-.mega-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: #3498db;
-  margin: 0 0 12px 0;
-  padding-bottom: 6px;
-  border-bottom: 2px solid #3498db;
-}
-
-.mega-column .dropdown-item {
-  padding: 6px 0;
-  font-size: 12px;
-  color: #6b7280;
-}
-
-.mega-column .dropdown-item:hover {
-  background: transparent;
-  color: #3498db;
-  padding-left: 0;
-}
-
-/* Promo column */
-.promo-column {
-  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-  border-radius: 6px;
-  padding: 20px;
-  position: relative;
-  overflow: hidden;
-}
-
-.promo-badge {
-  background: #3498db;
-  color: white;
-  padding: 4px 10px;
-  border-radius: 15px;
-  font-size: 10px;
-  font-weight: 600;
-  display: inline-block;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-}
-
-.promo-box h3 {
-  font-size: 15px;
-  font-weight: 700;
-  color: #1f2937;
-  margin: 0 0 15px 0;
-  line-height: 1.3;
-}
-
-.shop-now-btn {
-  background: #3498db;
-  color: white;
-  border: none;
-  padding: 8px 20px;
-  border-radius: 4px;
-  font-weight: 600;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-bottom: 12px;
-}
-
-.shop-now-btn:hover {
-  background: #2980b9;
-  transform: translateY(-2px);
-}
-
-.promo-image {
-  width: 100%;
-  max-width: 180px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-
-/* Categories Mega Dropdown */
-.categories-mega-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: white;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  border-radius: 6px;
-  padding: 15px;
-  z-index: 100;
-  min-width: 280px;
-  max-width: 380px;
-}
-
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 6px;
-}
-
-.category-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
-  border-radius: 4px;
-  text-decoration: none;
-  color: #4b5563;
-  font-size: 12px;
-  font-weight: 500;
-  transition: all 0.2s;
-  cursor: pointer;
-}
-
-.category-item:hover {
-  background: #f9fafb;
-  color: #3498db;
-}
-
-.category-icon {
-  font-size: 18px;
-}
-
-.category-count {
-  margin-left: auto;
-  background: #f3f4f6;
-  color: #6b7280;
-  padding: 2px 6px;
-  border-radius: 8px;
-  font-size: 10px;
-  font-weight: 600;
-}
-
-.mobile-menu-toggle {
-  display: none;
-}
-
-/* Mobile Responsive */
+/* Mobile Styles */
 @media (max-width: 1024px) {
-  .header-content {
-    grid-template-columns: auto 1fr auto;
-    gap: 15px;
-  }
-
-  .header-actions .text {
-    display: none;
-  }
-
   .search-section {
     max-width: 400px;
+    margin: 0 16px;
   }
-
-  .nav-links {
+  
+  .header-actions {
     gap: 20px;
-  }
-
-  .shop-mega-dropdown {
-    min-width: 700px;
-  }
-
-  .mega-content {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .promo-column {
-    grid-column: 1 / -1;
   }
 }
 
@@ -676,27 +437,28 @@
     display: none;
   }
 
-  .header-actions {
-    gap: 10px;
+  .search-section {
+    display: none;
+    order: 3;
+    width: 100%;
+    margin: 16px 0 0 0;
+    max-width: 100%;
   }
 
-  .logo-image {
-    height: 35px;
+  .header-content {
+    flex-wrap: wrap;
+    position: relative;
   }
 
-  .logo-text h4 {
-    font-size: 16px;
-  }
-
-  .nav-container {
-    flex-direction: column;
-    align-items: stretch;
+  .header-content.mobile-open .search-section {
+    display: flex;
   }
 
   .nav-links {
     display: none;
     flex-direction: column;
-    gap: 0;
+    gap: 12px;
+    padding: 20px 0;
   }
 
   .main-nav.mobile-open .nav-links {
@@ -712,27 +474,69 @@
     justify-content: center;
   }
 
-  .simple-dropdown,
-  .shop-mega-dropdown {
+  .header-actions {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .header-content {
+    gap: 16px;
+  }
+
+  .logo-text h1 {
+    font-size: 20px;
+  }
+
+  .dropdown {
     position: static;
     box-shadow: none;
     opacity: 1;
     visibility: visible;
     transform: none;
-    padding: 10px 20px;
   }
 
-  .mega-content {
-    grid-template-columns: 1fr;
-    gap: 15px;
+  .logo-image {
+    width: 36px;
+    height: 36px;
   }
 
-  .categories-mega-dropdown {
-    position: static;
-    max-width: 100%;
+  .logo {
+    gap: 8px;
   }
 
-  .categories-grid {
-    grid-template-columns: 1fr;
+  .header-actions {
+    gap: 12px;
+  }
+
+  .cart .badge {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    top: -6px;
+    right: -6px;
+  }
+
+  .material-icons {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 375px) {
+  .logo-text h1 {
+    font-size: 18px;
+  }
+  
+  .marketplace-text {
+    font-size: 9px;
+  }
+  
+  .logo-image {
+    width: 32px;
+    height: 32px;
   }
 }
