@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
   mobileMenuOpen: boolean = false;
   
   // Search category
-  selectedCategory: string = 'All Departments';
+  selectedCategory: string = 'All';
   categoryDropdownOpen: boolean = false;
   
   // Language selector
