@@ -18,8 +18,11 @@ import { BeautyComponent } from './beauty/beauty.component';
 import { BooksComponent } from './books/books.component';
 import { ToysComponent } from './toys/toys.component';
 import { AutomotiveComponent } from './automotive/automotive.component';
+import { FeaturedProductsComponent } from './featured-products/featured-products.component';
+import { CategorySidebarComponent } from './category-sidebar/category-sidebar.component';
 
-interface Product {
+// Export interfaces for use in other components
+export interface Product {
   id: number;
   sku: string;
   name: string;
@@ -32,7 +35,7 @@ interface Product {
   category: string;
 }
 
-interface BlogPost {
+export interface BlogPost {
   id: number;
   title: string;
   image: string;
@@ -41,7 +44,7 @@ interface BlogPost {
   author: string;
 }
 
-interface Category {
+export interface Category {
   name: string;
   key: string;
   icon: string;
@@ -70,7 +73,9 @@ interface Category {
     BeautyComponent,
     BooksComponent,
     ToysComponent,
-    AutomotiveComponent
+    AutomotiveComponent,
+    FeaturedProductsComponent,
+    CategorySidebarComponent
   ],
   templateUrl: './market-place.component.html',
   styleUrls: ['./market-place.component.css']
@@ -171,7 +176,7 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       originalPrice: 129.99,
       rating: 4.5,
       reviews: 234,
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop',
       badges: ['SALE', 'HOT'],
       category: 'Electronics'
     },
@@ -183,7 +188,7 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       originalPrice: 199.99,
       rating: 4.8,
       reviews: 456,
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop',
       badges: ['NEW'],
       category: 'Electronics'
     },
@@ -194,7 +199,7 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       price: 34.99,
       rating: 4.6,
       reviews: 189,
-      image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=300&h=300&fit=crop',
       badges: [],
       category: 'Home & Garden'
     },
@@ -206,7 +211,7 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       originalPrice: 349.99,
       rating: 4.7,
       reviews: 345,
-      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop',
       badges: ['SALE'],
       category: 'Fashion'
     },
@@ -217,7 +222,7 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       price: 449.99,
       rating: 4.4,
       reviews: 123,
-      image: 'https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=400&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=300&h=300&fit=crop',
       badges: ['NEW'],
       category: 'Electronics'
     },
@@ -229,7 +234,7 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       originalPrice: 29.99,
       rating: 4.9,
       reviews: 567,
-      image: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=400&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=300&h=300&fit=crop',
       badges: ['HOT'],
       category: 'Sports'
     },
@@ -240,7 +245,7 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       price: 79.99,
       rating: 4.3,
       reviews: 98,
-      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=300&h=300&fit=crop',
       badges: [],
       category: 'Fashion'
     },
@@ -252,7 +257,7 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       originalPrice: 74.99,
       rating: 4.5,
       reviews: 156,
-      image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=300&h=300&fit=crop',
       badges: ['SALE'],
       category: 'Electronics'
     }
@@ -266,7 +271,7 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       price: 189.99,
       rating: 4.8,
       reviews: 234,
-      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&h=300&fit=crop',
       badges: ['NEW'],
       category: 'Electronics'
     },
@@ -278,7 +283,7 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       originalPrice: 99.99,
       rating: 4.6,
       reviews: 178,
-      image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=300&h=300&fit=crop',
       badges: ['SALE'],
       category: 'Fashion'
     },
@@ -289,7 +294,7 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       price: 39.99,
       rating: 4.7,
       reviews: 456,
-      image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=300&h=300&fit=crop',
       badges: ['HOT'],
       category: 'Beauty'
     },
@@ -300,7 +305,7 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       price: 129.99,
       rating: 4.5,
       reviews: 289,
-      image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=300&fit=crop',
       badges: ['NEW'],
       category: 'Home & Garden'
     }
@@ -486,15 +491,7 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
     }
   }
 
-  // New methods for hover functionality
-  toggleCategory(categoryName: string): void {
-    if (this.expandedCategory === categoryName) {
-      this.expandedCategory = null;
-    } else {
-      this.expandedCategory = categoryName;
-    }
-  }
-
+  // Category sidebar methods
   onCategoryHover(categoryKey: string): void {
     if (this.hoverTimeout) {
       clearTimeout(this.hoverTimeout);
@@ -503,13 +500,12 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
   }
 
   onCategoryLeave(): void {
-    // Only hide if not hovering over the card
     if (!this.isCardHovered) {
       this.hoverTimeout = setTimeout(() => {
         if (!this.isCardHovered) {
           this.hoveredCategory = null;
         }
-      }, 300); // 300ms delay before hiding
+      }, 300);
     }
   }
 
@@ -526,11 +522,18 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       if (!this.isCardHovered) {
         this.hoveredCategory = null;
       }
-    }, 300); // 300ms delay before hiding
+    }, 300);
   }
 
-  // New method to navigate to category
-  navigateToCategory(categoryKey: string): void {
+  onToggleCategory(categoryName: string): void {
+    if (this.expandedCategory === categoryName) {
+      this.expandedCategory = null;
+    } else {
+      this.expandedCategory = categoryName;
+    }
+  }
+
+  onNavigateToCategory(categoryKey: string): void {
     const routeMap: { [key: string]: string } = {
       'electronics': '/shop/category/electronics',
       'fashion': '/shop/category/fashion',
@@ -539,7 +542,8 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       'beauty': '/shop/category/beauty',
       'books': '/shop/category/books',
       'toys': '/shop/category/toys-games',
-      'automotive': '/shop/category/automotive'
+      'automotive': '/shop/category/automotive',
+      'all': '/shop/categories'
     };
 
     const route = routeMap[categoryKey];
@@ -548,8 +552,7 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
     }
   }
 
-  // New method to navigate to subcategory
-  navigateToSubcategory(categoryKey: string, subcategory: string): void {
+  onNavigateToSubcategory(event: {categoryKey: string, subcategory: string}): void {
     const baseRouteMap: { [key: string]: string } = {
       'electronics': '/shop/category/electronics',
       'fashion': '/shop/category/fashion',
@@ -561,11 +564,25 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       'automotive': '/shop/category/automotive'
     };
 
-    const baseRoute = baseRouteMap[categoryKey];
+    const baseRoute = baseRouteMap[event.categoryKey];
     if (baseRoute) {
       this.router.navigate([baseRoute], { 
-        queryParams: { subcategory: subcategory.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-') } 
+        queryParams: { subcategory: event.subcategory.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-') } 
       });
+    }
+  }
+
+  // Featured products methods
+  onAddToCart(product: Product): void {
+    this.cartTotal += product.price;
+    this.cartItemCount++;
+  }
+
+  onToggleWishlist(productId: number): void {
+    if (this.wishlist.has(productId)) {
+      this.wishlist.delete(productId);
+    } else {
+      this.wishlist.add(productId);
     }
   }
 
@@ -644,7 +661,6 @@ export class MarketplaceComponent implements OnInit, OnDestroy {
       this.router.navigate([route]);
     }
   }
-  
 
   // Account navigation handler
   onAccountItemSelected(item: string): void {

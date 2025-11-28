@@ -24,6 +24,15 @@ import { TrackOrderComponent } from './components/header/shop/track-order/track-
 import { ElectronicsComponent } from './components/market-place/electronics/electronics.component';
 import { FashionComponent } from './components/market-place/fashion/fashion.component';
 import { GardenComponent } from './components/market-place/garden/garden.component';
+import { SportsComponent } from './components/market-place/sports/sports.component';
+import { BeautyComponent } from './components/market-place/beauty/beauty.component';
+import { BooksComponent } from './components/market-place/books/books.component';
+import { ToysComponent } from './components/market-place/toys/toys.component';
+import { AutomotiveComponent } from './components/market-place/automotive/automotive.component';
+
+// New Components
+import { FeaturedProductsComponent } from './components/market-place/featured-products/featured-products.component';
+import { CategorySidebarComponent } from './components/market-place/category-sidebar/category-sidebar.component';
 
 export const routes: Routes = [
   { path: '', component: MarketplaceComponent },
@@ -49,6 +58,15 @@ export const routes: Routes = [
   { path: 'electronics', component: ElectronicsComponent },
   { path: 'fashion', component: FashionComponent },
   { path: 'home-garden', component: GardenComponent },
+  { path: 'sports', component: SportsComponent },
+  { path: 'beauty', component: BeautyComponent },
+  { path: 'books', component: BooksComponent },
+  { path: 'toys-games', component: ToysComponent },
+  { path: 'automotive', component: AutomotiveComponent },
+  
+  // Component showcase routes (optional)
+  { path: 'featured-products', component: FeaturedProductsComponent },
+  { path: 'category-sidebar', component: CategorySidebarComponent },
   
   // Blog route
   { path: 'blog', component: BlogComponent }, 

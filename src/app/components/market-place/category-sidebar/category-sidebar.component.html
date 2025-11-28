@@ -1,0 +1,48 @@
+<aside class="category-sidebar">
+  <div class="sidebar-header">
+    <h3>Shop by Category</h3>
+  </div>
+  <div class="categories-list">
+    <div 
+      class="category-item" 
+      *ngFor="let category of categories"
+      [class.expanded]="expandedCategory === category.name"
+      [class.active]="hoveredCategory === category.key"
+      (mouseenter)="onCategoryHover(category.key)"
+      (mouseleave)="onCategoryLeave()"
+    >
+      <div 
+        class="category-main" 
+        (click)="onToggleCategory(category.name)"
+        (keypress)="onToggleCategory(category.name)"
+        tabindex="0"
+      >
+        <div class="category-info">
+          <span class="material-icons category-icon">{{ category.icon }}</span>
+          <span class="category-name">{{ category.name }}</span>
+        </div>
+        <div class="category-meta">
+          <span class="product-count">{{ category.productCount }}</span>
+          <span class="material-icons expand-icon">expand_more</span>
+        </div>
+      </div>
+      <div class="subcategories" *ngIf="expandedCategory === category.name">
+        <div 
+          class="subcategory-item" 
+          *ngFor="let subcategory of category.subcategories"
+          (click)="onNavigateToSubcategory(category.key, subcategory)"
+          (keypress)="onNavigateToSubcategory(category.key, subcategory)"
+          tabindex="0"
+        >
+          {{ subcategory }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    <button class="view-all-categories-btn" (click)="onNavigateToCategory('all')">
+      View All Categories
+      <span class="material-icons">arrow_forward</span>
+    </button>
+  </div>
+</aside>
