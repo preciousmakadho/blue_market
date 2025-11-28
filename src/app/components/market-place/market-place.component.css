@@ -1,4 +1,4 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,6 +9,10 @@
   color: #2D2D2D;
   line-height: 1.6;
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .container {
@@ -297,7 +301,7 @@
 
 /* Features Section */
 .features {
-  padding: 60px 0;
+  padding: 40px 0;
   background: #F5F5F5;
   width: 100%;
 }
@@ -351,10 +355,19 @@
   line-height: 1.5;
 }
 
-/* Featured Products Section */
+/* Featured Products Section - NO LEFT GAP */
 .featured-products,
 .new-arrivals {
-  padding: 80px 0;
+  padding: 40px 0;
+  width: 100%;
+  margin: 0;
+}
+
+/* Override container padding for featured products section */
+.featured-products .container {
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
   width: 100%;
 }
 
@@ -366,6 +379,7 @@
   flex-wrap: wrap;
   gap: 16px;
   width: 100%;
+  padding: 0 16px;
 }
 
 .section-header h2 {
@@ -404,7 +418,7 @@
   border-color: #2196F3;
 }
 
-/* Featured Products Layout */
+/* Featured Products Layout - NO LEFT GAP */
 .featured-products-layout {
   display: grid;
   grid-template-columns: 280px 1fr;
@@ -412,23 +426,30 @@
   align-items: start;
   position: relative;
   width: 100%;
-  margin-left: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .category-cards-container {
   min-height: 400px;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .products-section {
   min-height: 400px;
   width: 100%;
+  margin: 0;
+  padding: 0 24px;
 }
 
 /* Category Hover Cards */
 .category-hover-card {
   width: 100%;
   animation: fadeIn 0.3s ease-in-out;
+  margin: 0;
+  padding: 0 24px;
 }
 
 @keyframes fadeIn {
@@ -444,7 +465,7 @@
 
 /* Promo Banners */
 .promo-banners {
-  padding: 80px 0;
+  padding: 30px 0;
   width: 100%;
 }
 
@@ -528,7 +549,7 @@
 
 /* Blog Section */
 .blog {
-  padding: 80px 0;
+  padding: 40px 0;
   background: #F5F5F5;
   width: 100%;
 }
@@ -616,7 +637,7 @@
 
 /* Brands Section */
 .brands {
-  padding: 80px 0;
+  padding: 40px 0;
   width: 100%;
 }
 
@@ -812,7 +833,7 @@
     font-size: 32px;
   }
 
-  /* Products Layout */
+  /* Products Layout - MOBILE FIX FOR NO GAP */
   .featured-products-layout {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -820,17 +841,27 @@
 
   .category-sidebar {
     position: static;
-    order: 2;
+    margin: 0 16px;
   }
 
   .products-section {
     order: 1;
+    padding: 0 16px;
+  }
+
+  .category-hover-card {
+    padding: 0 16px;
+  }
+
+  .featured-products .container {
+    padding: 0;
   }
 
   .section-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
+    padding: 0 16px;
   }
 
   .section-header h2 {
@@ -1068,51 +1099,4 @@
     box-shadow: none;
     border: 1px solid #ddd;
   }
-}
-/* Featured Products Layout - Remove Left Gap */
-.featured-products-layout {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 0;
-  align-items: start;
-  position: relative;
-  width: 100%;
-  margin-left: 0;
-  padding-left: 0;
-}
-
-.category-cards-container {
-  min-height: 400px;
-  width: 100%;
-  padding-left: 0;
-}
-
-.products-section {
-  min-height: 400px;
-  width: 100%;
-  padding-left: 0;
-}
-
-/* Container adjustments to remove left padding */
-.featured-products .container {
-  padding-left: 0;
-  padding-right: 16px;
-}
-
-/* Ensure the main container doesn't add padding */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;
-  width: 100%;
-}
-
-/* Remove any potential body or parent padding */
-.marketplace-container {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  color: #2D2D2D;
-  line-height: 1.6;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
 }
