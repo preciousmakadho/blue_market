@@ -6,8 +6,7 @@
         <div class="logo" (click)="navigateTo('')" style="cursor: pointer;">
           <img src="Assets/blulogo.png" class="logo-image" />
           <div class="logo-text">
-            <h4>BLUFOUNTAIN</h4>
-            <span class="marketplace-text">MARKET</span>
+            <h4>BluFountain Market</h4>
           </div>
         </div>
       </div>
@@ -85,10 +84,54 @@
           <span class="badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
         </a>
 
-        <a class="header-action-item account" (click)="toggleAccountDropdown()">
+        <a class="header-action-item account" (click)="toggleAccountSlider()">
           <span class="material-icons">person_outline</span>
           <span class="text">Account</span>
         </a>
+        
+        <!-- Language Selector -->
+        <div class="language-selector" (click)="toggleLanguageDropdown()">
+          <span class="flag-icon">🌐</span>
+          <span class="text">{{ selectedLanguageCode }}</span>
+          <span class="material-icons arrow-small">expand_more</span>
+          
+          <!-- Language Dropdown Menu -->
+          <div class="language-dropdown-menu" *ngIf="languageDropdownOpen">
+            <div class="language-header">Change language</div>
+            <div class="language-option" (click)="selectLanguage('en', 'EN')">
+              <input type="radio" [checked]="selectedLanguage === 'en'">
+              <span>English - EN</span>
+            </div>
+            <div class="language-option" (click)="selectLanguage('es', 'ES')">
+              <input type="radio" [checked]="selectedLanguage === 'es'">
+              <span>español - ES</span>
+            </div>
+            <div class="language-option" (click)="selectLanguage('ar', 'AR')">
+              <input type="radio" [checked]="selectedLanguage === 'ar'">
+              <span>العربية - AR</span>
+            </div>
+            <div class="language-option" (click)="selectLanguage('de', 'DE')">
+              <input type="radio" [checked]="selectedLanguage === 'de'">
+              <span>Deutsch - DE</span>
+            </div>
+            <div class="language-option" (click)="selectLanguage('he', 'HE')">
+              <input type="radio" [checked]="selectedLanguage === 'he'">
+              <span>עברית - HE</span>
+            </div>
+            <div class="language-option" (click)="selectLanguage('ko', 'KO')">
+              <input type="radio" [checked]="selectedLanguage === 'ko'">
+              <span>한국어 - KO</span>
+            </div>
+            <div class="language-option" (click)="selectLanguage('pt', 'PT')">
+              <input type="radio" [checked]="selectedLanguage === 'pt'">
+              <span>português - PT</span>
+            </div>
+            <div class="language-option" (click)="selectLanguage('zh', 'ZH')">
+              <input type="radio" [checked]="selectedLanguage === 'zh'">
+              <span>中文 (简体) - ZH</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
@@ -100,12 +143,93 @@
   <nav class="main-nav" [class.mobile-open]="mobileMenuOpen">
     <div class="container nav-container">
       <!-- Browse All Categories button -->
-      <button class="browse-categories-btn" [class.active]="categoriesDropdownOpen" 
-              (click)="toggleCategoriesDropdown()">
-        <span class="material-icons">apps</span>
-        <span>Browse All Categories</span>
-        <span class="material-icons arrow">{{ categoriesDropdownOpen ? 'expand_less' : 'expand_more' }}</span>
-      </button>
+      <div class="browse-categories-wrapper">
+        <button class="browse-categories-btn" [class.active]="categoriesDropdownOpen" 
+                (click)="toggleCategoriesDropdown()">
+          <span class="material-icons">apps</span>
+          <span>Browse All Categories</span>
+          <span class="material-icons arrow">{{ categoriesDropdownOpen ? 'expand_less' : 'expand_more' }}</span>
+        </button>
+
+        <!-- New Categories Mega Dropdown -->
+        <div class="categories-mega-dropdown" *ngIf="categoriesDropdownOpen" 
+             (mouseleave)="categoriesDropdownOpen = false">
+          <div class="categories-mega-content">
+            <!-- Left Column - Departments -->
+            <div class="departments-column">
+              <h4 class="departments-title">Shop by Department</h4>
+              <div class="departments-list">
+                <div class="department-item" 
+                     *ngFor="let department of departments"
+                     [class.active]="activeDepartment?.id === department.id"
+                     (mouseenter)="setActiveDepartment(department)">
+                  <span class="department-icon">{{ department.icon }}</span>
+                  <span class="department-name">{{ department.name }}</span>
+                  <span class="material-icons arrow-right">chevron_right</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column - Department Content -->
+            <div class="department-content-column" *ngIf="activeDepartment">
+              <!-- Subcategories Section -->
+              <div class="content-section">
+                <h5 class="content-title">Search for products, brands...</h5>
+                <div class="subcategories-grid">
+                  <div class="subcategory-column" *ngFor="let column of activeDepartment.subcategories">
+                    <h6 class="subcategory-title" *ngIf="column.title">{{ column.title }}</h6>
+                    <a *ngFor="let item of column.items" 
+                       class="subcategory-item"
+                       (click)="navigateToSubcategory(item.route)">
+                      {{ item.name }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Featured Stores Section -->
+              <div class="content-section" *ngIf="activeDepartment.featuredStores.length">
+                <h5 class="content-title">Featured Stores</h5>
+                <div class="featured-stores">
+                  <a *ngFor="let store of activeDepartment.featuredStores" 
+                     class="featured-store"
+                     (click)="navigateToStore(store.route)">
+                    {{ store.name }}
+                  </a>
+                </div>
+              </div>
+
+              <!-- Promotional Banner -->
+              <div class="promo-banner" *ngIf="activeDepartment.promo">
+                <div class="promo-content">
+                  <span class="promo-badge">{{ activeDepartment.promo.badge }}</span>
+                  <h3 class="promo-title">{{ activeDepartment.promo.title }}</h3>
+                  <button class="promo-btn" (click)="navigateTo(activeDepartment.promo.route)">
+                    {{ activeDepartment.promo.buttonText }}
+                  </button>
+                </div>
+                <div class="promo-image">
+                  <img [src]="activeDepartment.promo.image" [alt]="activeDepartment.promo.title" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Default Content when no department is active -->
+            <div class="department-content-column default-content" *ngIf="!activeDepartment">
+              <div class="content-section">
+                <h5 class="content-title">Popular Categories</h5>
+                <div class="default-categories">
+                  <div class="default-category" *ngFor="let category of defaultCategories"
+                       (click)="navigateTo(category.route)">
+                    <span class="category-icon">{{ category.icon }}</span>
+                    <span class="category-name">{{ category.name }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Main navigation links -->
       <ul class="nav-links">
@@ -240,62 +364,69 @@
         </li>
       </ul>
     </div>
-
-    <!-- Categories Mega Dropdown -->
-    <div class="categories-mega-dropdown" *ngIf="categoriesDropdownOpen" 
-         (mouseleave)="categoriesDropdownOpen = false">
-      <div class="categories-grid">
-        <a (click)="navigateTo('/category/wines')" class="category-item">
-          <span class="category-icon">🍷</span>
-          <span>Wines & Drinks</span>
-          <span class="category-count">1</span>
-        </a>
-        <a (click)="navigateTo('/category/vegetables')" class="category-item">
-          <span class="category-icon">🥬</span>
-          <span>Vegetables</span>
-          <span class="category-count">3</span>
-        </a>
-        <a (click)="navigateTo('/category/uncategorized')" class="category-item">
-          <span class="category-icon">📦</span>
-          <span>Uncategorized</span>
-          <span class="category-count">9</span>
-        </a>
-        <a (click)="navigateTo('/category/dairy')" class="category-item">
-          <span class="category-icon">🥛</span>
-          <span>Milks and Dairies</span>
-          <span class="category-count">3</span>
-        </a>
-        <a (click)="navigateTo('/category/seafood')" class="category-item">
-          <span class="category-icon">🐟</span>
-          <span>Fresh Seafood</span>
-          <span class="category-count">5</span>
-        </a>
-        <a (click)="navigateTo('/category/fruit')" class="category-item">
-          <span class="category-icon">🍎</span>
-          <span>Fresh Fruit</span>
-          <span class="category-count">8</span>
-        </a>
-        <a (click)="navigateTo('/category/deals')" class="category-item">
-          <span class="category-icon">🎁</span>
-          <span>Deals Of The Day</span>
-          <span class="category-count">4</span>
-        </a>
-        <a (click)="navigateTo('/category/beauty')" class="category-item">
-          <span class="category-icon">💄</span>
-          <span>Clothing & beauty</span>
-          <span class="category-count">2</span>
-        </a>
-        <a (click)="navigateTo('/category/bread')" class="category-item">
-          <span class="category-icon">🥖</span>
-          <span>Bread and Juice</span>
-          <span class="category-count">5</span>
-        </a>
-        <a (click)="navigateTo('/category/baking')" class="category-item">
-          <span class="category-icon">🧁</span>
-          <span>Baking material</span>
-          <span class="category-count">7</span>
-        </a>
-      </div>
-    </div>
   </nav>
 </header>
+
+<!-- Account Slider Overlay -->
+<div class="account-slider-overlay" *ngIf="accountSliderOpen" (click)="toggleAccountSlider()"></div>
+
+<!-- Account Slider -->
+<div class="account-slider" [class.open]="accountSliderOpen">
+  <div class="account-slider-header">
+    <h2>My Account</h2>
+    <button class="close-slider" (click)="toggleAccountSlider()">
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+  
+  <div class="account-slider-content">
+    <div class="welcome-section">
+      <h3>Welcome to BluFountain</h3>
+    </div>
+
+    <!-- Existing Account Section -->
+    <div class="account-section">
+      <h4>I have an account</h4>
+      <p class="section-description">Fill in your username and password to access your account.</p>
+      
+      <form class="login-form">
+        <div class="form-group">
+          <input type="text" placeholder="Username or Email" class="form-input">
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="Password" class="form-input">
+        </div>
+        <button type="submit" class="signin-btn">Sign In</button>
+      </form>
+
+      <div class="exclusive-savings">
+        <div class="savings-card">
+          <span class="member-text">member sign card</span>
+          <h4>Sign in for Exclusive Savings!</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customer Account Section -->
+    <div class="account-section">
+      <h4>Create a New Customer Account</h4>
+      <p class="section-description">By creating a Customer account you'll be able to access:</p>
+      <ul class="benefits-list">
+        <li>Quick Checkout and Order Tracking.</li>
+        <li>Orders and Invoices.</li>
+      </ul>
+      <button class="create-account-btn" (click)="navigateTo('/register/customer')">Create an Account</button>
+    </div>
+
+    <!-- Business Account Section -->
+    <div class="account-section">
+      <h4>Create a New Business Account</h4>
+      <p class="section-description">By creating a Business Account you will be able to access:</p>
+      <ul class="benefits-list">
+        <li>Business Payment Options and Exclusive Discounts.</li>
+        <li>A tailored range of Products and Support Services.</li>
+      </ul>
+      <button class="create-account-btn business" (click)="navigateTo('/register/business')">Create Business Account</button>
+    </div>
+  </div>
+</div>
