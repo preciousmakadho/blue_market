@@ -18,12 +18,15 @@ export class HeaderComponent implements OnInit {
   searchQuery: string = '';
   cartTotal: number = 0;
   cartItemCount: number = 0;
+  compareCount: number = 0;
+  wishlistCount: number = 0;
   mobileMenuOpen: boolean = false;
   
   // Dropdown states
   accountDropdownOpen: boolean = false;
   cartDropdownOpen: boolean = false;
-  aboutDropdownOpen: boolean = false;
+  categoriesDropdownOpen: boolean = false;
+  homeDropdownOpen: boolean = false;
   shopDropdownOpen: boolean = false;
   vendorsDropdownOpen: boolean = false;
   megaMenuDropdownOpen: boolean = false;
@@ -33,9 +36,11 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // Initialize cart with some demo data
+    // Initialize with demo data
     this.cartTotal = 44.98;
     this.cartItemCount = 2;
+    this.compareCount = 0;
+    this.wishlistCount = 0;
   }
 
   // Close all dropdowns when clicking outside
@@ -49,6 +54,9 @@ export class HeaderComponent implements OnInit {
     }
     if (!target.closest('.cart')) {
       this.cartDropdownOpen = false;
+    }
+    if (!target.closest('.browse-categories-btn') && !target.closest('.categories-mega-dropdown')) {
+      this.categoriesDropdownOpen = false;
     }
   }
 
@@ -99,10 +107,15 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  toggleCategoriesDropdown(): void {
+    this.categoriesDropdownOpen = !this.categoriesDropdownOpen;
+  }
+
   closeAllDropdowns(): void {
     this.accountDropdownOpen = false;
     this.cartDropdownOpen = false;
-    this.aboutDropdownOpen = false;
+    this.categoriesDropdownOpen = false;
+    this.homeDropdownOpen = false;
     this.shopDropdownOpen = false;
     this.vendorsDropdownOpen = false;
     this.megaMenuDropdownOpen = false;
