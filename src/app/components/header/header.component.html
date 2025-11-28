@@ -22,7 +22,6 @@
             </button>
             <div class="category-dropdown-menu" *ngIf="categoryDropdownOpen">
               <div class="category-list">
-
                 <a (click)="selectCategory('Arts & Crafts')" class="category-option">Arts & Crafts</a>
                 <a (click)="selectCategory('Automotive')" class="category-option">Automotive</a>
                 <a (click)="selectCategory('Baby')" class="category-option">Baby</a>
@@ -139,6 +138,42 @@
     </div>
   </div>
 
+  <!-- New Middle Row with Quick Links -->
+  <div class="middle-header">
+    <div class="container">
+      <div class="quick-links">
+        <a class="quick-link" (click)="navigateTo('/daily-deals')">
+          <span class="material-icons">local_offer</span>
+          <span>Daily Deals</span>
+        </a>
+        <a class="quick-link" (click)="navigateTo('/flash-sales')">
+          <span class="material-icons">flash_on</span>
+          <span>Flash Sales</span>
+        </a>
+        <a class="quick-link" (click)="navigateTo('/new-arrivals')">
+          <span class="material-icons">new_releases</span>
+          <span>New Arrivals</span>
+        </a>
+        <a class="quick-link" (click)="navigateTo('/trending')">
+          <span class="material-icons">trending_up</span>
+          <span>Trending Now</span>
+        </a>
+        <a class="quick-link" (click)="navigateTo('/clearance')">
+          <span class="material-icons">clear_all</span>
+          <span>Clearance</span>
+        </a>
+        <a class="quick-link" (click)="navigateTo('/gift-cards')">
+          <span class="material-icons">card_giftcard</span>
+          <span>Gift Cards</span>
+        </a>
+        <a class="quick-link" (click)="navigateTo('/help-center')">
+          <span class="material-icons">help_center</span>
+          <span>Help Center</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <nav class="main-nav" [class.mobile-open]="mobileMenuOpen">
     <div class="container nav-container">
       <!-- Browse All Categories button -->
@@ -150,7 +185,7 @@
           <span class="material-icons arrow">{{ categoriesDropdownOpen ? 'expand_less' : 'expand_more' }}</span>
         </button>
 
-        <!-- New Categories Mega Dropdown -->
+        <!-- Enhanced Categories Mega Dropdown -->
         <div class="categories-mega-dropdown" *ngIf="categoriesDropdownOpen" 
              (mouseleave)="categoriesDropdownOpen = false">
           <div class="categories-mega-content">
@@ -171,57 +206,86 @@
 
             <!-- Right Column - Department Content -->
             <div class="department-content-column" *ngIf="activeDepartment">
-              <!-- Subcategories Section -->
-              <div class="content-section">
-                <h5 class="content-title">Search for products, brands...</h5>
-                <div class="subcategories-grid">
-                  <div class="subcategory-column" *ngFor="let column of activeDepartment.subcategories">
-                    <h6 class="subcategory-title" *ngIf="column.title">{{ column.title }}</h6>
-                    <a *ngFor="let item of column.items" 
-                       class="subcategory-item"
-                       (click)="navigateToSubcategory(item.route)">
-                      {{ item.name }}
+              <!-- Search Section -->
+              <div class="search-section-mini">
+                <div class="search-mini">
+                  <input type="text" placeholder="Search for products, brands..." class="search-mini-input">
+                  <span class="material-icons search-mini-icon">search</span>
+                </div>
+              </div>
+
+              <!-- Main Content Grid -->
+              <div class="department-main-content">
+                <!-- Subcategories Section -->
+                <div class="subcategories-section">
+                  <div class="subcategories-grid">
+                    <div class="subcategory-column" *ngFor="let column of activeDepartment.subcategories">
+                      <h6 class="subcategory-title" *ngIf="column.title">{{ column.title }}</h6>
+                      <div class="subcategory-items">
+                        <a *ngFor="let item of column.items" 
+                           class="subcategory-item"
+                           (click)="navigateToSubcategory(item.route)">
+                          {{ item.name }}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Featured Stores Section -->
+                <div class="featured-stores-section" *ngIf="activeDepartment.featuredStores.length">
+                  <h5 class="section-title">Featured Stores</h5>
+                  <div class="featured-stores-grid">
+                    <a *ngFor="let store of activeDepartment.featuredStores" 
+                       class="featured-store-item"
+                       (click)="navigateToStore(store.route)">
+                      <span class="store-icon">🏪</span>
+                      <span class="store-name">{{ store.name }}</span>
                     </a>
                   </div>
                 </div>
-              </div>
 
-              <!-- Featured Stores Section -->
-              <div class="content-section" *ngIf="activeDepartment.featuredStores.length">
-                <h5 class="content-title">Featured Stores</h5>
-                <div class="featured-stores">
-                  <a *ngFor="let store of activeDepartment.featuredStores" 
-                     class="featured-store"
-                     (click)="navigateToStore(store.route)">
-                    {{ store.name }}
-                  </a>
-                </div>
-              </div>
-
-              <!-- Promotional Banner -->
-              <div class="promo-banner" *ngIf="activeDepartment.promo">
-                <div class="promo-content">
-                  <span class="promo-badge">{{ activeDepartment.promo.badge }}</span>
-                  <h3 class="promo-title">{{ activeDepartment.promo.title }}</h3>
-                  <button class="promo-btn" (click)="navigateTo(activeDepartment.promo.route)">
-                    {{ activeDepartment.promo.buttonText }}
-                  </button>
-                </div>
-                <div class="promo-image">
-                  <img [src]="activeDepartment.promo.image" [alt]="activeDepartment.promo.title" />
+                <!-- Promotional Banner -->
+                <div class="promo-banner-section" *ngIf="activeDepartment.promo">
+                  <div class="promo-banner">
+                    <div class="promo-content">
+                      <span class="promo-badge">{{ activeDepartment.promo.badge }}</span>
+                      <h3 class="promo-title">{{ activeDepartment.promo.title }}</h3>
+                      <p class="promo-description">{{ activeDepartment.promo.description }}</p>
+                      <button class="promo-btn" (click)="navigateTo(activeDepartment.promo.route)">
+                        {{ activeDepartment.promo.buttonText }}
+                      </button>
+                    </div>
+                    <div class="promo-image">
+                      <img [src]="activeDepartment.promo.image" [alt]="activeDepartment.promo.title" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
             <!-- Default Content when no department is active -->
             <div class="department-content-column default-content" *ngIf="!activeDepartment">
-              <div class="content-section">
+              <div class="default-content-inner">
                 <h5 class="content-title">Popular Categories</h5>
-                <div class="default-categories">
-                  <div class="default-category" *ngFor="let category of defaultCategories"
+                <div class="default-categories-grid">
+                  <div class="default-category-item" *ngFor="let category of defaultCategories"
                        (click)="navigateTo(category.route)">
-                    <span class="category-icon">{{ category.icon }}</span>
+                    <div class="category-icon-wrapper">
+                      <span class="category-icon">{{ category.icon }}</span>
+                    </div>
                     <span class="category-name">{{ category.name }}</span>
+                  </div>
+                </div>
+                
+                <!-- Quick Access Section -->
+                <div class="quick-access-section">
+                  <h5 class="content-title">Quick Access</h5>
+                  <div class="quick-links-mini">
+                    <a class="quick-link-mini" (click)="navigateTo('/daily-deals')">🔥 Daily Deals</a>
+                    <a class="quick-link-mini" (click)="navigateTo('/new-arrivals')">🆕 New Arrivals</a>
+                    <a class="quick-link-mini" (click)="navigateTo('/best-sellers')">🏆 Best Sellers</a>
+                    <a class="quick-link-mini" (click)="navigateTo('/clearance')">💸 Clearance</a>
                   </div>
                 </div>
               </div>
@@ -304,7 +368,7 @@
                   <span class="promo-badge">Organic</span>
                   <h3>Everyday Fresh & Clean with Our Products</h3>
                   <button class="shop-now-btn" (click)="navigateTo('/shop')">Shop Now</button>
-                  <img src="Assets/vegetables.png" alt="Fresh vegetables" class="promo-image" />
+                  <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Fresh vegetables" class="promo-image" />
                 </div>
               </div>
             </div>

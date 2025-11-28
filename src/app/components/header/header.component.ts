@@ -59,7 +59,8 @@ export class HeaderComponent implements OnInit {
             { name: 'Refrigerators', route: '/category/appliances/refrigerators' },
             { name: 'Ovens & Stoves', route: '/category/appliances/ovens' },
             { name: 'Microwaves', route: '/category/appliances/microwaves' },
-            { name: 'Dishwashers', route: '/category/appliances/dishwashers' }
+            { name: 'Dishwashers', route: '/category/appliances/dishwashers' },
+            { name: 'Coffee Makers', route: '/category/appliances/coffee-makers' }
           ]
         },
         {
@@ -68,68 +69,83 @@ export class HeaderComponent implements OnInit {
             { name: 'Washing Machines', route: '/category/appliances/washing-machines' },
             { name: 'Dryers', route: '/category/appliances/dryers' },
             { name: 'Air Conditioners', route: '/category/appliances/air-conditioners' },
-            { name: 'Vacuum Cleaners', route: '/category/appliances/vacuums' }
+            { name: 'Vacuum Cleaners', route: '/category/appliances/vacuums' },
+            { name: 'Water Heaters', route: '/category/appliances/water-heaters' }
+          ]
+        },
+        {
+          title: 'Small Appliances',
+          items: [
+            { name: 'Blenders & Mixers', route: '/category/appliances/blenders' },
+            { name: 'Toasters & Kettles', route: '/category/appliances/toasters' },
+            { name: 'Food Processors', route: '/category/appliances/food-processors' },
+            { name: 'Irons & Steamers', route: '/category/appliances/irons' }
           ]
         }
       ],
       featuredStores: [
         { name: 'Samsung Home', route: '/store/samsung-home' },
         { name: 'LG Appliances', route: '/store/lg-appliances' },
-        { name: 'Bosch Premium', route: '/store/bosch-premium' }
+        { name: 'Bosch Premium', route: '/store/bosch-premium' },
+        { name: 'Whirlpool', route: '/store/whirlpool' }
       ],
       promo: {
         badge: 'Smart Home',
         title: 'UPGRADE YOUR KITCHEN',
+        description: 'Latest smart appliances with energy efficiency',
         buttonText: 'SHOP NOW',
         route: '/category/smart-appliances',
-        image: 'Assets/appliances-promo.jpg'
+        image: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
       }
     },
     {
-      id: 'toys',
-      name: 'Toys',
-      icon: '🧸',
+      id: 'camping-outdoor',
+      name: 'Camping & Outdoor',
+      icon: '🏕️',
       subcategories: [
         {
-          title: 'Toys',
+          title: 'Camping & Outdoor',
           items: [
-            { name: 'New in Toys', route: '/category/toys/new' },
-            { name: 'All Toys', route: '/category/toys/all' },
-            { name: 'Action Figures & Dolls', route: '/category/toys/action-figures' },
-            { name: 'Arts & Crafts', route: '/category/toys/arts-crafts' }
+            { name: 'New in Camping', route: '/category/camping/new' },
+            { name: 'All Camping', route: '/category/camping/all' },
+            { name: 'Tents & Shelters', route: '/category/camping/tents' },
+            { name: 'Camping Furniture', route: '/category/camping/furniture' },
+            { name: 'Lighting & Gadgets', route: '/category/camping/lighting' }
           ]
         },
         {
-          title: '',
+          title: 'Sleeping',
           items: [
-            { name: 'Board Games', route: '/category/toys/board-games' },
-            { name: 'Card Games', route: '/category/toys/card-games' },
-            { name: 'Indoor Play', route: '/category/toys/indoor-play' },
-            { name: 'Outdoor Play', route: '/category/toys/outdoor-play' }
+            { name: 'Sleeping Bags', route: '/category/camping/sleeping-bags' },
+            { name: 'Air Mattresses', route: '/category/camping/mattresses' },
+            { name: 'Camping Pillows', route: '/category/camping/pillows' },
+            { name: 'Coolers & Refrigeration', route: '/category/camping/coolers' }
           ]
         },
         {
-          title: '',
+          title: 'Outdoor Activities',
           items: [
-            { name: 'Kids Party Supplies', route: '/category/toys/party-supplies' },
-            { name: 'Puzzles', route: '/category/toys/puzzles' },
-            { name: 'Smart Toys', route: '/category/toys/smart-toys' }
+            { name: 'All Outdoor Activities', route: '/category/outdoor/activities' },
+            { name: 'Beach & Water Activities', route: '/category/outdoor/beach' },
+            { name: 'Fishing', route: '/category/outdoor/fishing' },
+            { name: 'Hiking', route: '/category/outdoor/hiking' },
+            { name: 'Hunting', route: '/category/outdoor/hunting' }
           ]
         }
       ],
       featuredStores: [
-        { name: 'The Character Shop', route: '/store/character-shop' },
-        { name: 'Disney', route: '/store/disney' },
-        { name: 'Fisher Price', route: '/store/fisher-price' },
-        { name: 'Hasbro', route: '/store/hasbro' },
-        { name: 'LEGO®', route: '/store/lego' }
+        { name: 'Campground', route: '/store/campground' },
+        { name: 'Kaufmann', route: '/store/kaufmann' },
+        { name: 'Basecamp', route: '/store/basecamp' },
+        { name: 'Lifetime', route: '/store/lifetime' }
       ],
       promo: {
-        badge: 'DEALS that THRILL',
-        title: 'CREATIVE PLAY FOR ALL AGES',
-        buttonText: 'SHOP NOW',
-        route: '/category/featured-toys',
-        image: 'Assets/toys-promo.jpg'
+        badge: 'OUTDOOR ADVENTURE',
+        title: 'GEAR UP FOR YOUR NEXT TRIP',
+        description: 'Premium camping gear for unforgettable adventures',
+        buttonText: 'EXPLORE NOW',
+        route: '/category/camping-gear',
+        image: 'https://images.unsplash.com/photo-1504851149312-7a075b496cc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
       }
     },
     {
@@ -143,7 +159,8 @@ export class HeaderComponent implements OnInit {
             { name: 'Smartphones', route: '/category/electronics/smartphones' },
             { name: 'Tablets', route: '/category/electronics/tablets' },
             { name: 'Smartwatches', route: '/category/electronics/smartwatches' },
-            { name: 'Headphones', route: '/category/electronics/headphones' }
+            { name: 'Headphones', route: '/category/electronics/headphones' },
+            { name: 'Phone Cases', route: '/category/electronics/phone-cases' }
           ]
         },
         {
@@ -152,25 +169,37 @@ export class HeaderComponent implements OnInit {
             { name: 'Laptops', route: '/category/electronics/laptops' },
             { name: 'Desktops', route: '/category/electronics/desktops' },
             { name: 'Monitors', route: '/category/electronics/monitors' },
-            { name: 'Printers', route: '/category/electronics/printers' }
+            { name: 'Printers', route: '/category/electronics/printers' },
+            { name: 'Computer Accessories', route: '/category/electronics/computer-accessories' }
+          ]
+        },
+        {
+          title: 'Audio & Video',
+          items: [
+            { name: 'TVs', route: '/category/electronics/tvs' },
+            { name: 'Speakers', route: '/category/electronics/speakers' },
+            { name: 'Soundbars', route: '/category/electronics/soundbars' },
+            { name: 'Gaming Consoles', route: '/category/electronics/gaming-consoles' }
           ]
         }
       ],
       featuredStores: [
         { name: 'Apple Store', route: '/store/apple' },
         { name: 'Samsung Experience', route: '/store/samsung' },
-        { name: 'Sony Premium', route: '/store/sony' }
+        { name: 'Sony Premium', route: '/store/sony' },
+        { name: 'LG Electronics', route: '/store/lg-electronics' }
       ],
       promo: {
         badge: 'Latest Tech',
-        title: 'CUTTING-ELECTRONICS',
+        title: 'CUTTING-EDGE ELECTRONICS',
+        description: 'Discover the latest in technology innovation',
         buttonText: 'EXPLORE NOW',
         route: '/category/latest-electronics',
-        image: 'Assets/electronics-promo.jpg'
+        image: 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
       }
     },
     {
-      id: 'fashion',
+      id: 'clothing',
       name: 'Clothing & Shoes',
       icon: '👕',
       subcategories: [
@@ -180,7 +209,8 @@ export class HeaderComponent implements OnInit {
             { name: 'Shirts & Tops', route: '/category/fashion/mens-shirts' },
             { name: 'Pants & Jeans', route: '/category/fashion/mens-pants' },
             { name: 'Shoes', route: '/category/fashion/mens-shoes' },
-            { name: 'Accessories', route: '/category/fashion/mens-accessories' }
+            { name: 'Accessories', route: '/category/fashion/mens-accessories' },
+            { name: 'Sportswear', route: '/category/fashion/mens-sportswear' }
           ]
         },
         {
@@ -189,58 +219,122 @@ export class HeaderComponent implements OnInit {
             { name: 'Dresses & Skirts', route: '/category/fashion/womens-dresses' },
             { name: 'Tops & Blouses', route: '/category/fashion/womens-tops' },
             { name: 'Shoes', route: '/category/fashion/womens-shoes' },
-            { name: 'Bags & Accessories', route: '/category/fashion/womens-accessories' }
+            { name: 'Bags & Accessories', route: '/category/fashion/womens-accessories' },
+            { name: 'Sportswear', route: '/category/fashion/womens-sportswear' }
+          ]
+        },
+        {
+          title: 'Kids & Babies',
+          items: [
+            { name: "Boys' Clothing", route: '/category/fashion/boys-clothing' },
+            { name: "Girls' Clothing", route: '/category/fashion/girls-clothing' },
+            { name: 'Baby Clothing', route: '/category/fashion/baby-clothing' },
+            { name: 'Kids Shoes', route: '/category/fashion/kids-shoes' }
           ]
         }
       ],
       featuredStores: [
         { name: 'Premium Brands', route: '/store/premium-brands' },
         { name: 'Sportswear', route: '/store/sportswear' },
-        { name: 'Designer Collection', route: '/store/designer' }
+        { name: 'Designer Collection', route: '/store/designer' },
+        { name: 'Fast Fashion', route: '/store/fast-fashion' }
       ],
       promo: {
         badge: 'New Collection',
         title: 'TRENDING STYLES 2024',
+        description: 'Fresh styles for every season and occasion',
         buttonText: 'SHOP FASHION',
         route: '/category/new-fashion',
-        image: 'Assets/fashion-promo.jpg'
+        image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
       }
     },
     {
-      id: 'home',
-      name: 'Homeware',
-      icon: '🛋️',
+      id: 'home-garden',
+      name: 'Garden, Pool & Patio',
+      icon: '🌿',
       subcategories: [
         {
-          title: 'Furniture',
+          title: 'Garden & Outdoor',
           items: [
-            { name: 'Living Room', route: '/category/home/living-room' },
-            { name: 'Bedroom', route: '/category/home/bedroom' },
-            { name: 'Dining Room', route: '/category/home/dining-room' },
-            { name: 'Office Furniture', route: '/category/home/office' }
+            { name: 'New In Garden', route: '/category/garden/new' },
+            { name: 'All Garden', route: '/category/garden/all' },
+            { name: 'Gardening Tools', route: '/category/garden/tools' },
+            { name: 'Seeds & Bulbs', route: '/category/garden/seeds' },
+            { name: 'Garden Storage', route: '/category/garden/storage' }
           ]
         },
         {
-          title: 'Home Decor',
+          title: 'Pool & Patio',
           items: [
-            { name: 'Lighting', route: '/category/home/lighting' },
-            { name: 'Wall Art', route: '/category/home/wall-art' },
-            { name: 'Rugs & Carpets', route: '/category/home/rugs' },
-            { name: 'Curtains & Blinds', route: '/category/home/curtains' }
+            { name: 'All Pool', route: '/category/pool/all' },
+            { name: 'Pool Cleaners', route: '/category/pool/cleaners' },
+            { name: 'Pool Inflatables', route: '/category/pool/inflatables' },
+            { name: 'Patio Furniture', route: '/category/patio/furniture' },
+            { name: 'Patio Heaters', route: '/category/patio/heaters' }
+          ]
+        },
+        {
+          title: 'Outdoor Living',
+          items: [
+            { name: 'All Braai', route: '/category/braai/all' },
+            { name: 'Charcoal Braais', route: '/category/braai/charcoal' },
+            { name: 'Gas Braais', route: '/category/braai/gas' },
+            { name: 'Braai Accessories', route: '/category/braai/accessories' },
+            { name: 'Outdoor Lighting', route: '/category/outdoor/lighting' }
           ]
         }
       ],
       featuredStores: [
-        { name: 'Home Essentials', route: '/store/home-essentials' },
-        { name: 'Luxury Living', route: '/store/luxury-living' },
-        { name: 'Modern Designs', route: '/store/modern-designs' }
+        { name: 'Leroy Merlin', route: '/store/leroy-merlin' },
+        { name: 'Calore Group', route: '/store/calore-group' },
+        { name: 'Fire Up', route: '/store/fire-up' },
+        { name: 'Gardena', route: '/store/gardena' }
       ],
       promo: {
-        badge: 'Home Makeover',
-        title: 'TRANSFORM YOUR SPACE',
-        buttonText: 'DISCOVER',
-        route: '/category/home-decor',
-        image: 'Assets/home-promo.jpg'
+        badge: 'SUMMER READY',
+        title: 'CREATE YOUR OUTDOOR OASIS',
+        description: 'Transform your outdoor space with our premium collection',
+        buttonText: 'SHOP OUTDOOR',
+        route: '/category/outdoor-living',
+        image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+      }
+    },
+    {
+      id: 'automotive',
+      name: 'Automotive & DIY',
+      icon: '🚗',
+      subcategories: [
+        {
+          title: 'Auto Parts',
+          items: [
+            { name: 'Engine Parts', route: '/category/automotive/engine' },
+            { name: 'Brakes & Suspension', route: '/category/automotive/brakes' },
+            { name: 'Lighting & Electrical', route: '/category/automotive/lighting' },
+            { name: 'Tools & Equipment', route: '/category/automotive/tools' }
+          ]
+        },
+        {
+          title: 'DIY & Tools',
+          items: [
+            { name: 'Power Tools', route: '/category/diy/power-tools' },
+            { name: 'Hand Tools', route: '/category/diy/hand-tools' },
+            { name: 'Paint & Supplies', route: '/category/diy/paint' },
+            { name: 'Hardware', route: '/category/diy/hardware' }
+          ]
+        }
+      ],
+      featuredStores: [
+        { name: 'AutoPro', route: '/store/autopro' },
+        { name: 'ToolMaster', route: '/store/toolmaster' },
+        { name: 'DIY Experts', route: '/store/diy-experts' }
+      ],
+      promo: {
+        badge: 'PRO GRADE',
+        title: 'PROFESSIONAL TOOLS & PARTS',
+        description: 'Everything for your automotive and DIY projects',
+        buttonText: 'SHOP NOW',
+        route: '/category/automotive-tools',
+        image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
       }
     }
   ];
