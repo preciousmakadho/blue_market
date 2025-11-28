@@ -1,0 +1,49 @@
+<div class="featured-products-grid">
+  <div class="product-card" *ngFor="let product of products">
+    <div class="product-badges">
+      <span
+        class="badge"
+        *ngFor="let badge of product.badges"
+        [class.sale]="badge === 'SALE'"
+        [class.new]="badge === 'NEW'"
+        [class.hot]="badge === 'HOT'"
+      >
+        {{ badge }}
+      </span>
+    </div>
+    <div class="product-image">
+      <img [src]="product.image" [alt]="product.name" loading="lazy" />
+      <div class="product-actions">
+        <button
+          class="wishlist-btn"
+          [class.active]="isInWishlist(product.id)"
+          (click)="onToggleWishlist(product.id)"
+        >
+          <span class="material-icons">favorite</span>
+        </button>
+      </div>
+    </div>
+    <div class="product-info">
+      <div class="product-sku">{{ product.sku }}</div>
+      <h3 class="product-name">{{ product.name }}</h3>
+      <div class="product-rating">
+        <span class="stars">
+          <span *ngFor="let star of generateStars(product.rating)" class="star">
+            <span class="material-icons">{{ star ? 'star' : 'star_border' }}</span>
+          </span>
+        </span>
+        <span class="reviews">({{ product.reviews }})</span>
+      </div>
+      <div class="product-price">
+        <span class="price">\${{ product.price.toFixed(2) }}</span>
+        <span class="original-price" *ngIf="product.originalPrice">
+          \${{ product.originalPrice.toFixed(2) }}
+        </span>
+      </div>
+      <button class="add-to-cart-btn" (click)="onAddToCart(product)">
+        <span class="material-icons">shopping_cart</span>
+        Add to Cart
+      </button>
+    </div>
+  </div>
+</div>
