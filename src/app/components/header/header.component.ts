@@ -22,6 +22,15 @@ export class HeaderComponent implements OnInit {
   wishlistCount: number = 0;
   mobileMenuOpen: boolean = false;
   
+  // Search category
+  selectedCategory: string = 'All';
+  categoryDropdownOpen: boolean = false;
+  
+  // Language selector
+  selectedLanguage: string = 'en';
+  selectedLanguageCode: string = 'EN';
+  languageDropdownOpen: boolean = false;
+  
   // Dropdown states
   accountDropdownOpen: boolean = false;
   cartDropdownOpen: boolean = false;
@@ -57,6 +66,12 @@ export class HeaderComponent implements OnInit {
     }
     if (!target.closest('.browse-categories-btn') && !target.closest('.categories-mega-dropdown')) {
       this.categoriesDropdownOpen = false;
+    }
+    if (!target.closest('.category-dropdown-wrapper')) {
+      this.categoryDropdownOpen = false;
+    }
+    if (!target.closest('.language-selector')) {
+      this.languageDropdownOpen = false;
     }
   }
 
@@ -109,6 +124,27 @@ export class HeaderComponent implements OnInit {
 
   toggleCategoriesDropdown(): void {
     this.categoriesDropdownOpen = !this.categoriesDropdownOpen;
+  }
+
+  toggleCategoryDropdown(): void {
+    this.categoryDropdownOpen = !this.categoryDropdownOpen;
+  }
+
+  selectCategory(category: string): void {
+    this.selectedCategory = category;
+    this.categoryDropdownOpen = false;
+  }
+
+  toggleLanguageDropdown(): void {
+    this.languageDropdownOpen = !this.languageDropdownOpen;
+  }
+
+  selectLanguage(code: string, displayCode: string): void {
+    this.selectedLanguage = code;
+    this.selectedLanguageCode = displayCode;
+    this.languageDropdownOpen = false;
+    // Implement language change logic here
+    console.log('Language changed to:', code);
   }
 
   closeAllDropdowns(): void {
