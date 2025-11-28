@@ -53,8 +53,6 @@
 
     <section class="featured-products">
       <div class="container">
-       
-
         <div class="featured-products-layout">
           <!-- Shop by Category Sidebar -->
           <app-category-sidebar
@@ -276,16 +274,8 @@
       </div>
     </section>
 
-    <section class="brands">
-      <div class="container">
-        <h2 class="section-title">Shop by Brand</h2>
-        <div class="brands-grid">
-          <div class="brand-logo" *ngFor="let brand of marketplaceBrands">
-            {{ brand }}
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- Shop by Brands Component -->
+    <app-shop-brands [brands]="marketplaceBrands"></app-shop-brands>
   </div>
 
   <!-- Footer Component -->
