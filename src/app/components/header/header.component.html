@@ -12,17 +12,50 @@
         </div>
       </div>
 
-      <!-- Search bar in center -->
+      <!-- Search bar in center with category dropdown -->
       <div class="search-section">
         <div class="search-bar">
+          <div class="category-dropdown-wrapper">
+            <button class="category-dropdown-btn" [class.active]="categoryDropdownOpen" 
+                    (click)="toggleCategoryDropdown()">
+              <span class="category-text">{{ selectedCategory }}</span>
+              <span class="material-icons">expand_more</span>
+            </button>
+            <div class="category-dropdown-menu" *ngIf="categoryDropdownOpen">
+              <div class="category-list">
+                <a (click)="selectCategory('All Departments')" class="category-option" 
+                   [class.selected]="selectedCategory === 'All Departments'">All </a>
+                <a (click)="selectCategory('Arts & Crafts')" class="category-option">Arts & Crafts</a>
+                <a (click)="selectCategory('Automotive')" class="category-option">Automotive</a>
+                <a (click)="selectCategory('Baby')" class="category-option">Baby</a>
+                <a (click)="selectCategory('Beauty & Personal Care')" class="category-option">Beauty & Personal Care</a>
+                <a (click)="selectCategory('Books')" class="category-option">Books</a>
+                <a (click)="selectCategory('Boys Fashion')" class="category-option">Boys' Fashion</a>
+                <a (click)="selectCategory('Computers')" class="category-option">Computers</a>
+                <a (click)="selectCategory('Deals')" class="category-option">Deals</a>
+                <a (click)="selectCategory('Digital Music')" class="category-option">Digital Music</a>
+                <a (click)="selectCategory('Electronics')" class="category-option">Electronics</a>
+                <a (click)="selectCategory('Girls Fashion')" class="category-option">Girls' Fashion</a>
+                <a (click)="selectCategory('Health & Household')" class="category-option">Health & Household</a>
+                <a (click)="selectCategory('Home & Kitchen')" class="category-option">Home & Kitchen</a>
+                <a (click)="selectCategory('Industrial & Scientific')" class="category-option">Industrial & Scientific</a>
+                <a (click)="selectCategory('Kindle Store')" class="category-option">Kindle Store</a>
+                <a (click)="selectCategory('Luggage')" class="category-option">Luggage</a>
+                <a (click)="selectCategory('Men Fashion')" class="category-option">Men's Fashion</a>
+                <a (click)="selectCategory('Movies & TV')" class="category-option">Movies & TV</a>
+                <a (click)="selectCategory('Music, CDs & Vinyl')" class="category-option">Music, CDs & Vinyl</a>
+              </div>
+            </div>
+          </div>
           <input
             type="text"
             [(ngModel)]="searchQuery"
-            placeholder="Search for products..."
+            placeholder="Search BluFountain"
             (keyup.enter)="searchProducts()"
+            class="search-input"
           />
           <button class="search-btn" (click)="searchProducts()">
-            Search
+            <span class="material-icons">search</span>
           </button>
         </div>
       </div>
