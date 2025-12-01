@@ -21,6 +21,7 @@ import { AutomotiveComponent } from './automotive/automotive.component';
 import { FeaturedProductsComponent } from './featured-products/featured-products.component';
 import { CategorySidebarComponent } from './category-sidebar/category-sidebar.component';
 import { ShopBrandsComponent, Brand } from './shop-brands/shop-brands.component';
+import { PromoBannersComponent } from './promo-banners/promo-banners.component';
 
 // Export interfaces for use in other components
 export interface Product {
@@ -77,7 +78,8 @@ export interface Category {
     AutomotiveComponent,
     FeaturedProductsComponent,
     CategorySidebarComponent,
-    ShopBrandsComponent
+    ShopBrandsComponent, 
+    PromoBannersComponent
   ],
   templateUrl: './market-place.component.html',
   styleUrls: ['./market-place.component.css']

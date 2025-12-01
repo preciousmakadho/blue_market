@@ -14,7 +14,8 @@
 }
 
 .sidebar-header {
-  background: #2196F3;
+  background: #04225d;
+  
   color: white;
   padding: 20px;
   text-align: center;
@@ -48,7 +49,7 @@
 
 .category-item.active {
   background-color: #F8F9FA;
-  border-left: 3px solid #2196F3;
+  border-left: 3px solid #04225d;
 }
 
 .category-main {
@@ -75,7 +76,7 @@
 
 .category-icon {
   font-size: 20px;
-  color: #2196F3;
+  color: #04225d;
   width: 24px;
   height: 24px;
   display: flex;
@@ -98,7 +99,7 @@
 
 .product-count {
   background: #E3F2FD;
-  color: #2196F3;
+  color: #04225d;
   padding: 4px 8px;
   border-radius: 12px;
   font-size: 11px;
@@ -147,8 +148,8 @@
 
 .subcategory-item:hover {
   background: white;
-  color: #2196F3;
-  border-left-color: #2196F3;
+  color: #04225d;
+  border-left-color: #04225d;
 }
 
 .sidebar-footer {
@@ -160,8 +161,8 @@
 .view-all-categories-btn {
   width: 100%;
   background: transparent;
-  border: 2px solid #2196F3;
-  color: #2196F3;
+  border: 2px solid #04225d;
+  color: #04225d;
   padding: 12px 16px;
   border-radius: 8px;
   font-size: 14px;
@@ -175,7 +176,7 @@
 }
 
 .view-all-categories-btn:hover {
-  background: #2196F3;
+  background: #04225d;
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
