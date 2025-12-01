@@ -64,7 +64,7 @@
 }
 
 .logo-text h1 {
-  color: #2196F3;
+  color: #04225d;
   font-size: 28px;
   font-weight: 800;
   letter-spacing: 1px;
@@ -101,7 +101,7 @@
 }
 
 .search-bar:focus-within {
-  border-color: #2196F3;
+  border-color: #04225d;
 }
 
 .search-bar input {
@@ -115,7 +115,7 @@
 }
 
 .search-btn {
-  background: #2196F3;
+  background: #04225d;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -153,7 +153,7 @@
 
 .account:hover,
 .cart:hover {
-  color: #2196F3;
+  color: #04225d;
   background: #f5f5f5;
 }
 
@@ -165,7 +165,7 @@
   position: absolute;
   top: -2px;
   right: -2px;
-  background: #2196F3;
+  background: #04225d;
   color: white;
   border-radius: 50%;
   width: 18px;
@@ -217,7 +217,7 @@
 }
 
 .nav-links a:hover {
-  color: #2196F3;
+  color: #04225d;
 }
 
 /* Hero Section */
@@ -274,11 +274,11 @@
 
 .filter-select:focus {
   outline: none;
-  border-color: #2196F3;
+  border-color: #04225d;
 }
 
 .apply-filters-btn {
-  background: #2196F3;
+  background: #04225d;
   color: white;
   border: none;
   padding: 14px 24px;
@@ -294,14 +294,14 @@
 }
 
 .apply-filters-btn:hover {
-  background: #1976D2;
+  background: #04225d;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
 }
 
 /* Features Section */
 .features {
-  padding: 40px 0;
+  padding: 30px 0;
   background: #F5F5F5;
   width: 100%;
 }
@@ -338,7 +338,7 @@
   justify-content: center;
   background: #E3F2FD;
   border-radius: 50%;
-  color: #2196F3;
+  color: #04225d;
   flex-shrink: 0;
 }
 
@@ -358,7 +358,7 @@
 /* Featured Products Section - NO LEFT GAP */
 .featured-products,
 .new-arrivals {
-  padding: 40px 0;
+  padding: 20px 0;
   width: 100%;
   margin: 0;
 }
@@ -408,14 +408,14 @@
 }
 
 .category-tabs button:hover {
-  border-color: #2196F3;
-  color: #2196F3;
+  border-color: #04225d;
+  color: #04225d;
 }
 
 .category-tabs button.active {
-  background: #2196F3;
+  background: #04225d;
   color: white;
-  border-color: #2196F3;
+  border-color: #04225d;
 }
 
 /* Featured Products Layout - NO LEFT GAP */
@@ -463,93 +463,10 @@
   }
 }
 
-/* Promo Banners */
-.promo-banners {
-  padding: 30px 0;
-  width: 100%;
-}
-
-.promo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 32px;
-  width: 100%;
-}
-
-.promo-banner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  background: #2D2D2D;
-  color: white;
-  padding: 40px;
-  border-radius: 12px;
-  align-items: center;
-  transition: transform 0.3s;
-  width: 100%;
-}
-
-.promo-banner:hover {
-  transform: translateY(-4px);
-}
-
-.promo-banner.fashion {
-  background: linear-gradient(135deg, #1565C0 0%, #2D2D2D 100%);
-}
-
-.promo-content h3 {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 16px;
-  color: #2196F3;
-  line-height: 1.2;
-}
-
-.promo-content p {
-  font-size: 16px;
-  margin-bottom: 8px;
-  line-height: 1.5;
-}
-
-.promo-detail {
-  font-size: 14px;
-  color: #CCC;
-  margin-bottom: 24px !important;
-  line-height: 1.5;
-}
-
-.shop-now-btn {
-  background: #2196F3;
-  color: white;
-  border: none;
-  padding: 12px 28px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.shop-now-btn:hover {
-  background: #1976D2;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
-}
-
-.promo-image {
-  width: 100%;
-}
-
-.promo-image img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-}
 
 /* Blog Section */
 .blog {
-  padding: 40px 0;
+  padding: 10px 0;
   background: #F5F5F5;
   width: 100%;
 }
@@ -606,7 +523,7 @@
   position: absolute;
   top: 16px;
   left: 16px;
-  background: #2196F3;
+  background: #04225d;
   color: white;
   padding: 6px 12px;
   border-radius: 6px;
@@ -633,42 +550,6 @@
   font-size: 13px;
   color: #999;
   flex-wrap: wrap;
-}
-
-/* Brands Section */
-.brands {
-  padding: 40px 0;
-  width: 100%;
-}
-
-.brands-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 24px;
-  width: 100%;
-}
-
-.brand-logo {
-  background: white;
-  border: 2px solid #E0E0E0;
-  padding: 32px 20px;
-  border-radius: 12px;
-  text-align: center;
-  font-weight: 700;
-  color: #999;
-  transition: all 0.3s;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100px;
-}
-
-.brand-logo:hover {
-  border-color: #2196F3;
-  color: #2196F3;
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
@@ -909,22 +790,6 @@
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 24px;
   }
-
-  /* Brands */
-  .brands {
-    padding: 60px 0;
-  }
-
-  .brands-grid {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 16px;
-  }
-
-  .brand-logo {
-    padding: 24px 16px;
-    min-height: 80px;
-    font-size: 14px;
-  }
 }
 
 /* Mobile Large */
@@ -950,8 +815,7 @@
   .featured-products,
   .new-arrivals,
   .promo-banners,
-  .blog,
-  .brands {
+  .blog {
     padding: 40px 0;
   }
 
@@ -985,16 +849,6 @@
 
   .blog-content h3 {
     font-size: 16px;
-  }
-
-  .brands-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .brand-logo {
-    padding: 20px 12px;
-    min-height: 70px;
-    font-size: 12px;
   }
 }
 
@@ -1037,10 +891,6 @@
   .promo-content h3 {
     font-size: 20px;
   }
-
-  .brands-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 /* Touch Device Optimizations */
@@ -1050,10 +900,6 @@
   }
   
   .feature-box:hover {
-    transform: none;
-  }
-  
-  .brand-logo:hover {
     transform: none;
   }
   

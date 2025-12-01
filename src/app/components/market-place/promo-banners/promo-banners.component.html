@@ -1,0 +1,45 @@
+<section class="promo-banners">
+  <div class="container">
+    <div class="promo-grid">
+      <div 
+        class="promo-banner-item" 
+        [ngClass]="getBannerClasses(banner)"
+        [style]="getBannerStyle(banner)"
+        *ngFor="let banner of currentBanners"
+        [attr.data-category]="banner.category"
+      >
+        <div class="promo-content">
+          <h3 [style.color]="banner.textColor">{{ banner.title }}</h3>
+          <p>{{ banner.description }}</p>
+          <p class="promo-detail">{{ banner.detail }}</p>
+          <button 
+            class="shop-now-btn"
+            (click)="navigateTo(banner)"
+            [style.background-color]="banner.textColor"
+          >
+            {{ banner.buttonText }}
+          </button>
+        </div>
+        <div class="promo-image">
+          <img 
+            [src]="banner.image" 
+            [alt]="banner.title" 
+            loading="lazy"
+            (error)="onImageError($event, banner)"
+          />
+        </div>
+      </div>
+    </div>
+    
+    <!-- Banner Navigation Dots -->
+    <!-- <div class="banner-dots">
+      <button 
+        *ngFor="let banner of promoBanners; let i = index"
+        class="dot"
+        [class.active]="isBannerActive(banner)"
+        (click)="goToBanner(i)"
+        [attr.aria-label]="'Go to banner ' + (i + 1)"
+      ></button>
+    </div> -->
+  </div>
+</section>

@@ -1,0 +1,36 @@
+<section class="brands-section">
+  <div class="container">
+    <h2 class="section-title">Shop by Brand</h2>
+    <p class="section-subtitle">Discover products from your favorite brands</p>
+    
+    <div class="brands-grid">
+      <a 
+        *ngFor="let brand of brands" 
+        [routerLink]="brand.route || '/shop'" 
+        class="brand-card"
+        (click)="navigateToBrand(brand)"
+      >
+        <div class="brand-logo-container">
+          <img 
+            [src]="brand.logo" 
+            [alt]="brand.name + ' logo'" 
+            class="brand-logo"
+            loading="lazy"
+            (error)="onImageError($event, brand)"
+          />
+        </div>
+        <span class="brand-name">{{ brand.name }}</span>
+      </a>
+    </div>
+    
+    <div class="brands-info">
+      <p>Showing {{ brands.length }} premium brands</p>
+    </div>
+    
+    <div class="brands-actions">
+      <button class="view-all-brands-btn" routerLink="/shop/brands">
+        View All Brands
+      </button>
+    </div>
+  </div>
+</section>
