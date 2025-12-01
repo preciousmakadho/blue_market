@@ -1,7 +1,8 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +22,7 @@ export class HeaderComponent implements OnInit {
   compareCount: number = 0;
   wishlistCount: number = 0;
   mobileMenuOpen: boolean = false;
+  currentRoute: string = '';
   
   // Search category
   selectedCategory: string = 'All';
@@ -357,6 +359,13 @@ export class HeaderComponent implements OnInit {
     this.cartItemCount = 2;
     this.compareCount = 0;
     this.wishlistCount = 0;
+    
+    // Track current route
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.currentRoute = event.url;
+    });
   }
 
   // Close all dropdowns when clicking outside
