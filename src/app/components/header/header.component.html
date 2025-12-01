@@ -138,38 +138,52 @@
     </div>
   </div>
 
-  <!-- New Middle Row with Quick Links -->
+  <!-- New Middle Row with Navigation Style - UPDATED WITH SUBSCRIBE AND SIGN IN -->
   <div class="middle-header">
     <div class="container">
-      <div class="quick-links">
-        <a class="quick-link" (click)="navigateTo('/daily-deals')">
-          <span class="material-icons">local_offer</span>
-          <span>Daily Deals</span>
-        </a>
-        <a class="quick-link" (click)="navigateTo('/flash-sales')">
-          <span class="material-icons">flash_on</span>
-          <span>Flash Sales</span>
-        </a>
-        <a class="quick-link" (click)="navigateTo('/new-arrivals')">
-          <span class="material-icons">new_releases</span>
-          <span>New Arrivals</span>
-        </a>
-        <a class="quick-link" (click)="navigateTo('/trending')">
-          <span class="material-icons">trending_up</span>
-          <span>Trending Now</span>
-        </a>
-        <a class="quick-link" (click)="navigateTo('/clearance')">
-          <span class="material-icons">clear_all</span>
-          <span>Clearance</span>
-        </a>
-        <a class="quick-link" (click)="navigateTo('/gift-cards')">
-          <span class="material-icons">card_giftcard</span>
-          <span>Gift Cards</span>
-        </a>
-        <a class="quick-link" (click)="navigateTo('/help-center')">
-          <span class="material-icons">help_center</span>
-          <span>Help Center</span>
-        </a>
+      <div class="quick-links-container">
+        <div class="quick-links-left">
+          <a class="quick-link" [class.active]="currentRoute === ''" (click)="navigateTo('')">
+            <span class="material-icons">home</span>
+            <span>Home</span>
+          </a>
+          <a class="quick-link" (click)="navigateTo('/watch')">
+            <span class="material-icons">play_circle</span>
+            <span>Watch</span>
+          </a>
+          <a class="quick-link" (click)="navigateTo('/listen')">
+            <span class="material-icons">headphones</span>
+            <span>Listen</span>
+          </a>
+          <a class="quick-link" (click)="navigateTo('/play')">
+            <span class="material-icons">sports_esports</span>
+            <span>Play</span>
+          </a>
+          <a class="quick-link" (click)="navigateTo('/publications')">
+            <span class="material-icons">menu_book</span>
+            <span>Publications</span>
+          </a>
+          <a class="quick-link" (click)="navigateTo('/partners')">
+            <span class="material-icons">handshake</span>
+            <span>Partners</span>
+          </a>
+          <a class="quick-link" (click)="navigateTo('/public-notices')">
+            <span class="material-icons">campaign</span>
+            <span>Public Notices</span>
+          </a>
+          <a class="quick-link" (click)="navigateTo('/jobs')">
+            <span class="material-icons">work</span>
+            <span>Jobs</span>
+          </a>
+        </div>
+        <div class="quick-links-right">
+          <a class="quick-link" (click)="navigateTo('/subscribe')">
+            <span>Subscribe</span>
+          </a>
+          <a class="quick-link" (click)="navigateTo('/signin')">
+            <span>Sign in</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
