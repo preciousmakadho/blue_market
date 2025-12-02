@@ -33,7 +33,8 @@ import { AutomotiveComponent } from './components/market-place/automotive/automo
 // New Components
 import { FeaturedProductsComponent } from './components/market-place/featured-products/featured-products.component';
 import { CategorySidebarComponent } from './components/market-place/category-sidebar/category-sidebar.component';
-import { ShopBrandsComponent } from './components/market-place/shop-brands/shop-brands.component'; // Add this import
+import { ShopBrandsComponent } from './components/market-place/shop-brands/shop-brands.component';
+import { PromoBannersComponent } from './components/market-place/promo-banners/promo-banners.component'; // Add this import
 
 export const routes: Routes = [
   { path: '', component: MarketplaceComponent },
@@ -47,7 +48,7 @@ export const routes: Routes = [
   { path: 'shop/list', component: ShopListComponent },
   { path: 'shop/table', component: ShopTableComponent },
   { path: 'shop/sidebar', component: ShopSidebarComponent },
-  { path: 'shop/brands', component: ShopBrandsComponent }, // Add brands route
+  { path: 'shop/brands', component: ShopBrandsComponent },
   { path: 'product/:id', component: ProductComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
@@ -69,7 +70,8 @@ export const routes: Routes = [
   // Component showcase routes (optional)
   { path: 'featured-products', component: FeaturedProductsComponent },
   { path: 'category-sidebar', component: CategorySidebarComponent },
-  { path: 'shop-brands', component: ShopBrandsComponent }, // Add standalone route
+  { path: 'shop-brands', component: ShopBrandsComponent },
+  { path: 'promo-banners', component: PromoBannersComponent }, // Add standalone route
   
   // Blog route
   { path: 'blog', component: BlogComponent }, 
